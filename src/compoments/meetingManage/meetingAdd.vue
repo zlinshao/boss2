@@ -81,7 +81,7 @@
                                 <div class="row">
                                     <label class="col-md-2 control-label">消息内容 ：</label>
                                     <div class="col-md-10">
-                                        <textarea style="resize: vertical;margin-bottom: 18px" v-model="params.content"
+                                        <textarea style="resize: vertical;margin-bottom: 18px" v-model="params.content" placeholder="钉钉推送正文内容"
                                                   class="form-control" rows="2"></textarea>
                                     </div>
                                 </div>
@@ -99,6 +99,13 @@
                                     <div class="col-sm-2" style="display: flex;align-items: center;margin-top: 4px">
                                         <input type="checkbox" v-model="is_leader[index]">
                                         <span >领导</span>
+                                    </div>
+                                    <div class="col-md-12" style="padding: 0;margin-bottom: 18px" v-show="is_leader[index]">
+                                        <label class="col-md-2 control-label">领导排序：</label>
+                                        <div class="col-md-10">
+                                            <input type="number" v-model="leader_sort[index]" min="1"
+                                                   placeholder="领导顺序，最小值1（数字越小越靠前）" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
 
@@ -144,6 +151,7 @@
                 seatArray:[],
                 itemIdArray:[],
                 is_leader:[],
+                leader_sort:[],
                 dateConfigure : [
                     {
                         range : false,
@@ -179,14 +187,24 @@
         watch:{
             amount(val,oldVal){
                 if(val<oldVal){
-                    this.itemArray.splice(val,val);
-                    this.seatArray.splice(val,val);
-                    this.itemIdArray.splice(val,val);
+                    this.itemArray.splice(val,oldVal);
+                    this.seatArray.splice(val,oldVal);
+                    this.itemIdArray.splice(val,oldVal);
+                    this.is_leader.splice(val,oldVal);
+                    this.leader_sort.splice(val,oldVal);
+                }else if(val>oldVal){
+                    let amount = val-oldVal;
+                    for(let i=0;i<amount;i++){
+                        this.is_leader.push(false);
+                        this.leader_sort.push(false)
+                    }
                 }
                 if(!val){
                     this.itemArray=[];
                     this.seatArray=[];
                     this.itemIdArray=[];
+                    this.is_leader = [];
+                    this.leader_sort = [];
                 }
             },
             isReUpload(val){
@@ -211,6 +229,7 @@
                                     this.itemArray.push(item.staff_name);
                                     this.seatArray.push(item.seat_number);
                                     this.itemIdArray.push(item.staff_id);
+                                    this.leader_sort.push(item.leader_sort);
                                     if(item.is_leader === 1){
                                         this.is_leader.push(true);
                                     }else {
@@ -263,18 +282,17 @@
                         attendeeItem.staff_id = this.itemIdArray[i]?this.itemIdArray[i]:'';
                         attendeeItem.seat_number = this.seatArray[i]?this.seatArray[i]:'';
                         attendeeItem.is_leader = this.is_leader[i]?1:2;
+                        attendeeItem.leader_sort = this.leader_sort[i];
                         this.params.attendee.push(attendeeItem);
                         attendeeItem = {};
                     }
-
-                    console.log(this.params.attendee)
                     this.params.status = status;
                     this.$http.post('oa/conference/conferencesave',this.params).then((res) => {
                         if(res.data.code === '50010'){
                             this.info.success = res.data.msg;
                             this.info.state_success = true;
                             this.closeModal();
-                            this.$emit('successAdd')
+                            this.$emit('successAdd');
                         }else {
                             this.info.error = res.data.msg;
                             this.info.state_error = true;
@@ -306,6 +324,7 @@
                 this.compere_name = '';
                 this.recorder_name = '';
                 this. is_leader=[];
+                this. leader_sort=[];
             },
 
         }

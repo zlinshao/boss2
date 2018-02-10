@@ -9,10 +9,283 @@
                             <option value="day">最近八天</option>
                         </select>
                     </div>
-
+                    <div class="padd" v-if="isSuper">
+                        <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                    @sendDate="getDate"></DatePicker>
+                    </div>
                 </form>
             </div>
         </section>
+
+        <div class="col-md-12 tongji" v-if="isSuper">
+            <div class="col-md-6 info" style="padding: 0">
+                <div>
+                    <span class="text-primary">收房平均空置期天数</span>
+                    <span v-if="vacancy_period != '无'">{{vacancy_period.collect_deal_date_avg}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">收房最长空置期天数</span>
+                    <span v-if="vacancy_period != '无' && deal_date_max != '无'">{{deal_date_max.diff}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div class="border_bottom">
+                    <span class="text-primary">收房最长空置期房屋</span>
+                    <span v-if="vacancy_period != '无' && deal_date_max != '无'">
+                        {{deal_date_max.city}}&nbsp;>&nbsp;
+                        {{deal_date_max.detailed_address}}&nbsp;>&nbsp;
+                        {{deal_date_max.real_name}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+
+                <div>
+                    <span class="text-primary">收房超出空置期未出租房屋数量</span>
+                    <span v-if="vacancy_period != '无'">{{vacancy_period.collect_overtop_count}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div class="border_bottom">
+                    <span class="text-primary">平均收房超出空置期未出租房屋天数</span>
+                    <span v-if="vacancy_period != '无'">{{vacancy_period.collect_overtop_avg}}</span>
+                    <span v-else>无</span>
+                </div>
+
+                <div>
+                    <span class="text-primary">最长超出空置期内未出租房屋天数</span>
+                    <span v-if="vacancy_period != '无' && overTop != '无'">{{overTop.diff}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div class="border_bottom">
+                    <span class="text-primary">最长超出空置期房屋</span>
+                    <span v-if="vacancy_period != '无' && overTop != '无'">
+                        {{overTop.city}}&nbsp;>&nbsp;
+                        {{overTop.detailed_address}}&nbsp;>&nbsp;
+                        {{overTop.real_name}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+
+                <!--<div>-->
+                    <!--<span class="text-primary">收房空置期内未出租房屋数量</span>-->
+                    <!--<span v-if="vacancy_period != '无'">{{vacancy_period.collect_in_range}}</span>-->
+                    <!--<span v-else>无</span>-->
+                <!--</div>-->
+                <div>
+                    <span class="text-primary">租房未超过空置期房屋数量</span>
+                    <span v-if="vacancy_period != '无'">{{vacancy_period.rent_in_range}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div class="border_bottom">
+                    <span class="text-primary">租房平均剩余空置期</span>
+                    <span v-if="vacancy_period != '无'">{{vacancy_period.rent_surplus_deal_date}}</span>
+                    <span v-else>无</span>
+                </div>
+
+
+
+                <div>
+                    <span class="text-primary">总收房中介费</span>
+                    <span v-if="agency_fee != '无'">{{agency_fee.collect_agency_fee}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">收房最高中介费</span>
+                    <span v-if="agency_fee != '无' && collect_max != '无'">{{collect_max.medi_cost}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div class="border_bottom">
+                    <span class="text-primary">收房最高中介费房屋</span>
+                    <span v-if="agency_fee != '无' && collect_max != '无'">
+                        {{collect_max.city}}&nbsp;>&nbsp;
+                        {{collect_max.detailed_address}}&nbsp;>&nbsp;
+                        {{collect_max.real_name}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+
+                <div>
+                    <span class="text-primary">总租房中介费</span>
+                    <span v-if="agency_fee != '无'">{{agency_fee.rent_agency_fee}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">租房最高中介费</span>
+                    <span v-if="agency_fee != '无' && rent_max != '无'">{{rent_max.medi_cost}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div class="border_bottom">
+                    <span class="text-primary">租房最高中介费房屋</span>
+                    <span v-if="agency_fee != '无' && rent_max != '无'">
+                        {{rent_max.city}}&nbsp;>&nbsp;
+                        {{rent_max.detailed_address}}&nbsp;>&nbsp;
+                        {{rent_max.real_name}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+
+                <div>
+                    <span class="text-primary">收房总套数</span>
+                    <span v-if="collect_count != '无'">{{collect_count.collect_count}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">租房总套数</span>
+                    <span v-if="rent_count != '无'">{{rent_count.rent_count}}</span>
+                    <span v-else>无</span>
+                </div>
+            </div>
+
+
+            <div class="col-md-6 info">
+                <div>
+                    <span class="text-primary">平均收房月数</span>
+                    <span v-if="collect_data != '无'">{{collect_data.collect_months_avg}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">最大收房月数</span>
+                    <span v-if="collect_data != '无' && collect_month != '无'">
+                        {{collect_month.months}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">最大收房月数房屋</span>
+                    <span v-if="collect_data != '无' && collect_month != '无'">
+                        {{collect_month.city}}&nbsp;>&nbsp;
+                        {{collect_month.detailed_address}}&nbsp;>&nbsp;
+                        {{collect_month.real_name}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">平均收房价格</span>
+                    <span v-if="collect_data != '无'">
+                        {{collect_data.collect_price_avg}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+                <div class="border_bottom">
+                    <span class="text-primary">平均收房年限</span>
+                    <span v-if="collect_data != '无'">
+                        {{collect_data.collect_year_avg}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+
+                <div>
+                    <span class="text-primary">平均租房月数</span>
+                    <span v-if="rent_data != '无'">{{rent_data.rent_months_avg}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">最大租房月数</span>
+                    <span v-if="rent_data != '无' && rent_month != '无'">
+                        {{rent_month.months}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">最大租房月数房屋</span>
+                    <span v-if="rent_data != '无' && rent_month != '无'">
+                        {{rent_month.city}}&nbsp;>&nbsp;
+                        {{rent_month.detailed_address}}&nbsp;>&nbsp;
+                        {{rent_month.real_name}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">平均租房价格</span>
+                    <span v-if="rent_data != '无'">
+                        {{rent_data.rent_price_avg}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+                <div class="border_bottom">
+                    <span class="text-primary">平均租房年限</span>
+                    <span v-if="rent_data != '无'">
+                        {{rent_data.rent_year_avg}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+
+                <div>
+                    <span class="text-primary">平均溢价金额</span>
+                    <span v-if="number_premium != '无'">{{number_premium.price_differences_avg}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">最高溢价金额</span>
+                    <span v-if="number_premium != '无' && differences != '无'">
+                        {{differences.price_differences}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+                <div class="border_bottom">
+                    <span class="text-primary">最高溢价房屋</span>
+                    <span v-if="number_premium != '无' && differences != '无'">
+                        {{differences.city}}&nbsp;>&nbsp;
+                        {{differences.detailed_address}}&nbsp;>&nbsp;
+                        <span class="text-primary">收</span>({{differences.collect_name}})/
+                        <span class="text-primary">租</span>({{differences.rent_name}})
+                    </span>
+                    <span v-else>无</span>
+                </div>
+
+                <div>
+                    <span class="text-primary">正溢价房屋数量</span>
+                    <span v-if="number_premium != '无'">
+                        {{number_premium.premium_count}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">负溢价房屋数量</span>
+                    <span v-if="number_premium != '无'">
+                        {{number_premium.negative_premium_count}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+                <div class="border_bottom">
+                    <span class="text-primary">平价房屋数量</span>
+                    <span v-if="number_premium != '无'">
+                        {{number_premium.is_the_price_count}}
+                    </span>
+                    <span v-else>无</span>
+                </div>
+
+                <div>
+                    <span class="text-primary">离职总人数</span>
+                    <span v-if="dis_count != '无'">{{dis_count.dismiss_all_count}}</span>
+                    <span v-else>无</span>
+                    
+                    （<span class="text-primary">复职：</span>
+                    <span v-if="dis_count != '无'">{{dis_count.be_reinstated}}</span>
+                    <span v-else>无</span>）
+                </div>
+                <!--<div>-->
+                    <!--<span class="text-primary">复职</span>-->
+                    <!--<span v-if="dis_count != '无'">{{dis_count.be_reinstated}}</span>-->
+                    <!--<span v-else>无</span>-->
+                <!--</div>-->
+
+                <div>
+                    <span class="text-primary">入职总人数</span>
+                    <span v-if="enr_count != '无'">{{enr_count.enroll_all_count}}</span>
+                    <span v-else>无</span>
+
+                    （<span class="text-primary">离职：</span>
+                    <span v-if="enr_count != '无'">{{enr_count.dismiss_count}}</span>
+                    <span v-else>无</span>）
+                </div>
+                <!--<div>-->
+                    <!--<span class="text-primary">离职</span>-->
+                    <!--<span v-if="enr_count != '无'">{{enr_count.dismiss_count}}</span>-->
+                    <!--<span v-else>无</span>-->
+                <!--</div>-->
+            </div>
+        </div>
+
         <!--人事入职离职率-->
         <div class="static" v-if="simulate.indexOf('Statistics/manager') > -1 || isSuper">
             <div id="resourceChat" style="height: 400px;"></div>
@@ -48,19 +321,50 @@
             <div id="customerChat" style="height: 400px;"></div>
         </div>
 
-        <div class="main" v-if="simulate.indexOf('Statistics/customer_center') > -1 || isSuper">
-            <iframe :src="addr" id="myiframe"
-                    scrolling="yes" frameborder="0"></iframe>
-        </div>
+        <!--<div class="main" v-if="simulate.indexOf('Statistics/customer_center') > -1 || isSuper">-->
+        <!--<iframe :src="addr" id="myiframe"-->
+        <!--scrolling="yes" frameborder="0"></iframe>-->
+        <!--</div>-->
 
     </div>
 </template>
 
 <script>
+    import DatePicker from '../common/datePicker.vue'
+
     export default {
         props: ['simulate', 'isSuper'],
-        data (){
+        components: {DatePicker},
+        data() {
             return {
+                isShow: false,
+                vacancy_period: {},         //空置期
+                deal_date_max: {},          //空置期最大
+                overTop: {},                //空置期超出
+
+                collect_data: {},           //收房月数
+                collect_month: {},          //收房月数
+
+                rent_data: {},              //租房月数
+                rent_month: {},             //租房月数
+
+                number_premium: {},         //平均溢价
+                differences: {},            //溢价
+                agency_fee: {},             //中介费
+                collect_max: {},            //最大收中介费
+                rent_max: {},               //最大租中介费
+                collect_count: {},          //收房总套数
+                rent_count: {},             //租房总套数
+                dis_count: {},              //离职人数
+                enr_count: {},              //入职人数
+
+                currentDate: [],
+                dateConfigure: [                    //日期范围选择
+                    {
+                        range: true,
+                        needHour: true,
+                    }
+                ],
                 addr: '',
                 types: 'week',
                 myChart: [],                                //pushHTML
@@ -92,7 +396,7 @@
                 screenWidth: document.body.clientWidth,     // 页面宽度
             }
         },
-        mounted (){
+        mounted() {
             this.$http.get('core/customer/dict').then((res) => {
                 this.source.push('客户数量');
                 for (let key in res.data.source) {
@@ -106,9 +410,10 @@
                 })();
             };
             this.check('week');
+            this.houseMonth('');
         },
         watch: {
-            screenWidth (val) {
+            screenWidth(val) {
                 if (!this.timer) {
                     this.screenWidth = val;
                     this.timer = true;
@@ -127,11 +432,107 @@
             }
         },
         methods: {
-            search (){
+            getDate(data) {
+//                this.params.range = data;
+                this.houseMonth(data);
+            },
+            search() {
                 this.check(this.types);
             },
-            check (val){
+            houseMonth(date) {
+                this.vacancy_period = {};       //空置期
+                this.deal_date_avg = {};        //收房月数
+                this.number_premium = {};       //平均溢价
+                this.agency_fee = {};           //中介费
+                this.dis_count = {};            //离职人数
+                this.enroll_count = {};         //入职人数
+//                空置期
+                this.$http.get('statistics/market/vacancy_period?time=' + date).then((res) => {
+                    if (res.data.code === '200110') {
+                        this.vacancy_period = res.data.data;
+                        this.deal_date_max = res.data.data.collect_deal_date_max;
+                        this.overTop = res.data.data.collect_overtop_max;
+                    } else {
+                        this.vacancy_period = '无';
+                    }
+                });
+//                收房月数
+                this.$http.get('statistics/market/collect_data?time=' + date).then((res) => {
+                    if (res.data.code === '200110') {
+                        this.collect_data = res.data.data;
+                        this.collect_month = res.data.data.collect_months_max;
+                    } else {
+                        this.collect_data = '无'
+                    }
+                });
+//                租房月数
+                this.$http.get('statistics/market/rent_data?time=' + date).then((res) => {
+                    if (res.data.code === '200140') {
+                        this.rent_data = res.data.data;
+                        this.rent_month = res.data.data.rent_months_max;
+                    } else {
+                        this.rent_data = '无'
+                    }
+                });
+
+//                平均溢价
+                this.$http.get('statistics/market/number_premium?time=' + date).then((res) => {
+                    if (res.data.code === '200120') {
+                        this.number_premium = res.data.data;
+                        this.differences = res.data.data.price_differences_max;
+                    } else {
+                        this.number_premium = '无';
+                    }
+                });
+//                中介费
+                this.$http.get('statistics/market/agency_fee?time=' + date).then((res) => {
+                    if (res.data.code === '200130') {
+                        this.agency_fee = res.data.data;
+                        this.collect_max = res.data.data.collect_agency_fee_max;
+                        this.rent_max = res.data.data.rent_agency_fee_max;
+                    } else {
+                        this.agency_fee = '无';
+                    }
+                });
+
+                // 收房总套数
+                this.$http.get('statistics/market/collect_count?time=' + date).then((res) => {
+                    if (res.data.code === '20090') {
+                        this.collect_count = res.data.data;
+                    } else {
+                        this.collect_count = '无';
+                    }
+                });
+
+                // 租房总套数
+                this.$http.get('statistics/market/rent_count?time=' + date).then((res) => {
+                    if (res.data.code === '200100') {
+                        this.rent_count = res.data.data;
+                    } else {
+                        this.rent_count = '无';
+                    }
+                });
+
+//                离职人数
+                this.$http.get('statistics/manager/dismiss_count?time=' + date).then((res) => {
+                    if (res.data.code === '10020') {
+                        this.dis_count = res.data.data;
+                    } else {
+                        this.dis_count = '无';
+                    }
+                });
+//                入职人数
+                this.$http.get('statistics/manager/enroll_count?time=' + date).then((res) => {
+                    if (res.data.code === '10030') {
+                        this.enr_count = res.data.data;
+                    } else {
+                        this.enr_count = '无'
+                    }
+                });
+            },
+            check(val) {
                 this.times = [];
+//
 //                入职人数/离职率
                 this.$http.get('statistics/manager/dismiss?type=' + val).then((res) => {
                     this.dismiss_rate = [];
@@ -272,17 +673,17 @@
                 });
 
 //                客服
-                this.$http.get('statistics/customer_center/call_quality').then((res) => {
-                    if (res.data.code === '10000') {
-                        this.addr = res.data.data.data;
-                    } else {
-                        this.addr = '';
-                    }
-                });
+//                this.$http.get('statistics/customer_center/call_quality').then((res) => {
+//                    if (res.data.code === '10000') {
+//                        this.addr = res.data.data.data;
+//                    } else {
+//                        this.addr = '';
+//                    }
+//                });
             },
 
 //            人事入职离职
-            resourceChat (){
+            resourceChat() {
                 let option = {
                     title: {
                         text: '人事入职离职'
@@ -379,7 +780,7 @@
             },
 
 //            平均空置期/空置率
-            yearAvg (){
+            yearAvg() {
                 let option = {
                     title: {
                         text: '平均空置期/空置率'
@@ -471,7 +872,7 @@
             },
 
 //            平均租房价格/平均收房价格/溢价房数量
-            rentPrice (){
+            rentPrice() {
                 let option = {
                     title: {
                         text: '平均价格/溢价房数量'
@@ -568,7 +969,7 @@
             },
 
 //            业绩
-            achiev (){
+            achiev() {
                 let option = {
                     title: {
                         text: '业绩'
@@ -644,7 +1045,7 @@
             },
 
 //            平均出租时间
-            rent_day (){
+            rent_day() {
                 let option = {
                     title: {
                         text: '平均出租时间'
@@ -720,7 +1121,7 @@
             },
 
 //            平均收房年限
-            yearSvg (){
+            yearSvg() {
                 let option = {
                     title: {
                         text: '平均收房年限'
@@ -796,7 +1197,7 @@
             },
 
 //            客户来源
-            customerChats (){
+            customerChats() {
                 let option = {
                     color: ['#D53A35', '#334B5C', '#61A0A8', '#CA8622', '#D48265', '#91C7AE', '#BDA29A', '#C4CCD3'],
                     title: {
@@ -958,5 +1359,30 @@
         display: block;
         width: 100%;
         height: 100%;
+    }
+
+    div.info > div {
+        padding: 10px 0;
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+    }
+
+    .info > div > span:first-child {
+        display: inline-block;
+        padding-right: 20px;
+        text-align: right;
+        width: 150px;
+    }
+
+    .tongji {
+        background: #ffffff;
+        padding: 30px 0 10px 36px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+    }
+
+    .border_bottom {
+        border-bottom: 1px solid #dddddd;
     }
 </style>

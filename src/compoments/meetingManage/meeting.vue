@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <div class="modal fade" id="meetingAdd" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div id="content">
+        <div class="modal fade" id="myModal" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-
+                    <!--<div class="close" aria-label="Close" data-dismiss="modal">×</div>-->
                     <div class="modal-body">
-                        <h3 style="font-weight: bold;text-align: center;margin-top: 40px;margin-bottom: 15px">
+                        <h3 style="font-weight: bold;text-align: center;margin-bottom: 15px">
                             {{detailInfo.title}}
                         </h3>
                         <h5 style="text-align: center;color: #0ea1d8;">请扫描签到</h5>
@@ -18,7 +18,6 @@
                 </div>
             </div>
         </div>
-
         <div class="mainContent row" style="margin: 0">
             <!--名片-->
             <div class='visiting_card'>
@@ -53,9 +52,7 @@
                 <div class="nav">
                     <div class="row">
                         <div class="col-lg-2" style="width: 265px;">
-                            <!--<router-link :to="{path:'/meetingList'}">-->
-                            <!--<i style="margin: 5px" class="fa fa-angle-double-left"></i>返回-->
-                            <!--</router-link>-->
+
                         </div>
                         <div class="col-lg-5">
                             <h4 style="margin-top: 30px;font-weight: 600">企业文化</h4>
@@ -63,7 +60,7 @@
                                 <div class="border_1"></div>
                                 <div>
                                     <h5>尊重个性而不迁就个性；&nbsp;坚持团队精神而达到目的；</h5>
-                                    <h5>为集体创造价值；&nbsp;为员工创造机会；&nbsp;追求集体和个人共同进步</h5>
+                                    <h5>为集体创造价值；&nbsp;为员工创造机会；&nbsp;追求集体和个人共同进步。</h5>
                                 </div>
 
                             </div>
@@ -97,17 +94,17 @@
                             <div class="slogan">
                                 <div class="border_1"></div>
                                 <div>
-                                    <h5>打造中国最具竞争力的公寓运营商</h5>
+                                    <h5>打造中国最具竞争力的公寓运营商。</h5>
                                 </div>
 
                             </div>
                         </div>
                     </div>
-                </div>z
+                </div>
                 <!--主体-->
                 <div class="content_right_middle">
-                    <div class="two-dimension_code" v-if="unActual_num">
-                        <div style="padding: 10px">
+                    <div class="two-dimension_code" v-if="unActual_num&&!starCount || isTwoShow">
+                        <div style="padding: 10px;cursor: pointer" data-toggle="modal" data-target="#myModal">
                             <img style="width: 230px;height: 230px" :src="detailInfo.qrcode_pic_url" alt="">
                         </div>
                     </div>
@@ -115,7 +112,7 @@
                         <h4 style="padding: 0 15px;font-size: 24px">
                             <span style="margin-right: 10px">{{detailInfo.start_time}}</span>
                             <span>{{detailInfo.title}}</span>
-                            <span class="pull-right" v-if="!isStart">
+                            <span class="pull-right" v-if="!isStart && !isFinish && !noStart">
                                 <span>倒计时</span>
                                 <span style="color: #fc647d;">
                                     <span v-if="hour<10">0</span>{{hour}}:<span
@@ -127,8 +124,18 @@
                                     会议已开始
                                 </span>
                             </span>
+                            <span class="pull-right" v-if="isFinish">
+                                <span style="color: #fc647d;">
+                                    已结束
+                                </span>
+                            </span>
+                            <span class="pull-right" v-if="noStart">
+                                <span style="color: #fc647d;">
+                                    倒计时未开始
+                                </span>
+                            </span>
                         </h4>
-                        <p style="padding: 0 15px;font-size: 12px">乐伽商业管理有限公司</p>
+                        <p style="padding: 0 15px;font-size: 12px;color: #999">乐伽商业管理有限公司</p>
 
                         <div class="meetingDetail">
                             <div>
@@ -139,7 +146,7 @@
                             </div>
                             <div>
                                 <div>主持人</div>
-                                <div>{{detailInfo.compere_name}}</div>
+                                <div>{{ detailInfo.compere_name}}</div>
                             </div>
                             <div>
                                 <div>会议记录</div>
@@ -159,12 +166,15 @@
                             </div>
                         </div>
                         <div class="lead">
-                            <p style="padding:0 15px;font-size: 14px;color: #999">与会领导</p>
-                            <div class="lead_item" v-for="item in detailInfo.attendee" v-if="item.is_leader == 1">
+
+                            <p style="padding:0 15px;font-size: 13px;color: #999;">与会领导</p>
+                            <div class="lead_item" v-for="item in leaderList" v-if="item.is_leader == 1">
                                 <div>
                                     <div class="lead_item_head">
-                                        <img v-if="item.staff_avatar" :src="item.staff_avatar" :class="item.qrcode_time?'':'gray'">
-                                        <img v-else="" src="../../assets/img/head.png" :class="item.qrcode_time?'':'gray'">
+                                        <img v-if="item.staff_avatar" :src="item.staff_avatar"
+                                             :class="item.qrcode_time?'':'gray'">
+                                        <img v-else="" src="../../assets/img/head.png"
+                                             :class="item.qrcode_time?'':'gray'">
                                     </div>
                                     <div class="lead_item_name">
                                         <h5 style="color: #333">{{item.staff_name}}</h5>
@@ -281,12 +291,44 @@
                         </div>
                     </div>
                 </div>
-                <h4 style="margin-top: 20px;font-weight: 600">已签到人员</h4>
-                <h5 style="text-align: center" v-if="!actual_num">暂无数据...</h5>
+                <h4 style="margin-top: 20px;font-weight: 600;display: flex;align-items: center;justify-content: space-between">
+                    已签到人员
+                    <div class="switch has-switch" style="float: right">
+                        <div class="switch-animate" :class="signStatus? 'switch-on':'switch-off'" @click="changeStatus">
+                            <input type="checkbox" checked="" data-toggle="switch">
+                            <span class="switch-left">已签到</span><label>&nbsp;</label><span class="switch-right">迟到</span>
+                        </div>
+                    </div>
+                </h4>
                 <div class="scroll_bar" style="height: 495px; background:#fff;overflow: auto;width: 100%"
-                     v-if="actual_num">
+                     v-if="actual_num&&signStatus">
                     <div class="attendance" style="margin-bottom: 0;border-bottom: 1px solid #eee"
-                         v-for="item in detailInfo.attendee" v-if="item.qrcode_time">
+                         v-for="item in signListReverse" v-if="item.qrcode_time&&item.status==2">
+                        <div class="attendance_header">
+                            <div>
+                                <img v-if="item.staff_avatar" :src="item.staff_avatar">
+                                <img v-else="" src="../../assets/img/head.png">
+                            </div>
+                        </div>
+                        <div class="attendance_content">
+                            <h5 style="margin-bottom: 15px;margin-top: 5px;font-weight: bold;color: #333">
+                                <span>{{item.staff_name}}</span>
+                                <span class="pull-right">{{item.qrcode_time}}</span>
+                            </h5>
+                            <div>
+                                <span>{{item.staff_department}} - {{item.staff_position}}</span>
+                                <span class="pull-right">座位号&nbsp;
+                                    <span v-if="item.seat_number">{{item.seat_number}}</span>
+                                    <span v-else>暂无</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll_bar" style="height: 495px; background:#fff;overflow: auto;width: 100%"
+                     v-if="actual_num&&!signStatus">
+                    <div class="attendance" style="margin-bottom: 0;border-bottom: 1px solid #eee"
+                         v-for="item in signListReverse" v-if="item.qrcode_time&&item.status==1">
                         <div class="attendance_header">
                             <div>
                                 <img v-if="item.staff_avatar" :src="item.staff_avatar">
@@ -329,31 +371,62 @@
                 actual_num: '',
                 unActual_num: '',
                 signList: [],
+                leaderList:[],        //  领导列表
                 signInfoArray: [],
                 signInfo: {},
-                signInfoLength : '',
+                signInfoList: [],
+                signInfoLength: '',
                 changeCount: false,
                 start_time: '',
                 interval: null,
-                isStart:false,
-                starCount:false,
-
+                isStart: false,
+                noStart: false,
+                isFinish: false,
+                starCount: false,
+                signStatus : true,
+                signListReverse:[],
+                signListReverseLength:[],
+                isTwoShow : false,
             }
         },
         mounted(){
             this.getDictionary();
-            var content = document.getElementById('container');
-            this.FullScreen(content);
-//            document.documentElement.webkitRequestFullscreen();
+            $('.mainContent').css({'height': window.innerHeight - 30 + 'px', 'background': '#fff'});
+            window.onresize = function () {
+                $('.mainContent').css('height', window.innerHeight - 30 + 'px');
+                if (window.innerHeight > 950) {
+                    $('.unAttendance_item_group').css('height', '290px')
+                } else {
+                    $('.unAttendance_item_group').css('height', '170px')
+                }
+            };
+            $('#myModal').on('hidden.bs.modal', (e) => {
+               this.isTwoShow =true;
+            }).on('shown.bs.modal', (e) => {
+                this.isTwoShow =false;
+            })
         },
         watch: {
             start_time(val, oldValue){
                 this.countDown();
             },
             starCount(val){
-                if(val){
-                    $('#meetingAdd').modal('show');
+                if (val) {
+                    $('#myModal').modal('show');
                 }
+            },
+            signInfoList(val){
+                if (val.length > 0) {
+                    this.carousel();
+                }
+            },
+            unActual_num(val){
+                if (val < 1) {
+                    $('#myModal').modal('hide');
+                }
+            },
+            actual_num(val){
+                this.signListReverse = $.extend(true,[],this.detailInfo.attendee).reverse();
             }
         },
         methods: {
@@ -367,26 +440,54 @@
                         this.getMeetingDetail();
                         this.searchAttendance();
                     }, 2000);
+
                     setInterval(() => {
                         this.countDown();
                     }, 300000);
 
                 })
             },
+
+            carousel(){
+                this.signInfo = {};
+                this.signInfo = this.signInfoList[0];
+                new Promise((resolve, reject) => {
+                    $('.visiting_card').css('right', '10px');
+
+                    setTimeout(() => {
+                        resolve('');
+                    }, 500);
+                }).then((data) => {
+                    new Promise((resolve, reject) => {
+                        if (this.signInfoList.length > 1) {
+                            setTimeout(() => {
+                                $('.visiting_card').css('right', '-430px');
+                                resolve('');
+                            }, 500)
+                        } else {
+                            setTimeout(() => {
+                                $('.visiting_card').css('right', '-430px');
+                                resolve('');
+                            }, 2000)
+                        }
+
+
+                    }).then((data) => {
+                        setTimeout(() => {
+                            if (this.signInfoList.length > 0) {
+                                this.signInfoList.splice(0, 1);
+                            } else {
+                                this.signInfoList = [];
+                            }
+                        }, 500)
+                    })
+                })
+            },
             searchAttendance(){
                 this.$http.get('oa/conference/sign/id/' + this.$route.query.meetingId).then((res) => {
                     if (res.data.code === '50080') {
-                        this.signInfo = {};
-                        this.signInfo = res.data.data[0];
-                        console.log(1)
-                        $('.visiting_card').css('right', '10px');
-                        new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                $('.visiting_card').css('right', '-430px');
-                                resolve('clear');
-                            }, 4000)
-                        }).then((data) => {
-
+                        res.data.data.forEach((item) => {
+                            this.signInfoList.push(item)
                         });
                     } else {
 
@@ -395,15 +496,19 @@
             },
             getMeetingDetail(){
                 this.$store.dispatch('hideLoading');
-                this.$http.get('oa/conference/conferenceread/id/' + this.$route.query.meetingId).then((res) => {
+                this.$http.get('oa/conference/conferenceread/id/' + this.$route.query.meetingId + /order/ + 1).then((res) => {
                     if (res.data.code === '50020') {
                         this.detailInfo = res.data.data;
                         this.start_time = res.data.data.start_time;
                         let actual = [];
                         let unActual = [];
                         this.signList = [];
+                        this.leaderList = [];
                         if (this.detailInfo.attendee) {
                             this.detailInfo.attendee.forEach((item) => {
+                                if(item.is_leader == 1){
+                                    this.leaderList.push(item);
+                                }
                                 if (item.qrcode_time) {
                                     actual.push(item);
                                     if (item.is_leader == 2) {
@@ -415,9 +520,28 @@
                             });
                             this.actual_num = actual.length;
                             this.unActual_num = unActual.length;
+                            this.leaderList = this.quickSort(this.leaderList);
                         }
                     }
                 });
+            },
+
+            quickSort(arr){
+                if(arr.length<=1){//如果数组只有一个数，就直接返回；
+                    return arr;
+                }
+                let num=Math.floor(arr.length/2);//找到中间数的索引值，如果是浮点数，则向下取整
+                let newValue = arr.splice(num,1);//找到中间数的值
+                let left=[],right=[];
+
+                for(let i=0;i<arr.length;i++){
+                    if(Number(arr[i].leader_sort)  < Number(newValue[0].leader_sort)){
+                        left.push(arr[i]);//基准点的左边的数传到左边数组
+                    }else{
+                        right.push(arr[i]);//基准点的右边的数传到右边数组
+                    }
+                }
+                return this.quickSort(left).concat(newValue,this.quickSort(right));//递归不断重复比较
             },
 
             countDown(){
@@ -432,8 +556,9 @@
                         this.interval = setInterval(() => {
                             if (this.count < 1) {
                                 clearInterval(this.interval);
-                                $('#meetingAdd').modal('hide');
+                                $('#myModal').modal('hide');
                                 this.isStart = true;
+                                this.starCount = false;
                             } else {
                                 this.count--;
                                 this.hour = parseInt(this.count / 3600);
@@ -441,26 +566,33 @@
                                 this.second = parseInt(this.count % 3600 % 60);
                             }
                         }, 1000);
-                    } else if(res.data.code === '50091'){
+                    } else if (res.data.code === '50091') {
                         this.isStart = true;
-                    }else {
-
+                        this.noStart = false;
+                        this.isFinish = false;
+                        this.starCount = false;
+                    } else if (res.data.code === '50092') {
+                        this.noStart = true;
+                        this.isFinish = false;
+                        this.isStart = false;
+                        this.starCount = false;
+                    } else {
+                        this.isFinish = true;
+                        this.isStart = false;
+                        this.noStart = false;
+                        this.starCount = false;
                     }
                 });
             },
-            FullScreen(el){
-                var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen,
-                    wscript;
-                if (typeof rfs != "undefined" && rfs) {
+            fullScreen(){
+                let el = document.getElementById('content');
+                let rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
+                if (typeof rfs !== "undefined" && rfs) {
                     rfs.call(el);
-                    return;
                 }
-                if (typeof window.ActiveXObject != "undefined") {
-                    wscript = new ActiveXObject("WScript.Shell");
-                    if (wscript) {
-                        wscript.SendKeys("{F11}");
-                    }
-                }
+            },
+            changeStatus(){
+                this.signStatus = !this.signStatus
             }
         }
     }
@@ -468,15 +600,21 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    body,html{
-        /*font-family:Fantasy;*/
-        overflow: hidden;
-        margin:0;
+    body, html {
+        margin: 0;
         padding: 0;
+        width: 1920px;
+        overflow: hidden;
     }
+
+    .nav h5 {
+        font-size: 16px;
+    }
+
     .mainContent {
         box-shadow: 0 2px 6px 0 rgba(89, 77, 235, 0.2), 0 0 8px 0 rgba(90, 97, 235, 0.1);
     }
+
     .content_right {
         display: inline-block;
         background: #ffffff;
@@ -657,12 +795,13 @@
     .lead {
         margin-top: 20px;
         display: flex;
+        flex-wrap: wrap;
     }
 
     .lead_item > div {
         width: 180px;
         height: 180px;
-        margin-right: 10px;
+        margin: 0 10px 10px;
         border: 1px solid #dddddd;
         border-radius: 5px;
     }
@@ -696,7 +835,7 @@
 
     .unAttendance_item_group {
         width: 100%;
-        height: 179px;
+        height: 170px;
         overflow: auto;
         margin: 15px 0;
         display: flex;
@@ -738,7 +877,7 @@
         right: -430px;
         border-radius: 5px;
         box-shadow: 0 2px 6px 0 rgba(10, 219, 244, .2), 0 0 8px 0 rgba(10, 219, 244, .1);
-        transition: all 1s;
+        transition: all .5s;
     }
 
     .card_top {
@@ -829,29 +968,70 @@
         right: 11px;
     }
 
+    /*模态框*/
+    .modal-content {
+        position: relative;
+        overflow: visible;
+    }
+
+    .modal-content .close {
+        width: 30px;
+        height: 30px;
+        background: #fff;
+        border: 1px solid #48969f;
+        opacity: 1;
+        color: #48969f;
+        text-align: center;
+        line-height: 25px;
+        z-index: 9999;
+        cursor: pointer;
+        border-radius: 50%;
+        position: absolute;
+        top: -12px;
+        right: -12px;
+    }
+
     .modal-body {
-        width: 400px;
-        height: 400px;
-        padding: 0;
+        width: 440px;
+        height: 440px;
+        padding-top: 20px;
     }
 
     .erWeiMa {
         padding: 20px;
         width: 280px;
         height: 280px;
-        margin:0 auto ;
+        margin: 0 auto;
         /*background: #efefef;*/
         background: url("../../assets/img/组22.png") no-repeat;
         background-size: 100% 100%;
     }
 
     .modal-dialog {
-        width: 400px;
-        height: 400px;
+        width: 440px;
+        height: 440px;
         position: absolute;
         top: 50%;
         left: 50%;
         margin: -200px 0 0 -200px;
     }
 
+    p {
+        font-size: 13px;
+    }
+
+    .has-switch span.switch-left {
+        background-color: #33c2dc;
+        color: #fff;
+    }
+    .has-switch label{
+        border: 4px solid #33c2dc;
+    }
+    .has-switch > div.switch-on label{
+        background-color: #0088cc;
+    }
+    .has-switch span{
+        font-size: 12px;
+        font-weight: 600;
+    }
 </style>

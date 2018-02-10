@@ -52,7 +52,9 @@
                         </div>
                         <div class="pro-sort" style="margin-left: 10px;margin-top: 15px">
                             <label>
-                                <label style="padding-right: 25px" :class="{'label_check':true,'c_on':contractSearchInfo.become_due,'c_off':!contractSearchInfo.become_due}" @click.prevent="trid($event)">
+                                <label style="padding-right: 25px"
+                                       :class="{'label_check':true,'c_on':contractSearchInfo.become_due,'c_off':!contractSearchInfo.become_due}"
+                                       @click.prevent="trid($event)">
                                     <input type="checkbox" v-model="contractSearchInfo.become_due">
                                     30天内快到期
                                 </label>
@@ -75,11 +77,13 @@
                                     simulate.indexOf('core/area') == -1 && simulate.indexOf('core/up_contract') == -1">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增租房合同
                             </button>-->
-                            <button class="btn btn-primary" @click="collectAdd" v-show="simulate.indexOf('Rent/saveContract') > -1||isSuper">
+                            <button class="btn btn-primary" @click="collectAdd"
+                                    v-show="simulate.indexOf('Rent/saveContract') > -1||isSuper">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增租房合同
                             </button>
                         </div>
-                        <div class="pull-right pro-sort" style="margin: 8px" v-if="simulate.indexOf('Memo/MemoList_rent')>-1||isSuper">
+                        <div class="pull-right pro-sort" style="margin: 8px"
+                             v-if="simulate.indexOf('Memo/MemoList_rent')>-1||isSuper">
                             <router-link :to="{path:'/Memorandum',query: {flag: 'rent'}}" class="btn btn-primary">
                                 &nbsp;查看备忘录
                             </router-link>
@@ -88,6 +92,11 @@
                             <button class="btn btn-primary" @click="exportData"
                                     v-show="simulate.indexOf('Rent/contractList_export') > -1||isSuper">
                                 导出
+                            </button>
+                        </div>
+                        <div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('Rent/sendSms_remind')>-1||isSuper">
+                            <button class="btn btn-primary" @click="sendMessage">
+                                温馨提醒
                             </button>
                         </div>
                     </div>
@@ -114,14 +123,17 @@
                             <i class="fa fa-star" v-if="mark == 1" @click="marked"> 标记</i>
                             <i class="fa fa-star" v-if="mark == 2" @click="marked"> 取消标记</i>
                         </li>-->
-                        <li class="operate" v-if="contractSeleted.length ===1&&(simulate.indexOf('Rent/delete') > -1||isSuper)">
-                        <!--<li class="operate" v-if="contractSeleted.length ===1">-->
+                        <li class="operate"
+                            v-if="contractSeleted.length ===1&&(simulate.indexOf('Rent/delete') > -1||isSuper)">
+                            <!--<li class="operate" v-if="contractSeleted.length ===1">-->
                             <i class="fa fa-times-circle" @click="deleteContract"> 删除</i>
                         </li>
                         <li class="operate" v-if="contractSeleted.length ===1">
-                            <i class="fa fa-arrow-up" v-if="top == null" @click="stick(contractSeleted,'core/core_common/stick')">
+                            <i class="fa fa-arrow-up" v-if="top == null"
+                               @click="stick(contractSeleted,'core/core_common/stick')">
                                 置顶</i>
-                            <i class="fa fa-times-circle" v-if="top != null" @click="stick(contractSeleted,'core/core_common/unstick')">
+                            <i class="fa fa-times-circle" v-if="top != null"
+                               @click="stick(contractSeleted,'core/core_common/unstick')">
                                 取消置顶</i>&nbsp;
                         </li>
                         <!--<li  class="operate"  v-if="status !== 1 && contractSeleted.length ===1"  >
@@ -130,22 +142,32 @@
                         <!--<li class="operate" v-if="simulate.indexOf('core/up_contract') > -1">
                             <i class="fa fa-scissors" @click="cancel">作废</i>&nbsp;
                         </li>-->
-                        <li class="operate" v-if="simulate.indexOf('MoveOrder/stopContract_rent') > -1">
-                            <i class="fa fa-scissors" @click="cancel">作废</i>&nbsp;
+                        <li class="operate"
+                            v-if="simulate.indexOf('MoveOrder/stopContract_rent') > -1&&contractStatus[0] !=1&& contractSeleted.length ===1">
+                            <i class="fa fa-scissors" @click="cancel(2)">作废</i>&nbsp;
                         </li>
-                        <li class="operate" v-if="contractSeleted.length ===1&&(simulate.indexOf('Rent/readContract_review') > -1||isSuper)">
-                        <!--<li class="operate" v-if="contractSeleted.length ===1">-->
+                        <li class="operate"
+                            v-if="simulate.indexOf('MoveOrder/stopContract_rent') > -1&&contractStatus[0] ==1&& contractSeleted.length ===1">
+                            <i class="fa fa-scissors" @click="cancel(1)">取消作废</i>&nbsp;
+                        </li>
+                        <li class="operate"
+                            v-if="contractSeleted.length ===1&&(simulate.indexOf('Rent/readContract_review') > -1||isSuper)">
+                            <!--<li class="operate" v-if="contractSeleted.length ===1">-->
                             <router-link tag="i" class="fa fa-eye" :to="{path:'/rentingDetail',
                                 query: {ContractId: contractSeleted,flag:'review'}}">查看回访记录
                             </router-link>
                         </li>
-                        <li class="operate" @click="distribution" v-if="simulate.indexOf('MoveOrder/moveOrder_rent') > -1||isSuper">
+                        <li class="operate" @click="distribution"
+                            v-if="simulate.indexOf('MoveOrder/moveOrder_rent') > -1||isSuper">
                             <i class="fa fa-sitemap">按人员分配</i>&nbsp;
                         </li>
-                        <li class="operate" @click="distributionDpm" v-if="simulate.indexOf('MoveOrder/moveOrderByDpm_rent') > -1||isSuper">
+                        <li class="operate" @click="distributionDpm"
+                            v-if="simulate.indexOf('MoveOrder/moveOrderByDpm_rent') > -1||isSuper">
                             <i class="fa fa-sitemap">按部门分配</i>&nbsp;
                         </li>
-                        <li class="operate" v-if="contractSeleted.length ===1&&(simulate.indexOf('Record/saveRepair')>-1||isSuper)" @click="createRepair">
+                        <li class="operate"
+                            v-if="contractSeleted.length ===1&&(simulate.indexOf('Record/saveRepair')>-1||isSuper)"
+                            @click="createRepair">
                             <i class="fa fa-briefcase"></i>
                             创建维修单
                         </li>
@@ -153,6 +175,11 @@
                             <i class="fa fa-envelope"></i>
                             发送短信
                         </li>
+
+                        <!--<li class="operate" @click="sendMessage" v-if="simulate.indexOf('Rent/sendSms_remind')>-1||isSuper">-->
+                        <!--<i class="fa fa-envelope"></i>-->
+                        <!--温馨提示-->
+                        <!--</li>-->
                     </ul>
                 </div>
             </div>
@@ -167,7 +194,8 @@
                             <label for="allCheck"
                                    :class="{'label_check':true,'c_on':contractSeleted.length==contractSearchList.length&&contractSearchList.length!=0,'c_off':contractSeleted.length!=contractSearchList.length}"
                                    @click.prevent="pickedAll($event)">
-                                <input id="allCheck" type="checkbox" :checked="contractSeleted.length==contractSearchList.length&&contractSearchList.length!=0">
+                                <input id="allCheck" type="checkbox"
+                                       :checked="contractSeleted.length==contractSearchList.length&&contractSearchList.length!=0">
                             </label>
                             <!--<input id="allCheck" type="checkbox" v-model="allCheck" @click="pickedAll($event)">
                             <label for="allCheck"></label>-->
@@ -289,8 +317,8 @@
                     <thead class="text-center">
                     <tr>
                         <th class="text-center">合同编号</th>
-                        <th class="text-center">房东姓名</th>
-                        <th class="text-center">房东电话</th>
+                        <th class="text-center">租客姓名</th>
+                        <th class="text-center">租客电话</th>
                         <th class="text-center">地址</th>
                         <th class="text-center">开单人</th>
                         <th class="text-center">标记</th>
@@ -305,10 +333,12 @@
                         <td>{{item.address}}</td>
                         <td>{{item.admin_name}}</td>
                         <td>
-                            <a v-if="item.repetition_mark == 0" href="javascript:;" @click="sign(item.zid,1)" title="标记">
+                            <a v-if="item.repetition_mark == 0" href="javascript:;" @click="sign(item.zid,1)"
+                               title="标记">
                                 <i class="fa fa-star-o"></i>
                             </a>
-                            <a v-if="item.repetition_mark == 1" href="javascript:;" @click="sign(item.zid,0)" title="取消标记">
+                            <a v-if="item.repetition_mark == 1" href="javascript:;" @click="sign(item.zid,0)"
+                               title="取消标记">
                                 <i class="fa fa-star"></i>
                             </a>
                         </td>
@@ -329,7 +359,7 @@
             </section>
         </div>
 
-        <div  v-show="simulate.indexOf('OldRent/searchZuserIndex') > -1||isSuper">
+        <div v-show="simulate.indexOf('OldRent/searchZuserIndex') > -1||isSuper">
             <Page :pg="oldPages" @pag="getOldPage" :beforePage="oldPage"></Page>
         </div>
 
@@ -361,10 +391,32 @@
                 </div>
             </div>
         </div>
+
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="prompt">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            确定要发送信息吗？
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <a class="btn btn-default btn-md" data-dismiss="modal">取消</a>
+                        <a class="btn btn-success btn-md" @click="sure">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
-    import Loading from  '../loading/Loading.vue'
+    import Loading from '../loading/Loading.vue'
     import Confirm from '../common/confirm.vue'
     import Page from '../common/page.vue'
     import Staff from '../common/oraganization.vue'
@@ -373,11 +425,13 @@
 
     import Contract from './rentingAdd.vue'
     import EditRepair from '../customerService/repairLog/repaireLogEdit.vue'
-    export default{
-        props : ['simulate','isSuper'],
-        components: {DatePicker, Page, Staff, Status, Confirm, Loading ,Contract,EditRepair},
-        data(){
+
+    export default {
+        props: ['simulate', 'isSuper'],
+        components: {DatePicker, Page, Staff, Status, Confirm, Loading, Contract, EditRepair},
+        data() {
             return {
+                pitch: [],
                 flag: true,
                 flag1: false,
                 start_time: "",
@@ -386,7 +440,7 @@
                     range: true, // 是否选择范围
                     needHour: false // 是否需要选择小时
                 }],
-                dateConfigure1:[{
+                dateConfigure1: [{
                     range: false, // 是否选择范围
                     needHour: false // 是否需要选择小时
                 }],
@@ -404,7 +458,7 @@
                     become_due: false,
                     //最新发布
                     newest: false,
-                    reviewed : '',
+                    reviewed: '',
                 },
                 dictionary: [],
                 info: {
@@ -435,33 +489,47 @@
                 allId: [],
                 keepStatus: false,
 
-                currentContractId : '',
-                leaveTime : '',             // 离职时间
+                currentContractId: '',
+                leaveTime: '',             // 离职时间
 
 
-                oldList:[],
-                oldPages:'',
-                oldPage:'',
-                isOldShow : true,
+                oldList: [],
+                oldPages: '',
+                oldPage: '',
+                isOldShow: true,
+                contractStatus: [],
             }
         },
         watch: {
             'contractSeleted': {
                 deep: true,
-                handler(val, oldVal){
+                handler(val, oldVal) {
                     this.checkboxModel = val;
                 }
             }
         },
-        mounted(){
+        mounted() {
             this.getDictionary();
             this.IsPC();
         },
         methods: {
-            showFlag (){
+            sendMessage() {
+                $('#prompt').modal({backdrop: 'static'});
+            },
+            sure()  {
+                this.$http.get('core/rent/sendSms?type=rent').then((res) => {
+                    if (res.data.code === '80018') {
+                        this.successMsg(res.data.msg);
+                        $('#prompt').modal('hide');
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
+            showFlag() {
                 this.flag = !this.flag;
             },
-            IsPC(){
+            IsPC() {
                 let userAgentInfo = navigator.userAgent;
                 let Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod");
                 let flag = true;
@@ -476,7 +544,7 @@
                 this.flag = flag;
                 this.flag1 = flag1;
             },
-            getDictionary(){
+            getDictionary() {
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary = res.data;
 
@@ -496,25 +564,25 @@
                     this.searchContract();
                 });
             },
-            trid(ev){
+            trid(ev) {
                 let valInput = ev.target.getElementsByTagName('input')[0];
                 valInput.checked = !valInput.checked;
                 this.contractSearchInfo.become_due = valInput.checked;
                 this.search();
             },
-            search(){
+            search() {
                 this.contractSearchInfo.page = 1;
                 this.searchContract();
                 this.oldPage = '';
-                if(this.contractSearchInfo.keywords){
+                if (this.contractSearchInfo.keywords) {
                     this.searchOldContract();
-                }else {
+                } else {
                     this.oldList = [];
                     this.oldPages = '';
                     this.isOldShow = true
                 }
             },
-            searchContract(){
+            searchContract() {
                 this.$http.post('core/rent/contractlist', this.contractSearchInfo).then((res) => {
                     if (res.data.code === '80010') {
                         this.contractSearchList = res.data.data.list;
@@ -534,12 +602,12 @@
                     }
                 })
             },
-            selectDpm(){ //选择部门
+            selectDpm() { //选择部门
                 this.configureType = 'selectDpm';
                 $('.selectCustom:eq(0)').modal('show');
-                this.configure = {type:'department',length: 1};
+                this.configure = {type: 'department', length: 1};
             },
-            dpmSeleted(val){
+            dpmSeleted(val) {
                 if (this.configureType === 'selectDpm') {
                     if (val.department.length) {
                         this.departmentName = val.department[0].name;
@@ -592,18 +660,18 @@
                     })
                 }
             },
-            getDate(val){
+            getDate(val) {
                 this.contractSearchInfo.start = val.split('to')[0]
                 this.contractSearchInfo.end = val.split('to')[1]
                 this.search();
             },
-            getPage(val){
+            getPage(val) {
                 this.contractSearchInfo.page = val;
                 this.allCheck = false;
                 this.contractSeleted = [];
                 this.searchContract();
             },
-            isNewest(val){
+            isNewest(val) {
                 if (val) {
                     this.contractSearchInfo.newest = true;
                 } else {
@@ -611,23 +679,27 @@
                 }
                 this.searchContract();
             },
-            reset(){    //清空
+            reset() {    //清空
                 this.contractSearchInfo.department_id = '';
                 this.departmentName = '';
                 this.searchContract();
             },
-            picked (item, e){  //复选框单选并保存选中的id
+            picked(item, e) {  //复选框单选并保存选中的id
                 let evInput = e.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
                     this.contractSeleted.push(item.id);
+                    if (item.contract_status != 1) {
+                        this.pitch.push(item.id);
+                    }
                     this.houseId.push(item.house_id);
+                    this.contractStatus.push(item.contract_status);
                     item.mark === 2 ? this.mark = 1 : this.mark = 2;
                     item.status !== 1 ? this.status = 2 : this.status = 1;
-                    this.$http.get('core/rent/readcontract/id/' + item.id).then((res)=>{
-                        if(res.data.code === '80020'){
+                    this.$http.get('core/rent/readcontract/id/' + item.id).then((res) => {
+                        if (res.data.code === '80020') {
                             this.top = res.data.data.top;
-                        }else {
+                        } else {
                             this.info.error = res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_error = true;
@@ -639,6 +711,16 @@
                             this.contractSeleted.splice(i, 1)
                         }
                     }
+                    for (let i = 0; i < this.pitch.length; i++) {
+                        if (item.id === this.pitch[i]) {
+                            this.pitch.splice(i, 1)
+                        }
+                    }
+                    for (let i = 0; i < this.contractStatus.length; i++) {
+                        if (item.contract_status === this.contractStatus[i]) {
+                            this.contractStatus.splice(i, 1)
+                        }
+                    }
                     for (let i = 0; i < this.houseId.length; i++) {
                         if (item.id === this.houseId[i]) {
                             this.houseId.splice(i, 1)
@@ -646,13 +728,13 @@
                     }
                 }
             },
-            pickedAll(e){
+            pickedAll(e) {
                 let evInput = e.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
 //                this.allCheck = evInput.checked;
                 if (evInput.checked) {
                     this.contractSeleted = [];
-                    for (let i = 0;i<this.contractSearchList.length;i++){
+                    for (let i = 0; i < this.contractSearchList.length; i++) {
                         this.contractSeleted.push(this.contractSearchList[i].id)
                     }
 //                    this.contractSeleted = this.allId;
@@ -660,9 +742,9 @@
                     this.contractSeleted = [];
                 }
             },
-            stick(id, addr){  //top
+            stick(id, addr) {  //top
                 let table_id = String(id);
-                this.$http.post(addr,{
+                this.$http.post(addr, {
                     table_id: table_id,
                     category: 'rent',
                 }).then((res) => {
@@ -679,7 +761,7 @@
                     }
                 })
             },
-            marked(){
+            marked() {
                 this.$http.get('core/rent/mark/id/' + this.contractSeleted[0] + '/mark/' + this.mark).then((res) => {
                     if (res.data.code === '80090') {
                         this.search();
@@ -694,24 +776,28 @@
                     }
                 })
             },
-            deleteContract(){
+            deleteContract() {
                 this.confirmMsg = {msg: '您确定删除吗'};
                 $('#confirm').modal('show');
                 this.msgFlag = 'delete';
 
             },
-            deblocking(){  //解锁
+            deblocking() {  //解锁
                 this.confirmMsg = {msg: '您确定解锁吗'};
                 $('#confirm').modal('show');
                 this.msgFlag = 'lock';
 
             },
-            cancel(){
-                this.confirmMsg = {msg: '您确定作废吗'};
+            cancel(val) {
+                if (val === 2) {
+                    this.confirmMsg = {msg: '您确定作废吗'};
+                } else {
+                    this.confirmMsg = {msg: '您确定取消作废吗'};
+                }
                 $('#confirm').modal('show');
                 this.msgFlag = 'cancel';
             },
-            getConfirm(){
+            getConfirm() {
                 if (this.msgFlag === 'delete') {
                     this.$http.get('core/rent/delete/id/' + this.contractSeleted[0]).then((res) => {
                         if (res.data.code === '80030') {
@@ -741,12 +827,13 @@
                             this.info.state_error = true;
                         }
                     })
-                }else if (this.msgFlag === 'cancel') {
-                    this.$http.get('core/move_order/stopContract/type/rent/id/' + this.contractSeleted[0] ).then((res) => {
+                } else if (this.msgFlag === 'cancel') {
+                    this.$http.get('core/move_order/stopContract/type/rent/id/' + this.contractSeleted[0]).then((res) => {
                         if (res.data.code === '70030') {
                             this.search();
                             this.houseId = [];
                             this.contractSeleted = [];
+                            this.contractStatus = [];
                             this.info.success = res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_success = true;
@@ -756,10 +843,10 @@
                             this.info.state_error = true;
                         }
                     })
-                }else if(this.msgFlag === 'export'){
-                    this.$http.post('core/rent/contractlist/export/'+1, this.contractSearchInfo).then((res) => {
-                        if(res.data.code === '80020'){
-                            window.location.href=res.data.data
+                } else if (this.msgFlag === 'export') {
+                    this.$http.post('core/rent/contractlist/export/' + 1, this.contractSearchInfo).then((res) => {
+                        if (res.data.code === '80020') {
+                            window.location.href = res.data.data
                             this.info.success = res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_success = true;
@@ -767,56 +854,56 @@
                     })
                 }
             },
-            distribution(){
+            distribution() {
                 $('#selectCustom').modal('show');
-                this.configure = {type:'staff',length: 1};
+                this.configure = {type: 'staff', length: 1};
                 this.configureType = 'distribution';
             },
-            distributionDpm(){
+            distributionDpm() {
                 $('#selectCustom').modal('show');
-                this.configure = {type:'department',length: 1};
+                this.configure = {type: 'department', length: 1};
                 this.configureType = 'distributionDpm';
             },
-            collectAdd(){
+            collectAdd() {
                 $('.rem_div').remove();
                 $('#contractAdd').modal('show');
             },
             // 创建维修单
-            createRepair(){
+            createRepair() {
                 this.currentContractId = this.contractSeleted[0];
                 $('#repairLogEdit').modal('show');
             },
-            closeRepair(){
-                this.currentContractId='';
+            closeRepair() {
+                this.currentContractId = '';
                 this.contractSeleted = [];
             },
 
-            showSendMail(){
+            showSendMail() {
                 this.leaveTime = '';
                 $('#sendMail').modal('show')
             },
-            getLeaveDate(val){
+            getLeaveDate(val) {
                 this.leaveTime = val;
             },
 //            发送短信
-            sureSendEmail(){
+            sureSendEmail() {
                 /*console.log(this.contractSeleted)
                 console.log(this.leaveTime)*/
-                if (this.leaveTime==''){
+                if (this.leaveTime == '') {
                     this.info.error = '请选择业务员离职时间';
                     //显示失败弹窗 ***
                     this.info.state_error = true;
                     return;
                 }
-                this.$http.get('core/collect/sendSms',{
-                    params : {
-                        type : 'rent',
-                        time : this.leaveTime,
-                        id : this.contractSeleted
+                this.$http.get('core/collect/sendSms', {
+                    params: {
+                        type: 'rent',
+                        time: this.leaveTime,
+                        id: this.contractSeleted
                     }
-                }).then((res)=>{
+                }).then((res) => {
 //                    console.log(res.data)
-                    if (res.data.code==70018){
+                    if (res.data.code == 70018) {
                         // success
                         this.contractSeleted = [];
                         this.info.success = res.data.msg;
@@ -831,9 +918,9 @@
                     }
                 })
             },
-            searchOldContract(){
-                if(this.contractSearchInfo.keywords){
-                    this.$http.get('old/rent?input='+ this.contractSearchInfo.keywords+'&page='+this.oldPage).then((res) => {
+            searchOldContract() {
+                if (this.contractSearchInfo.keywords) {
+                    this.$http.get('old/rent?input=' + this.contractSearchInfo.keywords + '&page=' + this.oldPage).then((res) => {
                         if (res.data.code === '80010') {
                             this.oldList = res.data.data.data;
                             this.oldPages = res.data.data.pages;
@@ -844,24 +931,24 @@
                             this.isOldShow = true;
                         }
                     })
-                }else {
+                } else {
                     this.oldList = [];
                     this.oldPages = '';
                     this.isOldShow = true
                 }
             },
-            getOldPage(val){
+            getOldPage(val) {
                 this.oldPage = val;
                 this.searchOldContract();
             },
-            sign(id,mark){
-                this.$http.put('old/rent/rep/'+id+'?newmark='+mark).then((res) => {
-                    if(res.data.code === '80010'){
+            sign(id, mark) {
+                this.$http.put('old/rent/rep/' + id + '?newmark=' + mark).then((res) => {
+                    if (res.data.code === '80010') {
                         this.searchOldContract();
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                    }else {
+                    } else {
                         this.info.error = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_error = true;
@@ -869,11 +956,21 @@
                 })
             },
             //导出
-            exportData(){
+            exportData() {
                 this.confirmMsg = {msg: '您确定导出吗'};
                 $('#confirm').modal('show');
                 this.msgFlag = 'export';
-            }
+            },
+            successMsg(msg) {    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg) {      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
+            },
         }
     }
 </script>
@@ -963,13 +1060,15 @@
     .selected {
         background: #fffcd9 !important;
     }
-    .cancel{
+
+    .cancel {
         display: inline-block;
         width: 20px;
         height: 20px;
         border-radius: 50%;
     }
-    .cancel>img{
+
+    .cancel > img {
         width: 20px;
         height: 20px;
         border-radius: 50%;

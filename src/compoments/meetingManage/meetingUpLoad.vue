@@ -18,11 +18,14 @@
                                         <input type="text" v-model="params.filename" placeholder="标题" class="form-control">
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row" style="margin-bottom: -18px">
                                     <label class="col-md-2 control-label">文件上传：</label>
-                                    <div class="col-md-10">
+                                    <div class="col-md-10" >
                                         <Upload @photo="fileId" @delete="picDelete" @complete="complete"
                                                  :result="'file'" :idPhotos="file"></Upload>
+                                        <span style="color: #e8403f;display: inline-block;margin-top: -18px">
+                                            暂只支持.jpg,.jpeg,.gif,.png,.bmp,.doc,.docx,.xls,.xlsx,.pdf格式
+                                     </span>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -129,6 +132,7 @@
                 $('.selectCustom').modal('show');
             },
             getDepartment(val){
+                console.log(val)
                 this.params.visible_range = {
                     department:[],
                     staff:[],
@@ -220,5 +224,9 @@
     input[type='checkbox']{
         width: 17px;
         height: 17px;
+    }
+
+    .col-md-10 .dropzone > div{
+        margin-bottom: 0;
     }
 </style>

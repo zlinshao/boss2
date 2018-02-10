@@ -46,7 +46,7 @@
                             </label>
                         </div>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="签收人/房屋地址/价格" v-model="params.search"
+                            <input type="text" class="form-control" placeholder="签约人/房屋地址" v-model="params.search"
                                    @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
@@ -120,90 +120,90 @@
         </section>
 
         <!--增加/查看 备注-->
-        <div class="modal fade " id="addRemarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
+        <!--<div class="modal fade " id="addRemarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
+             <!--aria-hidden="true">-->
+            <!--<div class="modal-dialog">-->
+                <!--<div class="modal-content">-->
 
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">{{address_remark}}</h4>
-                    </div>
+                    <!--<div class="modal-header">-->
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+                        <!--<h4 class="modal-title">{{address_remark}}</h4>-->
+                    <!--</div>-->
 
-                    <div class="modal-body roll" style="max-height: 500px;overflow: auto;">
-                        <div class="row has-js">
-                            <div class="col-lg-12">
-                                <section class="panel table table-responsive roll" style="margin-bottom: 0;">
-                                    <table class="table table-advance table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th class="text-center width100">备注时间</th>
-                                            <th class="text-center">备注内容</th>
-                                            <th class="text-center width80">备注人</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td colspan="3" v-if="remarks_status == 1">
-                                                <div class="form-group">
-                                                    <div class="col-lg-12">
-                                                        <textarea class="form-control" v-model="addRemark"></textarea>
-                                                    </div>
-                                                    <div class="col-lg-12" style="margin-top: 10px;">
-                                                        <button class="btn btn-primary btn-sm pull-right"
-                                                                style="margin-left: 8px;"
-                                                                v-if="remarks_status == 1" @click="addRem">确定
-                                                        </button>
-                                                        <button class="btn btn-default btn-sm pull-right"
-                                                                @click="remark_hide"
-                                                                v-if="remarks_status == 1">取消
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="text-center" v-for="item in look_remark">
-                                            <!--v-show="remark_isActive != item.id" @click="revise_remark(item.id, item.content)"-->
-                                            <td>{{item.create_time}}</td>
-                                            <td>{{item.content}}</td>
-                                            <td>{{item.name}}</td>
-                                            <!--<td v-show="remark_isActive == item.id">-->
-                                            <!--<textarea class="form-control" v-model="addRemark"></textarea>-->
+                    <!--<div class="modal-body roll" style="max-height: 500px;overflow: auto;">-->
+                        <!--<div class="row has-js">-->
+                            <!--<div class="col-lg-12">-->
+                                <!--<section class="panel table table-responsive roll" style="margin-bottom: 0;">-->
+                                    <!--<table class="table table-advance table-hover">-->
+                                        <!--<thead>-->
+                                        <!--<tr>-->
+                                            <!--<th class="text-center width100">备注时间</th>-->
+                                            <!--<th class="text-center">备注内容</th>-->
+                                            <!--<th class="text-center width80">备注人</th>-->
+                                        <!--</tr>-->
+                                        <!--</thead>-->
+                                        <!--<tbody>-->
+                                        <!--<tr>-->
+                                            <!--<td colspan="3" v-if="remarks_status == 1">-->
+                                                <!--<div class="form-group">-->
+                                                    <!--<div class="col-lg-12">-->
+                                                        <!--<textarea class="form-control" v-model="addRemark"></textarea>-->
+                                                    <!--</div>-->
+                                                    <!--<div class="col-lg-12" style="margin-top: 10px;">-->
+                                                        <!--<button class="btn btn-primary btn-sm pull-right"-->
+                                                                <!--style="margin-left: 8px;"-->
+                                                                <!--v-if="remarks_status == 1" @click="addRem">确定-->
+                                                        <!--</button>-->
+                                                        <!--<button class="btn btn-default btn-sm pull-right"-->
+                                                                <!--@click="remark_hide"-->
+                                                                <!--v-if="remarks_status == 1">取消-->
+                                                        <!--</button>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
                                             <!--</td>-->
-                                        </tr>
-                                        <tr v-show="look_remark.length == 0" class="text-center">
-                                            <td colspan="3" style="font-size: 16px;">暂无备注...</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
+                                        <!--</tr>-->
+                                        <!--<tr class="text-center" v-for="item in look_remark">-->
+                                            <!--&lt;!&ndash;v-show="remark_isActive != item.id" @click="revise_remark(item.id, item.content)"&ndash;&gt;-->
+                                            <!--<td>{{item.create_time}}</td>-->
+                                            <!--<td>{{item.content}}</td>-->
+                                            <!--<td>{{item.name}}</td>-->
+                                            <!--&lt;!&ndash;<td v-show="remark_isActive == item.id">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<textarea class="form-control" v-model="addRemark"></textarea>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                                        <!--</tr>-->
+                                        <!--<tr v-show="look_remark.length == 0" class="text-center">-->
+                                            <!--<td colspan="3" style="font-size: 16px;">暂无备注...</td>-->
+                                        <!--</tr>-->
+                                        <!--</tbody>-->
+                                    <!--</table>-->
+                                <!--</section>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                    <!--<div class="modal-body" v-if="remarks_status == 1">-->
-                    <!--<form class="form-horizontal" role="form">-->
-                    <!--<div class="form-group">-->
-                    <!--<div class="col-lg-12">-->
-                    <!--<textarea class="form-control" v-model="addRemark"></textarea>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</form>-->
-                    <!--</div>-->
+                    <!--&lt;!&ndash;<div class="modal-body" v-if="remarks_status == 1">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<form class="form-horizontal" role="form">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="col-lg-12">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<textarea class="form-control" v-model="addRemark"></textarea>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</form>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-                    <!--<div class="modal-footer" v-if="remarks_status == 1">-->
-                    <!--<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>-->
-                    <!--<button class="btn btn-primary" type="button" @click="addRem">确定</button>-->
+                    <!--&lt;!&ndash;<div class="modal-footer" v-if="remarks_status == 1">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button class="btn btn-primary" type="button" @click="addRem">确定</button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--<div class="modal-footer">-->
+                        <!--<button class="btn btn-primary btn-sm pull-left" @click="remark_show"-->
+                                <!--v-if="remarks_status == 2">新增备注-->
+                        <!--</button>-->
+                        <!--<button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>-->
                     <!--</div>-->
-                    <div class="modal-footer">
-                        <button class="btn btn-primary btn-sm pull-left" @click="remark_show"
-                                v-if="remarks_status == 2">新增备注
-                        </button>
-                        <button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
         <div class="panel tips">
             <ul class="clearFix">
@@ -569,6 +569,9 @@
         <DetailInfo :msg="detail_info" :dict="dict" :detail="detail"></DetailInfo>
 
         <SendMessage :message="pitch" :page="beforePage" @send="search"></SendMessage>
+
+        <!--新增备注-->
+        <AddRemark @add="lookRemark" :remark="remarks"></AddRemark>
     </div>
 </template>
 
@@ -587,6 +590,7 @@
     import SelectHouse from '../../common/selectPayHouse.vue'
     import DetailInfo from './detail_info.vue'
     import SendMessage from './sendMessage.vue'
+    import AddRemark from '../../common/addRemark.vue'
 
     export default{
         components: {
@@ -603,7 +607,8 @@
             Confirm,
             ModifyTime,
             DetailInfo,
-            SendMessage
+            SendMessage,
+            AddRemark
         },
 
         data(){
@@ -621,11 +626,13 @@
                 isActive: '',
                 amount: '',                     //编辑列表金额
                 recycle_bin: true,            //回收站
-                look_remark: [],              //备注内容
-                remarks_status: '',          //新增/查看
-                addRemark: '',               //新增备注
-                address_remark: '',
-                remark_id: '',              //备注id
+                remarks:{
+                    look_remark: [],                        //备注内容
+                    addRemark: '',                          //新增备注
+                    address_remark: '',                     //头部信息
+                    remark_id: '',                          //备注id
+                    urls: 'account/receivable/tag_v2/'      //新增接口
+                },
                 pitch: [],                  //选中id
                 status: [],                // 选中状态
                 beforePage: 1,
@@ -783,7 +790,7 @@
                 if (val === 4) {
                     this.params.price = [this.starPrice, this.endPrice];
                 }
-                this.search(this.beforePage);
+                this.search(1);
                 $('#surplus').modal('hide');
             },
 
@@ -888,6 +895,7 @@
                         if (res.data.code === '18510') {
                             this.search(this.beforePage);
                             this.amount = '';
+                            this.isActive = '';
                             this.successMsg(res.data.msg);
                         } else {
                             this.errorMsg(res.data.msg);
@@ -1039,52 +1047,18 @@
                     }
                 })
             },
-//            新增备注
-            remark_show (){
-                this.remarks_status = 1;
-                this.addRemark = '';
-//                $('#addRemarks').modal({
-//                    backdrop: 'static',         //空白处模态框不消失
-//                });
-            },
-//            取消备注
-            remark_hide (){
-                this.remarks_status = 2;
-            },
-//            新增备注
-            addRem (){
-                if (this.addRemark !== '') {
-                    this.$http.post('account/receivable/tag_v2/' + this.remark_id, {
-                        content: this.addRemark,
-                    }).then((res) => {
-                        if (res.data.code === '18510') {
-                            this.look_remark.unshift(res.data.data);
-                            this.remark_hide();
-                            this.successMsg(res.data.msg);
-                        } else {
-                            this.errorMsg(res.data.msg);
-                        }
-                    })
-                } else {
-                    this.errorMsg('备注内容不能为空');
-                }
-            },
+
 //            查看备注
             look_tag (val, addr, id){
-                this.look_remark = val;
-                this.address_remark = addr;
-                this.remark_id = id;
-                this.remarks_status = 2;
-                $('#addRemarks').modal({
-                    backdrop: 'static',         //空白处模态框不消失
-                });
-            },
+                this.remarks.look_remark = val;
+                this.remarks.address_remark = addr;
+                this.remarks.remark_id = id;
+                $('#addRemarks').modal({backdrop: 'static'});    //空白处模态框不消失
 
-//            修改备注
-//            revise_remark (id, val){
-//                this.remark_isActive = id;
-//                this.addRemark = val;
-//            },
+            },
+            lookRemark (){
+                this.search(this.beforePage);
+            },
 
             clearForm(){
                 this.chooseResult.customer_name = '';

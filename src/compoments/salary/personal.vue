@@ -42,6 +42,12 @@
                         <div class="input-group">
                             <a class="btn btn-success" @click="leading_out">导出详情</a>
                         </div>
+                        <div class="input-group">
+                            <router-link class="btn btn-success" to="/historySettle">历史未结清</router-link>
+                        </div>
+                        <div class="input-group pull-right">
+                            <a class="btn btn-success" @click="freezes">冻结本月工资</a>
+                        </div>
                     </form>
                 </div>
                 <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
@@ -165,6 +171,8 @@
 
         <!--查看备注-->
         <salaryRemark :look="lookRem"></salaryRemark>
+
+        <FreezeSalary></FreezeSalary>
     </div>
 </template>
 
@@ -172,11 +180,12 @@
     import DatePicker from '../common/datePicker.vue'
     import Page from '../common/page.vue'
     import salaryRemark from './salaryRemark.vue'
-    import STAFF from  '../common/oraganization.vue'     //部门搜索
-    import personalRevise from  './personalRevise.vue'   //个人工资编辑
+    import STAFF from '../common/oraganization.vue'     //部门搜索
+    import personalRevise from './personalRevise.vue'   //个人工资编辑
+    import FreezeSalary from './freezeSalary.vue'   //个人工资编辑
     export default {
-        components: {DatePicker, STAFF, personalRevise, salaryRemark, Page},
-        data (){
+        components: {DatePicker, STAFF, personalRevise, salaryRemark, Page, FreezeSalary},
+        data() {
             return {
                 address_url: globalConfig.server,
                 leadingOut: '',
@@ -205,15 +214,20 @@
                 lookRem: '',                    //备注内容
             }
         },
-        mounted (){
+        mounted() {
             this.$http.get('salary/Commission/dict').then((res) => {
                 this.dict = res.data;
                 this.personalList(1);
             });
         },
         methods: {
+            // 冻结本月工资
+            freezes() {
+                $('#freezeModule').modal({backdrop: 'static'});
+            },
+
 //            导出详情
-            leading_out (){
+            leading_out() {
                 this.$http.get('/salary/salary/export', {
                     params: this.params
                 }).then((res) => {
@@ -225,11 +239,11 @@
                     }
                 })
             },
-            close_ (){
+            close_() {
                 $('#leading_out').modal('hide');
             },
 //            已发未发
-            toggle (val, id){
+            toggle(val, id) {
                 this.$http.post('salary/view/toggle/' + id, {
                     status: 3 - val,
                 }).then((res) => {
@@ -239,7 +253,7 @@
                 })
             },
 //            列表
-            personalList (val){
+            personalList(val) {
                 this.params.page = val;
                 this.pitch = [];
                 this.$http.get('salary/view', {
@@ -258,28 +272,28 @@
             },
 
 //            搜索
-            search (val){
+            search(val) {
                 this.personalList(val);
             },
 //            编辑成功
-            revise_search (){
+            revise_search() {
                 this.personalList(this.params.page);
             },
 
 //            日期搜索
-            getDate(data){
+            getDate(data) {
                 this.params.range = data;
                 this.search(1);
             },
 
 //            部门搜索
-            select(){
+            select() {
                 $('.selectCustom:eq(0)').modal({backdrop: 'static',});
                 this.configure = {type: 'department', length: 1};
             },
 
 //            部门搜索
-            selectDateSend(val){
+            selectDateSend(val) {
                 for (let i = 0; i < val.department.length; i++) {
                     this.selected = val.department[i].name;
                     this.params.department_id = val.department[i].id
@@ -288,14 +302,14 @@
             },
 
 //            重置部门搜索
-            clearSelect(){
+            clearSelect() {
                 this.params.department_id = '';
                 this.selected = '';
                 this.search(1);
             },
 
 //            选中
-            pitchId (rul, ev){
+            pitchId(rul, ev) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.pitch = [];
@@ -309,7 +323,7 @@
                 }
             },
 //            编辑
-            personal_rev (){
+            personal_rev() {
                 this.$http.get('salary/view/' + this.pitch).then((res) => {
                     this.salaryBar = res.data.data;
                     $('#personalModel').modal({backdrop: 'static',});
@@ -317,7 +331,7 @@
             },
 
 //            查看备注
-            lookRemark (val){
+            lookRemark(val) {
                 this.lookRem = val;
                 $('#salaryRemark').modal({backdrop: 'static',});
             }

@@ -96,6 +96,14 @@
                                                @blur="allMoney">
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">保修期奖励</label>
+                                    <div class="col-lg-10 iconic-input right">
+                                        <input type="text" v-model="bonus_warrenty" class="form-control" placeholder=""
+                                               @blur="allMoney">
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">年限(涨价)扣款</label>
                                     <div class="col-lg-10 iconic-input right">
@@ -134,7 +142,7 @@
                                     <label class="col-lg-2 col-sm-2 control-label">中介费</label>
                                     <div class="col-lg-10 iconic-input right">
                                         <input type="text" v-model="brokerage_fee" class="form-control" placeholder=""
-                                               @blur="allMoney">
+                                               @blur="allMoney" disabled>
                                     </div>
                                 </div>
 
@@ -186,6 +194,7 @@
                 year_period: '',                    //收房年限奖励
                 price_gap: '',                      //价格差奖励
                 achievement_up: '',                 //业绩提成
+                bonus_warrenty: '',                 //保修期奖励
                 not_send_scale: '',                 //未发比例
                 cells: [],                          //合同、资料、交接、客诉、尾款
                 contract: '',                       //合同
@@ -220,6 +229,7 @@
                 this.year_period = val.bonus_year;                          //收房年限奖励
                 this.price_gap = val.bonus_price;                           //价格差奖励
                 this.achievement_up = val.achv;                             //业绩提成
+                this.bonus_warrenty = val.bonus_warrenty;                    //业绩提成
                 this.not_send_scale = val.percentage_remain;                 //未发比例
                 this.cells = val.simple_cells;
                 this.contract = '';                       //合同
@@ -274,6 +284,7 @@
                     bonus_year: this.year_period,            //收房年限奖励
                     bonus_price: this.price_gap,              //价格差奖励
                     achv: this.achievement_up,                  //业绩提成
+                    bonus_warrenty: this.bonus_warrenty,                  //业绩提成
                     punish_year: this.punish_year,                  //年限(涨价)扣款
                     punish_vacancy: this.punish_vacancy,                  //空置期扣款
 //                    percentage_remain: this.not_send_scale,         //未发比例

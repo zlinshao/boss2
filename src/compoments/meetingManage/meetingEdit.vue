@@ -81,7 +81,7 @@
                                 <div class="row">
                                     <label class="col-md-2 control-label">消息内容 ：</label>
                                     <div class="col-md-10">
-                                        <textarea style="resize: vertical;margin-bottom: 18px" v-model="params.content"
+                                        <textarea style="resize: vertical;margin-bottom: 18px" v-model="params.content" placeholder="钉钉推送正文内容"
                                                   class="form-control" rows="2"></textarea>
                                     </div>
                                 </div>
@@ -100,6 +100,13 @@
                                         <input type="checkbox" v-model="is_leader[index]" :checked='false'>
                                         <span >领导</span>
                                     </div>
+                                    <div class="col-md-12" style="padding: 0;margin-bottom: 18px" v-show="is_leader[index]">
+                                        <label class="col-md-2 control-label">领导排序：</label>
+                                        <div class="col-md-10">
+                                            <input type="number" v-model="leader_sort[index]" min="1"
+                                                   placeholder="领导顺序，最小值1（数字越小越靠前）" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
 
                             </form>
@@ -107,8 +114,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" @click="closeModal">取消</button>
-                        <button type="button" class="btn btn-primary" @click="confirmAdd(1)">保存为草稿</button>
-                        <button type="button" class="btn btn-success" @click="confirmAdd(2)">保存并发布</button>
+                        <button type="button" class="btn btn-primary" @click="confirmAdd(1,2)">草稿</button>
+                        <button type="button" class="btn btn-success" @click="confirmAdd(2,2)">保存</button>
+                        <button type="button" class="btn btn-success" @click="confirmAdd(2,1)">发布</button>
                     </div>
                 </div>
             </div>
@@ -144,6 +152,7 @@
                 seatArray:[],
                 itemIdArray:[],
                 is_leader:[],
+                leader_sort:[],
                 dateConfigure : [
                     {
                         range : false,
@@ -190,12 +199,14 @@
                     this.seatArray.splice(val,val);
                     this.itemIdArray.splice(val,val);
                     this.is_leader.splice(val,val);
+                    this.leader_sort.splice(val,oldVal);
                 }
                 if(!val){
                     this.itemArray=[];
                     this.seatArray=[];
                     this.itemIdArray=[];
                     this.is_leader=[];
+                    this.leader_sort = [];
                 }
             }
         },
@@ -221,6 +232,8 @@
                                 this.itemArray.push(item.staff_name);
                                 this.seatArray.push(item.seat_number);
                                 this.itemIdArray.push(item.staff_id);
+                                this.leader_sort.push(item.leader_sort);
+                                console.log(this.leader_sort)
                                 if(item.is_leader === 1){
                                     this.is_leader.push(true);
                                 }else {
@@ -258,7 +271,7 @@
                     }
                 }
             },
-            confirmAdd(status){   //确认提交
+            confirmAdd(status,message){   //确认提交
                 if(this.itemIdArray.length<this.params.attendee_num){
                     this.info.error = '您还有参会人员尚未选择';
                     this.info.state_error = true;
@@ -269,11 +282,12 @@
                         attendeeItem.staff_id = this.itemIdArray[i] ? this.itemIdArray[i] : '';
                         attendeeItem.seat_number = this.seatArray[i] ? this.seatArray[i] : '';
                         attendeeItem.is_leader = this.is_leader[i] ? 1 : 2;
-
+                        attendeeItem.leader_sort = this.leader_sort[i];
                         this.params.attendee.push(attendeeItem);
                         attendeeItem = {};
                     }
                     this.params.status = status;
+                    this.params.message = message;
                     this.$http.put('oa/conference/conferenceupdate', this.params).then((res) => {
                         if (res.data.code === '50030') {
                             this.info.success = res.data.msg;
@@ -311,6 +325,7 @@
                 this.compere_name = '';
                 this.recorder_name = '';
                 this.is_leader=[];
+                this. leader_sort=[];
             },
 
         }

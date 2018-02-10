@@ -6,9 +6,10 @@
                      class="dz-preview dz-processing dz-image-preview dz-success dz-complete"
                      v-if="p != '' && p.small !== null">
                     <div class="dz-image">
-                        <img data-dz-thumbnail="" alt="" :src="p.small">
+                        <img v-if="p.small" data-dz-thumbnail="" alt="" :src="p.small">
+                        <!--<img v-else="" data-dz-thumbnail="" alt="" src="../../assets/img/head.png">-->
                     </div>
-                    <a class="dz-remove" @click="rules(index)">删除图片</a>
+                    <a class="dz-remove" @click="rules(index)">删除文件</a>
                 </div>
 
             </div>
@@ -54,7 +55,7 @@
                     maxFiles: 60,       //一次性上传的文件数量上限
                     maxFilesize: 20,    //MB
                     resizeWidth: _this.is_property,
-                    acceptedFiles: ".jpg,.jpeg,.gif,.png,.bmp,.doc,.docx,.xls,.xlsx,.pdf",
+                    acceptedFiles: ".jpg,.jpeg,.gif,.png,.bmp,.doc,.docx,.xls,.xlsx,.pdf,",
                     dictResponseError: "当前网络连接不稳定请稍后再试",
                     dictMaxFilesExceeded: "您最多只能上传60个文件！",
                     dictFileTooBig: "文件过大上传文件最大支持.",
@@ -76,7 +77,6 @@
                         this.on("queuecomplete", function (file) {
                             _this.$emit('complete','ok');
                             //上传完成后触发的方法
-
                         });
                         this.on("removedfile", function (file) {
                             let card = (JSON.parse(file.xhr.response).data);

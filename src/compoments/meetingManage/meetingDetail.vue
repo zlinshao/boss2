@@ -67,13 +67,13 @@
                                     <span class="col-md-8">{{detailInfo.attendee_num}}</span>
                                 </div>
                                 <div class="item">
-                                    <span class="col-md-4">可查看范围：</span>
+                                    <span class="col-md-4">会议纪要可查看范围：</span>
                                     <span class="col-md-8">
                                         <span  v-for="item in itemArray"> {{item}}</span>
                                     </span>
                                 </div>
                                 <div class="item">
-                                    <span class="col-md-4">上传时间：</span>
+                                    <span class="col-md-4">会议纪要上传时间：</span>
                                     <span class="col-md-8">{{recordInfo.upload_time}}</span>
                                 </div>
                             </div>
@@ -144,6 +144,7 @@
                         this.recordInfo = res.data.data;
 
                         if(this.recordInfo.visible_range.staff.length>0){
+                            this.itemArray = [];
                             this.recordInfo.visible_range.staff.forEach((item) =>{
                                 this.itemArray.push(item.staff_name);
                             })

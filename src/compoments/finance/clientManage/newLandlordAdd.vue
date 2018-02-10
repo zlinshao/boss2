@@ -419,7 +419,7 @@
 //                    this.one_type = 1;                                                  //付款方式
                     this.deposits = val.deposit;                                         //押金
                     this.medi_cost = val.medi_cost;                                     //中介费
-                    this.guarantee = val.guarantee;                                     //保修期
+                    this.guarantee = val.warrenty;                                     //保修期
 
                     this.one_type = String(val.pay_types);                                      //付款方式
                     if (val.pay_types.length > 1) {
@@ -646,7 +646,7 @@
                         pay_types: this.pay_type,                   //付款类型
                         deposit: this.deposits,                      //押金
                         medi_cost: this.medi_cost,                  //中介费
-                        guarantee: this.guarantee,                  //保修期
+                        warrenty: this.guarantee,                  //保修期
                         deal_date: this.pendingContract,            //待签约日期
                         first_pay_date: this.firstRemittance,       //第一次打房租日期
                         second_pay_date: this.second_pay_date,       //第二次打房租日期
@@ -695,7 +695,7 @@
                         pay_types: this.pay_type,                   //付款类型
                         deposit: this.deposits,                      //押金
                         medi_cost: this.medi_cost,                  //中介费
-                        guarantee: this.guarantee,                  //保修期
+                        warrenty: this.guarantee,                  //保修期
                         deal_date: this.pendingContract,            //待签约日期
                         first_pay_date: this.firstRemittance,       //第一次打房租日期
                         second_pay_date: this.second_pay_date,      //第二次打房租日期

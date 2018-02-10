@@ -39,7 +39,8 @@
                             <a class="btn btn-success" @click="time_choose">生成工资</a>
                         </div>
                         <div class="pull-right">
-                            <router-link class="btn btn-success" :to="{path:'/periodicDetail',query: {sear: params, department: selected}}">详情
+                            <router-link class="btn btn-success"
+                                         :to="{path:'/periodicDetail',query: {sear: params, department: selected}}">详情
                             </router-link>
                         </div>
                     </form>
@@ -88,19 +89,19 @@
                 <header class="panel-heading tab-bg-dark-navy-blue ">
                     <ul class="nav nav-tabs">
                         <!--<li :class="{'active': remark_term.tabs == 1}">-->
-                            <!--<a data-toggle="tab" href="#company" @click="empty_search(1, 1)">-->
-                                <!--公司-->
-                            <!--</a>-->
+                        <!--<a data-toggle="tab" href="#company" @click="empty_search(1, 1)">-->
+                        <!--公司-->
+                        <!--</a>-->
                         <!--</li>-->
                         <!--<li :class="{'active': remark_term.tabs == 2}">-->
-                            <!--<a data-toggle="tab" href="#area" @click="empty_search(2, 1)">-->
-                                <!--区域-->
-                            <!--</a>-->
+                        <!--<a data-toggle="tab" href="#area" @click="empty_search(2, 1)">-->
+                        <!--区域-->
+                        <!--</a>-->
                         <!--</li>-->
                         <!--<li :class="{'active': remark_term.tabs == 3}">-->
-                            <!--<a data-toggle="tab" href="#group" @click="empty_search(3, 1)">-->
-                                <!--小组-->
-                            <!--</a>-->
+                        <!--<a data-toggle="tab" href="#group" @click="empty_search(3, 1)">-->
+                        <!--小组-->
+                        <!--</a>-->
                         <!--</li>-->
                         <li :class="{'active': remark_term.tabs == 4}">
                             <a data-toggle="tab" href="#personal"> <!--@click="empty_search(4, 1)"-->
@@ -112,136 +113,136 @@
                 <div class="panel-body">
                     <div class="tab-content">
                         <!--<div id="company" class="tab-pane" :class="{'active': remark_term.tabs == 1}">-->
-                            <!--&lt;!&ndash;公司&ndash;&gt;-->
-                            <!--<section class="panel table table-responsive roll has-js">-->
-                                <!--<table class="table table-advance table-hover">-->
-                                    <!--<thead>-->
-                                    <!--<tr>-->
-                                        <!--<th></th>-->
-                                        <!--<th class="text-center width100">名称</th>-->
-                                        <!--<th class="text-center width100">收房(套)</th>-->
-                                        <!--<th class="text-center width100">租房(套)</th>-->
-                                        <!--<th class="text-center width80">实际业绩</th>-->
-                                        <!--<th class="text-center width80">溢出业绩</th>-->
-                                        <!--<th class="text-center width100">所属部门</th>-->
-                                        <!--<th class="text-center width50">备注</th>-->
-                                    <!--</tr>-->
-                                    <!--</thead>-->
-                                    <!--<tbody>-->
-                                    <!--<tr class="text-center" v-for="item in company">-->
-                                        <!--<td>-->
-                                            <!--<label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,-->
-                                            <!--'c_off':pitch.indexOf(item.id)==-1}"-->
-                                                   <!--@click.prevent="checked_id(item.id, $event, item.name, item.target_id)">-->
-                                                <!--<input type="checkbox" class="pull-left"-->
-                                                       <!--:checked="pitch.indexOf(item.id) > -1">-->
-                                            <!--</label>-->
-                                        <!--</td>-->
-                                        <!--<td>{{item.name}}</td>-->
-                                        <!--<td>{{item.collect_count}}</td>-->
-                                        <!--<td>{{item.rent_count}}</td>-->
-                                        <!--<td>{{item.sum_real}}</td>-->
-                                        <!--<td>{{item.sum_overflow}}</td>-->
-                                        <!--<td>{{item.department}}</td>-->
-                                        <!--<td>-->
-                                            <!--<i class="fa fa-book" @click="lookRemarks(item.name, item.target_id)"-->
-                                               <!--v-if="target_show.indexOf(item.target_id) > -1"></i>-->
-                                        <!--</td>-->
-                                    <!--</tr>-->
-                                    <!--<tr class="text-center" v-if="com_show">-->
-                                        <!--<td colspan="12" style="font-size: 22px;">暂无数据......</td>-->
-                                    <!--</tr>-->
-                                    <!--</tbody>-->
-                                <!--</table>-->
-                            <!--</section>-->
+                        <!--&lt;!&ndash;公司&ndash;&gt;-->
+                        <!--<section class="panel table table-responsive roll has-js">-->
+                        <!--<table class="table table-advance table-hover">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                        <!--<th></th>-->
+                        <!--<th class="text-center width100">名称</th>-->
+                        <!--<th class="text-center width100">收房(套)</th>-->
+                        <!--<th class="text-center width100">租房(套)</th>-->
+                        <!--<th class="text-center width80">实际业绩</th>-->
+                        <!--<th class="text-center width80">溢出业绩</th>-->
+                        <!--<th class="text-center width100">所属部门</th>-->
+                        <!--<th class="text-center width50">备注</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr class="text-center" v-for="item in company">-->
+                        <!--<td>-->
+                        <!--<label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,-->
+                        <!--'c_off':pitch.indexOf(item.id)==-1}"-->
+                        <!--@click.prevent="checked_id(item.id, $event, item.name, item.target_id)">-->
+                        <!--<input type="checkbox" class="pull-left"-->
+                        <!--:checked="pitch.indexOf(item.id) > -1">-->
+                        <!--</label>-->
+                        <!--</td>-->
+                        <!--<td>{{item.name}}</td>-->
+                        <!--<td>{{item.collect_count}}</td>-->
+                        <!--<td>{{item.rent_count}}</td>-->
+                        <!--<td>{{item.sum_real}}</td>-->
+                        <!--<td>{{item.sum_overflow}}</td>-->
+                        <!--<td>{{item.department}}</td>-->
+                        <!--<td>-->
+                        <!--<i class="fa fa-book" @click="lookRemarks(item.name, item.target_id)"-->
+                        <!--v-if="target_show.indexOf(item.target_id) > -1"></i>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr class="text-center" v-if="com_show">-->
+                        <!--<td colspan="12" style="font-size: 22px;">暂无数据......</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                        <!--</table>-->
+                        <!--</section>-->
                         <!--</div>-->
                         <!--<div id="area" class="tab-pane" :class="{'active': remark_term.tabs == 2}">-->
-                            <!--&lt;!&ndash;区域&ndash;&gt;-->
-                            <!--<section class="panel table table-responsive roll has-js">-->
-                                <!--<table class="table table-advance table-hover">-->
-                                    <!--<thead>-->
-                                    <!--<tr>-->
-                                        <!--<th></th>-->
-                                        <!--<th class="text-center width100">名称</th>-->
-                                        <!--<th class="text-center width100">收房(套)</th>-->
-                                        <!--<th class="text-center width100">租房(套)</th>-->
-                                        <!--<th class="text-center width80">实际业绩</th>-->
-                                        <!--<th class="text-center width80">溢出业绩</th>-->
-                                        <!--<th class="text-center width100">所属部门</th>-->
-                                        <!--<th class="text-center width50">备注</th>-->
-                                    <!--</tr>-->
-                                    <!--</thead>-->
-                                    <!--<tbody>-->
-                                    <!--<tr class="text-center" v-for="item in area">-->
-                                        <!--<td>-->
-                                            <!--<label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,-->
-                                            <!--'c_off':pitch.indexOf(item.id)==-1}"-->
-                                                   <!--@click.prevent="checked_id(item.id, $event, item.name, item.target_id)">-->
-                                                <!--<input type="checkbox" class="pull-left"-->
-                                                       <!--:checked="pitch.indexOf(item.id) > -1">-->
-                                            <!--</label>-->
-                                        <!--</td>-->
-                                        <!--<td>{{item.name}}</td>-->
-                                        <!--<td>{{item.collect_count}}</td>-->
-                                        <!--<td>{{item.rent_count}}</td>-->
-                                        <!--<td>{{item.sum_real}}</td>-->
-                                        <!--<td>{{item.sum_overflow}}</td>-->
-                                        <!--<td>{{item.department}}</td>-->
-                                        <!--<td>-->
-                                            <!--<i class="fa fa-book" @click="lookRemarks(item.name, item.target_id)"-->
-                                               <!--v-if="target_show.indexOf(item.target_id) > -1"></i>-->
-                                        <!--</td>-->
-                                    <!--</tr>-->
-                                    <!--<tr class="text-center" v-if="area_show">-->
-                                        <!--<td colspan="11" style="font-size: 22px;">暂无数据......</td>-->
-                                    <!--</tr>-->
-                                    <!--</tbody>-->
-                                <!--</table>-->
-                            <!--</section>-->
+                        <!--&lt;!&ndash;区域&ndash;&gt;-->
+                        <!--<section class="panel table table-responsive roll has-js">-->
+                        <!--<table class="table table-advance table-hover">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                        <!--<th></th>-->
+                        <!--<th class="text-center width100">名称</th>-->
+                        <!--<th class="text-center width100">收房(套)</th>-->
+                        <!--<th class="text-center width100">租房(套)</th>-->
+                        <!--<th class="text-center width80">实际业绩</th>-->
+                        <!--<th class="text-center width80">溢出业绩</th>-->
+                        <!--<th class="text-center width100">所属部门</th>-->
+                        <!--<th class="text-center width50">备注</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr class="text-center" v-for="item in area">-->
+                        <!--<td>-->
+                        <!--<label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,-->
+                        <!--'c_off':pitch.indexOf(item.id)==-1}"-->
+                        <!--@click.prevent="checked_id(item.id, $event, item.name, item.target_id)">-->
+                        <!--<input type="checkbox" class="pull-left"-->
+                        <!--:checked="pitch.indexOf(item.id) > -1">-->
+                        <!--</label>-->
+                        <!--</td>-->
+                        <!--<td>{{item.name}}</td>-->
+                        <!--<td>{{item.collect_count}}</td>-->
+                        <!--<td>{{item.rent_count}}</td>-->
+                        <!--<td>{{item.sum_real}}</td>-->
+                        <!--<td>{{item.sum_overflow}}</td>-->
+                        <!--<td>{{item.department}}</td>-->
+                        <!--<td>-->
+                        <!--<i class="fa fa-book" @click="lookRemarks(item.name, item.target_id)"-->
+                        <!--v-if="target_show.indexOf(item.target_id) > -1"></i>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr class="text-center" v-if="area_show">-->
+                        <!--<td colspan="11" style="font-size: 22px;">暂无数据......</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                        <!--</table>-->
+                        <!--</section>-->
                         <!--</div>-->
                         <!--<div id="group" class="tab-pane" :class="{'active': remark_term.tabs == 3}">-->
-                            <!--&lt;!&ndash;小组&ndash;&gt;-->
-                            <!--<section class="panel table table-responsive roll has-js">-->
-                                <!--<table class="table table-advance table-hover">-->
-                                    <!--<thead>-->
-                                    <!--<tr>-->
-                                        <!--<th></th>-->
-                                        <!--<th class="text-center width100">名称</th>-->
-                                        <!--<th class="text-center width100">收房(套)</th>-->
-                                        <!--<th class="text-center width100">租房(套)</th>-->
-                                        <!--<th class="text-center width80">实际业绩</th>-->
-                                        <!--<th class="text-center width80">溢出业绩</th>-->
-                                        <!--<th class="text-center width100">所属部门</th>-->
-                                        <!--<th class="text-center width50">备注</th>-->
-                                    <!--</tr>-->
-                                    <!--</thead>-->
-                                    <!--<tbody>-->
-                                    <!--<tr class="text-center" v-for="item in group">-->
-                                        <!--<td>-->
-                                            <!--<label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,-->
-                                            <!--'c_off':pitch.indexOf(item.id)==-1}"-->
-                                                   <!--@click.prevent="checked_id(item.id, $event, item.name, item.target_id)">-->
-                                                <!--<input type="checkbox" class="pull-left"-->
-                                                       <!--:checked="pitch.indexOf(item.id) > -1">-->
-                                            <!--</label>-->
-                                        <!--</td>-->
-                                        <!--<td>{{item.name}}</td>-->
-                                        <!--<td>{{item.collect_count}}</td>-->
-                                        <!--<td>{{item.rent_count}}</td>-->
-                                        <!--<td>{{item.sum_real}}</td>-->
-                                        <!--<td>{{item.sum_overflow}}</td>-->
-                                        <!--<td>{{item.department}}</td>-->
-                                        <!--<td>-->
-                                            <!--<i class="fa fa-book" @click="lookRemarks(item.name, item.target_id)"-->
-                                               <!--v-if="target_show.indexOf(item.target_id) > -1"></i>-->
-                                        <!--</td>-->
-                                    <!--</tr>-->
-                                    <!--<tr class="text-center" v-if="group_show">-->
-                                        <!--<td colspan="11" style="font-size: 22px;">暂无数据......</td>-->
-                                    <!--</tr>-->
-                                    <!--</tbody>-->
-                                <!--</table>-->
-                            <!--</section>-->
+                        <!--&lt;!&ndash;小组&ndash;&gt;-->
+                        <!--<section class="panel table table-responsive roll has-js">-->
+                        <!--<table class="table table-advance table-hover">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                        <!--<th></th>-->
+                        <!--<th class="text-center width100">名称</th>-->
+                        <!--<th class="text-center width100">收房(套)</th>-->
+                        <!--<th class="text-center width100">租房(套)</th>-->
+                        <!--<th class="text-center width80">实际业绩</th>-->
+                        <!--<th class="text-center width80">溢出业绩</th>-->
+                        <!--<th class="text-center width100">所属部门</th>-->
+                        <!--<th class="text-center width50">备注</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr class="text-center" v-for="item in group">-->
+                        <!--<td>-->
+                        <!--<label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,-->
+                        <!--'c_off':pitch.indexOf(item.id)==-1}"-->
+                        <!--@click.prevent="checked_id(item.id, $event, item.name, item.target_id)">-->
+                        <!--<input type="checkbox" class="pull-left"-->
+                        <!--:checked="pitch.indexOf(item.id) > -1">-->
+                        <!--</label>-->
+                        <!--</td>-->
+                        <!--<td>{{item.name}}</td>-->
+                        <!--<td>{{item.collect_count}}</td>-->
+                        <!--<td>{{item.rent_count}}</td>-->
+                        <!--<td>{{item.sum_real}}</td>-->
+                        <!--<td>{{item.sum_overflow}}</td>-->
+                        <!--<td>{{item.department}}</td>-->
+                        <!--<td>-->
+                        <!--<i class="fa fa-book" @click="lookRemarks(item.name, item.target_id)"-->
+                        <!--v-if="target_show.indexOf(item.target_id) > -1"></i>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr class="text-center" v-if="group_show">-->
+                        <!--<td colspan="11" style="font-size: 22px;">暂无数据......</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                        <!--</table>-->
+                        <!--</section>-->
                         <!--</div>-->
                         <div id="personal" class="tab-pane" :class="{'active': remark_term.tabs == 4}">
                             <!--个人-->
@@ -299,6 +300,8 @@
 
         <!--分页-->
         <Page @pag="search_page" :pg="paging" :beforePage="beforePage"></Page>
+
+        <Status :state='info'></Status>
     </div>
 </template>
 
@@ -306,9 +309,10 @@
     import DatePicker from '../common/datePicker.vue'                               //时间
     import lookRemark from './lookRemark.vue'                                       //备注
     import Organization from  '../finance/organization/organization_choose.vue'     //部门搜索
+    import Status from '../common/status.vue'
     import Page from '../common/page.vue'
     export default {
-        components: {DatePicker, Organization, lookRemark, Page},
+        components: {DatePicker, Organization, lookRemark, Page,Status},
         data (){
             return {
                 address_url: globalConfig.server,
@@ -365,6 +369,16 @@
                     period: '',             //周期
                     time: '',               //时间
                 },
+                info: {                             //提示信息
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         mounted (){
@@ -400,8 +414,11 @@
 //            生成工资
             generating_ok (){
                 this.$http.get('salary/view/generate/' + this.generating).then((res) => {
-                    if(res.data.code === '70010'){
+                    if (res.data.code === '70010') {
                         $('#time_choose').modal('hide');
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -422,6 +439,18 @@
                 this.params.department_id = '';
                 this.personalList(val, 1);
                 this.times();
+            },
+            successMsg(msg){
+                //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){
+                //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
             },
 //            列表
             personalList (val, page){

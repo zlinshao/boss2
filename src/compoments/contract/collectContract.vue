@@ -136,8 +136,12 @@
                             <i class="fa fa-scissors" @click="cancel">作废</i>&nbsp;
                         </li>-->
                         <li class="operate"
-                            v-if="(simulate.indexOf('MoveOrder/stopContract_collect') > -1||isSuper) && contractSeleted.length ===1">
-                            <i class="fa fa-scissors" @click="cancel">作废</i>&nbsp;
+                            v-if="(simulate.indexOf('MoveOrder/stopContract_collect') > -1||isSuper) && contractSeleted.length ===1&&contractStatus[0] !=1">
+                            <i class="fa fa-scissors" @click="cancel(2)">作废</i>&nbsp;
+                        </li>
+                        <li class="operate"
+                            v-if="(simulate.indexOf('MoveOrder/stopContract_collect') > -1||isSuper) && contractSeleted.length ===1&&contractStatus[0] ==1">
+                            <i class="fa fa-scissors" @click="cancel(1)">取消作废</i>&nbsp;
                         </li>
                         <li class="operate"
                             v-if="contractSeleted.length ===1&&(simulate.indexOf('Collect/readContract_review') > -1||isSuper)">
@@ -454,6 +458,7 @@
                 oldPages:'',
                 oldPage:'',
                 isOldShow : true,
+                contractStatus:[],
             }
         },
         watch: {
@@ -643,6 +648,7 @@
                 if (evInput.checked) {
                     this.contractSeleted.push(item.id);
                     this.houseId.push(item.house_id);
+                    this.contractStatus.push(item.contract_status);
                     item.mark === 2 ? this.mark = 1 : this.mark = 2;
                     item.status !== 1 ? this.status = 2 : this.status = 1;
                     this.$http.get('core/collect/readcontract/id/' + item.id).then((res)=>{
@@ -658,6 +664,11 @@
                     for (let i = 0; i < this.contractSeleted.length; i++) {
                         if (item.id === this.contractSeleted[i]) {
                             this.contractSeleted.splice(i, 1)
+                        }
+                    }
+                    for (let i = 0; i < this.contractStatus.length; i++) {
+                        if (item.contract_status === this.contractStatus[i]) {
+                            this.contractStatus.splice(i, 1)
                         }
                     }
                     for (let i = 0; i < this.houseId.length; i++) {
@@ -727,8 +738,13 @@
                 this.msgFlag = 'lock';
 
             },
-            cancel(){
-                this.confirmMsg = {msg: '您确定作废吗'};
+            cancel(val){
+                if(val === 2){
+                    this.confirmMsg = {msg: '您确定作废吗'};
+                }else {
+                    this.confirmMsg = {msg: '您确定取消作废吗'};
+                }
+
                 $('#confirm').modal('show');
                 this.msgFlag = 'cancel';
             },
@@ -768,6 +784,7 @@
                             this.search();
                             this.houseId = [];
                             this.contractSeleted = [];
+                            this.contractStatus = [];
                             this.info.success = res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_success = true;

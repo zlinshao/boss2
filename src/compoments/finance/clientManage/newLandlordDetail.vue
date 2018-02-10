@@ -262,6 +262,12 @@
                                     </span>
                                 </div>
                                 <div>
+                                    <span class="text-primary">支行：</span>
+                                    <span>
+                                          {{item.account_subbank}}
+                                    </span>
+                                </div>
+                                <div>
                                     <span class="text-primary">账号：</span>
                                     <span>
                                         {{item.account_num}}

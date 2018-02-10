@@ -31,7 +31,7 @@
                         <div class="row" v-for="key in amount" v-if="optionList.is_picture == 2">
                             <label class="col-sm-2 col-xs-12 control-label">选项{{key}}</label>
                             <div class="col-sm-8 col-xs-8">
-                                <input type="text" class="form-control" :value="optionList.option[key-1]" v-model="optionList.option[key-1]">
+                                <input type="text" class="form-control" v-model="optionList.option[key-1]">
                             </div>
                             <div class="col-sm-2 col-xs-4 flexBox">
                                 <i class="fa fa-plus-circle" @click="add(key-1)"></i>

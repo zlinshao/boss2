@@ -75,7 +75,7 @@
                         <th class="text-center">会议状态</th>
                         <th class="text-center">会议纪要</th>
                         <th class="text-center" v-show="simulate.indexOf('Conference/conferenceRead') > -1||isSuper">详情</th>
-                        <th class="text-center">二维码展示页</th>
+                        <th class="text-center" v-show="simulate.indexOf('Conference/conferenceRead_scan') > -1||isSuper">二维码展示页</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -94,10 +94,10 @@
                         <td>{{item.compere_name}}</td>
                         <td>
                             <!--<i :class="item.status ===1? 'roughDraft':'publish'"></i>-->
-                            <span class="label label-default" v-if="item.status ===1">
+                            <span class="label label-default" style="display:inline-block;width: 60px; " v-if="item.status ===1">
                                 草稿
                             </span>
-                            <span class="label label-primary" v-if="item.status ===2">
+                            <span class="label label-primary" style="display:inline-block;width: 60px; " v-if="item.status ===2">
                                 已发布
                             </span>
                         </td>
@@ -110,7 +110,7 @@
                                 详情
                             </router-link>
                         </td>
-                        <td>
+                        <td v-show="simulate.indexOf('Conference/conferenceRead_scan') > -1||isSuper">
                             <router-link target="_blank" :to="{path:'/meeting',query:{meetingId : item.id}}">
                                 二维码展示页
                             </router-link>
@@ -244,6 +244,7 @@
                     keywords: '',
                     pages: 1,
                 };
+                this.selectId = '';
                 this.isReUpload = false;
                 this.getMeetingList();
             },
