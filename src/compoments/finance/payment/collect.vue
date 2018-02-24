@@ -284,7 +284,7 @@
                             :class="{'pendable': item.pendable == 2,'reds': item.aproach == 1,'bigRed':item.subject_id == -3,'selected':pitch.indexOf(item.id) > -1}">
                             <td v-if="recycle_bin">
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id) == -1}"
-                                       @click.prevent="changeIndex($event,item.id,item.status,item.running_account_record)">
+                                       @click.prevent="changeIndex($event,item.id,item.status,item.running_account_record_v2)">
                                     <input type="checkbox" :value="item.id" :checked="pitch.indexOf(item.id) > -1">
                                 </label>
                             </td>
