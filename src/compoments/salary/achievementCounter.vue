@@ -97,7 +97,7 @@
                                         class="text-danger">*</span></label>
                                 <div class="form-group col-sm-8">
                                     <input type="number" class="form-control" placeholder="请输入月数"
-                                           v-model="guarantee">
+                                           v-model="guarantee" disabled>
                                 </div>
                             </div>
                         </div>
@@ -345,7 +345,7 @@
                 collectPay: '',                 //付款方式 收
                 firstRange: '',                 //第一次付款时间 收
                 collectFree: '',                //中介费 收
-                guarantee: '',                   //保修期 收
+                guarantee: 0,                   //保修期 收
 
                 rentRange: '',                  //签约日期 租
                 rentPrice: '',                  //月单价 租
