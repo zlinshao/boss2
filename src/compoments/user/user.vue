@@ -44,16 +44,16 @@
                                 <i class="fa fa-plus-square"></i>&nbsp;新增员工
                             </button>
                         </div>
-                        <div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('User/saveUser')>-1">
-                            <button class="btn btn-primary" @click="sendMessage(2)">
-                                年后短信
-                            </button>
-                        </div>
-                        <div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('User/saveUser')>-1">
-                            <button class="btn btn-primary" @click="sendMessage(1)">
-                                年前短信
-                            </button>
-                        </div>
+                        <!--<div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('User/saveUser')>-1">-->
+                            <!--<button class="btn btn-primary" @click="sendMessage(2)">-->
+                                <!--年后短信-->
+                            <!--</button>-->
+                        <!--</div>-->
+                        <!--<div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('User/saveUser')>-1">-->
+                            <!--<button class="btn btn-primary" @click="sendMessage(1)">-->
+                                <!--年前短信-->
+                            <!--</button>-->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>

@@ -94,11 +94,11 @@
                                 导出
                             </button>
                         </div>
-                        <div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('Rent/sendSms_remind')>-1||isSuper">
-                            <button class="btn btn-primary" @click="sendMessage">
-                                温馨提醒
-                            </button>
-                        </div>
+                        <!--<div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('Rent/sendSms_remind')>-1||isSuper">-->
+                            <!--<button class="btn btn-primary" @click="sendMessage">-->
+                                <!--温馨提醒-->
+                            <!--</button>-->
+                        <!--</div>-->
                     </div>
 
                     <div class="pull-right" v-if="!flag && flag1 === false">
