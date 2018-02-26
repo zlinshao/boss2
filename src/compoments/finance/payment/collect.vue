@@ -99,7 +99,7 @@
                         <li v-show="pitch.length == 1">
                             <h5 @click="addCollect"><a><i class="fa fa-pencil"></i>&nbsp;应收入账</a></h5>
                         </li>
-                        <li v-show="pitch.length == 1 && rollbacks !== null">
+                        <li v-show="pitch.length == 1 && rollbacks.length !== 0">
                             <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
                         <li>
@@ -490,21 +490,20 @@
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
-                        <h4 class="modal-title">提示信息{{rollback_id}}</h4>
+                        <h4 class="modal-title">回滚</h4>
                     </div>
                     <div class="modal-body">
-                        <h5 v-for="(key,index) in rollbacks">
-                            <label :class="{'label_check':true,'c_on':rollback_id.indexOf(index) > -1,
-                                    'c_off':rollback_id.indexOf(index) == -1}"
-                                   @click.prevent="change_index($event,index)">
-                                <input type="checkbox"
-                                       :checked="rollback_id.indexOf(index) > -1" class="rollbacks">
-                                {{key}}
+                        <h5 v-for="item in rollbacks">
+                            <label :class="{'label_check':true,'c_on':rollback_id.indexOf(indexs) > -1,
+                                    'c_off':rollback_id.indexOf(indexs) == -1}" v-for="(key,indexs) in item"
+                                   @click.prevent="change_index($event,indexs)">
+                                <input type="checkbox" :checked="rollback_id.indexOf(indexs) > -1"
+                                       class="rollbacks">{{key}}
                             </label>
                         </h5>
                     </div>
                     <div class="modal-footer text-right">
-                        <button data-dismiss="modal" class="btn btn-dafault btn-md">取消</button>
+                        <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
                         <button class="btn btn-danger btn-md" @click="rollback">确认</button>
                     </div>
                 </div>
@@ -622,7 +621,7 @@
                 sub_isActive: '',
                 leadingOut: '',             //导出
                 rollback_id: [],            //回滚ID
-                rollbacks: {},              //回滚
+                rollbacks: [],              //回滚
                 isActive: '',
                 amount: '',                     //编辑列表金额
                 recycle_bin: true,            //回收站
@@ -963,6 +962,7 @@
                 }
             },
             search(val){
+                this.rollbacks = [];
                 if (this.recycle_bin === false) {
                     this.pitch = [];
                     this.status = [];
@@ -1079,25 +1079,35 @@
                 if (evInput.checked) {
                     for (let i = 0; i < this.myData.length; i++) {
                         this.pitch.push(this.myData[i].id);
+                        let data = this.myData[i].running_account_record_v2;
+                        if(data.length !== 0){
+                            this.rollbacks.push(data);
+                        }
                     }
                 }
             },
             changeIndex(ev, id, status, index){
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
-                this.rollbacks = index;
                 this.status = [];
                 if (evInput.checked) {
                     this.pitch.push(id);
                     this.status.push(status);
+                    if (index.length !== 0) {
+                        this.rollbacks.push(index);
+                    }
                 } else {
-                    let index = this.pitch.indexOf(id);
-                    if (index > -1) {
-                        this.pitch.splice(index, 1);
+                    let index0 = this.pitch.indexOf(id);
+                    if (index0 > -1) {
+                        this.pitch.splice(index0, 1);
                     }
                     let index1 = this.status.indexOf(status);
                     if (index1 > -1) {
                         this.status.splice(index1, 1);
+                    }
+                    let index2 = this.rollbacks.indexOf(index);
+                    if (index2 > -1) {
+                        this.rollbacks.splice(index2, 1);
                     }
                 }
             },
