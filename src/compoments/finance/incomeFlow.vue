@@ -46,11 +46,11 @@
                         </div>
 
                         <div class="form-group">
-                            <a class="btn btn-success" type="button" @click="leading_out">流水导出</a>
+                            <a class="btn btn-success" type="button" @click="leading_out('1')">流水导出</a>
                         </div>
 
                         <div class="form-group pull-right">
-                            <a :href="leads + '/revenue/statistic/daily'" class="btn btn-success" type="button">日报表导出</a>
+                            <a class="btn btn-success" type="button" @click="leading_out('2')">日报表导出</a>
                         </div>
 
 
@@ -64,7 +64,14 @@
                                         <h4 class="modal-title">提示信息</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <h5>生成 成功！</h5>
+
+                                        <h5 v-if="tabs == '1'">生成 成功！</h5>
+
+                                        <div class="padd" v-if="tabs == '2'">
+                                            <DatePicker :dateConfigure="dateConfigure1" :idName="'completeDate'"
+                                                        :currentDate="[complete_date]" :placeholder="'选择时间'"
+                                                        @sendDate="getDate1"></DatePicker>
+                                        </div>
                                     </div>
                                     <div class="modal-footer text-right">
                                         <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
@@ -171,7 +178,6 @@
 
         <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
-
     </div>
 </template>
 
@@ -198,6 +204,16 @@
                         needHour: true
                     }
                 ],
+
+                dateConfigure1: [
+                    {
+                        range: false,
+                        needHour: false
+                    }
+                ],
+                complete_date: '',
+                tabs: '',
+
                 leadingOut: '',     //导出
                 leads: globalConfig.server,
                 myData: [],         //列表数据
@@ -226,18 +242,27 @@
             );
         },
         methods: {
-//            导出
-            leading_out() {
-                this.$http.get('account/running/export', {
-                    params: this.params
-                }).then((res) => {
-                    if (res.data.code === '18710') {
-                        this.leadingOut = res.data.data;
-                        $('#leading_out').modal({
-                            backdrop: 'static',         //空白处模态框不消失
-                        });
-                    }
-                })
+            // :href="leads + '/revenue/statistic/daily'"
+            //            导出
+            leading_out(val) {
+                this.tabs = val;
+                this.leadingOut = '';
+                if (val === '1') {
+                    this.$http.get('account/running/export', {
+                        params: this.params
+                    }).then((res) => {
+                        if (res.data.code === '18710') {
+                            this.leadingOut = res.data.data;
+                            $('#leading_out').modal({
+                                backdrop: 'static',         //空白处模态框不消失
+                            });
+                        }
+                    })
+                } else {
+                    $('#leading_out').modal({
+                        backdrop: 'static',         //空白处模态框不消失
+                    });
+                }
             },
             leading_down() {
                 $('#leading_out').modal('hide');
@@ -276,7 +301,10 @@
                 this.params.range = data;
                 this.search(1);
             },
-
+            getDate1(data) {
+                this.complete_date = data;
+                this.leadingOut = this.leads + '/revenue/statistic/daily?date=' + data;
+            },
             filter(val) {
                 this.beforePage = val;
                 this.$http.get('account/running?page=' + val, {
