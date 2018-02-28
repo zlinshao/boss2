@@ -32,7 +32,8 @@
                             <SelectSubject @choose="houseSubject" :current="params.subject_id"
                                            :msg="'科目搜索'"></SelectSubject>
                             <span class="input-group-btn">
-                                <button class="btn btn-warning" id="Subject" type="button" @click="search_empty(1)">清空</button>
+                                <button class="btn btn-warning" id="Subject" type="button"
+                                        @click="search_empty(1)">清空</button>
                             </span>
                         </div>
 
@@ -45,8 +46,13 @@
                         </div>
 
                         <div class="form-group">
-                            <a class="btn btn-success" type="button" @click="leading_out">导出</a>
+                            <a class="btn btn-success" type="button" @click="leading_out">流水导出</a>
                         </div>
+
+                        <div class="form-group pull-right">
+                            <a :href="leads + '/revenue/statistic/daily'" class="btn btn-success" type="button">日报表导出</a>
+                        </div>
+
 
                         <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
                             <div class="modal-dialog ">
@@ -62,7 +68,8 @@
                                     </div>
                                     <div class="modal-footer text-right">
                                         <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
-                                        <a :href="leadingOut" class="btn btn-success btn-md" @click="leading_down">下载</a>
+                                        <a :href="leadingOut" class="btn btn-success btn-md"
+                                           @click="leading_down">下载</a>
                                     </div>
                                 </div>
                             </div>
@@ -132,13 +139,15 @@
                             <td>{{dict.er_type[item.cate]}}</td>
                             <td>{{item.account_name}}</td>
                             <td>{{item.account_num}}</td>
-                            <td @mouseenter="enter_payable(item.id)" @mouseleave="enter_payable('')" style="cursor: pointer;">
+                            <td @mouseenter="enter_payable(item.id)" @mouseleave="enter_payable('')"
+                                style="cursor: pointer;">
                                 {{item.amount_received}}<br>
                                 <span v-if="item.id === isActive" style="color: #aaaaaa;">
                                     应收:&nbsp;{{item.amount_receivable}}
                                 </span>
                             </td>
-                            <td @mouseenter="enter_payable(item.id)" @mouseleave="enter_payable('')" style="cursor: pointer;">
+                            <td @mouseenter="enter_payable(item.id)" @mouseleave="enter_payable('')"
+                                style="cursor: pointer;">
                                 {{item.amount_paid}}<br>
                                 <span v-if="item.id === isActive" style="color: #aaaaaa;">
                                     应付:&nbsp;{{item.amount_payable}}
@@ -171,9 +180,9 @@
     import Page from '../common/page.vue'
     import DatePicker from '../common/datePicker.vue'
 
-    export default{
+    export default {
         components: {Page, DatePicker, SelectSubject},
-        data(){
+        data() {
             return {
                 isActive: '',
                 beforePage: 1,
@@ -190,6 +199,7 @@
                     }
                 ],
                 leadingOut: '',     //导出
+                leads: globalConfig.server,
                 myData: [],         //列表数据
 
                 params: {
@@ -208,7 +218,7 @@
                 },
             }
         },
-        mounted () {
+        mounted() {
             this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.dict = res.data;
                     this.filter(1);
@@ -217,11 +227,11 @@
         },
         methods: {
 //            导出
-            leading_out (){
-                this.$http.get('account/running/export',{
+            leading_out() {
+                this.$http.get('account/running/export', {
                     params: this.params
                 }).then((res) => {
-                    if(res.data.code === '18710'){
+                    if (res.data.code === '18710') {
                         this.leadingOut = res.data.data;
                         $('#leading_out').modal({
                             backdrop: 'static',         //空白处模态框不消失
@@ -229,18 +239,18 @@
                     }
                 })
             },
-            leading_down (){
+            leading_down() {
                 $('#leading_out').modal('hide');
             },
-            enter_payable (val){
+            enter_payable(val) {
                 this.isActive = val;
             },
 //            房款科目
-            houseSubject(val){
+            houseSubject(val) {
                 this.params.subject_id = val;
                 this.search(1);
             },
-            payFlowList(){
+            payFlowList() {
                 this.$http.get('account/running').then((res) => {
                     if (res.data.code === '18700') {
                         this.myData = res.data.data.data;
@@ -254,20 +264,20 @@
                 })
             },
 //            清空
-            search_empty (val){
+            search_empty(val) {
                 this.params.subject_id = '';
                 this.filter(val);
             },
-            search(val){
+            search(val) {
                 this.filter(val);
             },
-            getDate(data){
+            getDate(data) {
                 // 时间
                 this.params.range = data;
                 this.search(1);
             },
 
-            filter(val){
+            filter(val) {
                 this.beforePage = val;
                 this.$http.get('account/running?page=' + val, {
                     params: this.params
@@ -288,7 +298,7 @@
                     }
                 )
             },
-            setTips(val, bool){
+            setTips(val, bool) {
                 if (bool) {
                     this.tips.receive_sum = val.receive_sum;
                     this.tips.expend_sum = val.expend_sum;
@@ -354,7 +364,7 @@
         color: #FF9A02;
     }
 
-    .form-control{
+    .form-control {
         margin-bottom: 0;
     }
 
