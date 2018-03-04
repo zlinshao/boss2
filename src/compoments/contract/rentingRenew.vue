@@ -787,7 +787,7 @@
             test(){
                 if(!this.isMedia){
                     this.contractRenew.contract_num = this.contractRenew.contract_num.toUpperCase();
-                    let reg = /^LJZF0[1|2|3][0-9]{7}$/i;
+                    let reg = /^LJZF0[1-7][0-9]{7}$/i;
                     let regPer = /^GR[0-9]{6}$/i;
                     if(this.contractRenew.contract_num!==''){
                         this.contract_num_right = reg.test(this.contractRenew.contract_num) || regPer.test(this.contractRenew.contract_num);

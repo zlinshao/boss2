@@ -1,8 +1,6 @@
 <template>
     <div>
-        <vue-editor
-                useCustomImageHandler
-                @imageAdded="handleImageAdded" v-model="content" @blur="sendData">
+        <vue-editor useCustomImageHandler @imageAdded="handleImageAdded" v-model="content" @blur="sendData">
         </vue-editor>
     </div>
 </template>
@@ -39,7 +37,7 @@
             saveContent: function() {
                 // You have the content to save
 //                console.log(this.content);
-                if (this.content!=''){
+                if (this.content!==''){
                     this.$emit('editorContent',this.content);
                 }
             },

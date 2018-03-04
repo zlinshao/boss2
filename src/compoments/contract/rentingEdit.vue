@@ -901,7 +901,7 @@
             test(){
                 if(!this.isMedia){
                     this.contractEdit.contract_num = this.contractEdit.contract_num.toUpperCase();
-                    let reg = /^LJZF0[1|2|3][0-9]{7}$/i;
+                    let reg = /^LJZF0[1-7][0-9]{7}$/i;
                     let reg1 = /^LJS\d{1,7}$/i;
                     let regPer = /^GR[0-9]{6}$/i;
                     if(this.contractEdit.contract_num!==''){
