@@ -20,7 +20,9 @@
                         <!--催缴短信-->
                         <div v-if="messageStatus == 6">
                             <span class="vertical">
-                                【乐伽公寓】尊敬的***先生/女士：您租住的****小区，下一期房租需要缴纳，请xxx前及时缴纳，打款账户为收据上方的汇款账号。如不缴纳会有滞纳金的产生，收到此短信七天后如还未缴纳房租将视您为违约，我们将按照合同收回房屋！请您合理安排好缴款时间，及时缴款！如已缴纳，请忽略此条短信，再次感谢您的配合！如需咨询（如有疑问），请致电乐伽客户服务热线400-892-6606，或添加公众号“乐伽公寓”，谢谢。
+                                【乐伽公寓】尊敬的@先生/女士：您租住的@小区，下一期房租需要缴纳，请@前及时缴纳，打款账户为收据上方的汇款账号。请您合理安排好缴款时间，及时缴款！如已缴纳，请忽略此条短信！乐伽客户服务热线4008926606。
+二、到期短信
+【乐伽公寓】尊敬的***先生/女士：您租住的****小区，房租于***日到期，如续签/退租，请致电乐伽客户服务热线400-892-6606，谢谢。
                             </span>
                         </div>
                         <!--到期短信-->
@@ -31,7 +33,7 @@
                         </div>
                         <!--逾期短信-->
                         <div v-if="messageStatus == 8">
-                            <span class="vertical">【乐伽公寓】尊敬的***先生/女士：您租住的****小区，需要在XXX前缴纳下一期房租，您已经逾期XX天，请今天及时缴纳，如不缴纳，我们将按照合同处理，收回房屋！请您合理安排好缴款时间，及时缴款！如已缴纳，请忽略此条短信，感谢您的配合！如需咨询（如有疑问），请致电乐伽客户服务热线400-892-6606，或添加公众号“乐伽公寓”，谢谢。</span>
+                            <span class="vertical">【乐伽公寓】尊敬的***先生/女士：您租住的****小区，需要在XXX前缴纳下一期房租，您已经逾期XX天，请今天及时缴纳，如不缴纳，我们将按照合同处理，收回房屋！请您合理安排好缴款时间，及时缴款！如已缴纳，请忽略此条短信，感谢您的配合！如需咨询（如有疑问），请致电乐伽客户服务热线400-892-6606，谢谢。</span>
                             <!--<div style="display: inline-block;">-->
                             <!--<DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"-->
                             <!--:idName="'message'" @sendDate="getDate"></DatePicker>-->
@@ -58,10 +60,11 @@
 <script>
     import DatePicker from '../../common/datePicker.vue'
     import Status from '../../common/status.vue';
+
     export default {
         components: {DatePicker, Status},
         props: ['message', 'page'],
-        data (){
+        data() {
             return {
                 messageStatus: '',
                 dateConfigure: [
@@ -86,7 +89,7 @@
             }
         },
         methods: {
-            sendMessage (val){
+            sendMessage(val) {
                 this.messageStatus = val;
                 if (val === 6) {
                     this.statusInfo = '催缴短信';
@@ -102,7 +105,7 @@
                 }
             },
 //            确认发送
-            okSendMessage (){
+            okSendMessage() {
                 if (this.messageStatus !== '') {
                     this.$http.post('account/receivable/notify', {
                         type: this.messageStatus,
@@ -122,19 +125,19 @@
 //            getDate (val){
 //                this.messageDate = val;
 //            },
-            close_ (){
+            close_() {
                 $('#sendMessage').modal('hide');
 //                this.messageDate = '';
                 this.messageStatus = '';
                 this.statusInfo = '短信发送';
             },
-            successMsg(msg){
+            successMsg(msg) {
                 //成功提示信息
                 this.info.success = msg;
                 //显示成功弹窗 ***
                 this.info.state_success = true;
             },
-            errorMsg(msg){      //失败提示信息
+            errorMsg(msg) {      //失败提示信息
                 this.info.error = msg;
                 //显示成功弹窗 ***
                 this.info.state_error = true;
