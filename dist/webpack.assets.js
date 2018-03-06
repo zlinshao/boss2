@@ -1,1 +1,1 @@
-window.WEBPACK_ASSETS={"main":{"js":"/dist/b9b608adbceab76aa5f9.build.js"}}
+window.WEBPACK_ASSETS={"main":{"js":"/dist/b81183a77c774b00e3f0.build.js"}}
