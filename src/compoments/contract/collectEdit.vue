@@ -619,7 +619,7 @@
             test(){
                 if(!this.isMedia){
                     this.contractEdit.contract_num = this.contractEdit.contract_num.toUpperCase();
-                    let reg = /^LJSF0[1|2|3][0-9]{7}$/i;
+                    let reg = /^LJSF0[1-7][0-9]{7}$/i;
                     let reg1 = /^LJS\d{1,7}$/i;
                     if(this.contractEdit.contract_num!==''){
                         if(reg.test(this.contractEdit.contract_num)||reg1.test(this.contractEdit.contract_num)){

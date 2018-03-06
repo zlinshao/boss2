@@ -446,33 +446,33 @@
                     <!--</li>-->
                     <!--<li class="sub-menu">-->
 
-                    <!--<li class="sub-menu" v-show="isSuper">-->
-                    <!--<a href="javascript:;">-->
-                    <!--<i class="fa fa-money"></i>-->
-                    <!--<span>喜报管理</span>-->
-                    <!--</a>-->
-                    <!--<ul class="sub">-->
-                    <!--<li>-->
-                    <!--<router-link to="/collectBulletin">-->
-                    <!--<span>收房喜报</span>-->
-                    <!--</router-link>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                    <!--<router-link to="/rentBulletin">-->
-                    <!--<span>租房喜报</span>-->
-                    <!--</router-link>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                    <!--<router-link to="/balance">-->
-                    <!--<span>尾款报备</span>-->
-                    <!--</router-link>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                    <!--<router-link to="/special">-->
-                    <!--<span>特殊情况报备</span>-->
-                    <!--</router-link>-->
-                    <!--</li>-->
-                    <!--</ul>-->
+                    <!--<li class="sub-menu">-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="fa fa-money"></i>-->
+                            <!--<span>喜报管理</span>-->
+                        <!--</a>-->
+                        <!--<ul class="sub">-->
+                            <!--<li>-->
+                                <!--<router-link to="/collectBulletin">-->
+                                    <!--<span>收房喜报</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<router-link to="/rentBulletin">-->
+                                    <!--<span>租房喜报</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<router-link to="/balance">-->
+                                    <!--<span>尾款报备</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<router-link to="/special">-->
+                                    <!--<span>特殊情况报备</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                        <!--</ul>-->
                     <!--</li>-->
 
                     <li class="sub-menu"
@@ -649,6 +649,11 @@
                             <li v-show="simulate.indexOf('Department/next') > -1||isSuper">
                                 <router-link to="/periodicFor">
                                     <span>周期表</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/achievementCounter">
+                                    <span>业绩计算器</span>
                                 </router-link>
                             </li>
                         </ul>
@@ -1443,7 +1448,7 @@
                         });
                     }
                     if (res.data.code === '80035') {
-                        this.$router.push({path: 'lockScreen'});
+                        this.$router.push({path: '/lockScreen'});
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***

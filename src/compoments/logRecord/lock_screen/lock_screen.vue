@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import Status from '../common/status.vue';
+    import Status from '../../common/status.vue';
     export default {
         components: {Status},
         data (){

@@ -68,8 +68,8 @@
                             <th class="text-center width80">开单人</th>
                             <th class="text-center width110">房屋地址</th>
                             <th class="text-center width80">客户姓名</th>
-                            <th class="text-center width100">合同开始时间</th>
-                            <th class="text-center width100">合同结束时间</th>
+                            <!--<th class="text-center width100">合同开始时间</th>-->
+                            <!--<th class="text-center width100">合同结束时间</th>-->
                             <th class="text-center width100">应退</th>
                             <th class="text-center width100">实际扣款</th>
                             <th class="text-center width100">实际退款</th>
@@ -99,8 +99,8 @@
                                 </span>
                             </td>
                             <td>{{item.customer_name}}</td>
-                            <td>{{item.start_date}}</td>
-                            <td>{{item.end_date}}</td>
+                            <!--<td>{{item.start_date}}</td>-->
+                            <!--<td>{{item.end_date}}</td>-->
                             <td>{{item.refund_should}}</td>
                             <td>{{item.refund_diff}}</td>
                             <td>{{item.refund_real}}</td>

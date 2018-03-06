@@ -73,6 +73,9 @@
                         <li>
                             <h5><a @click="cancel_rename">取消重名标记</a></h5>
                         </li>
+                        <li>
+                            <h5><a @click="pendTenant">转为待处理项</a></h5>
+                        </li>
                         <li><h5 style="border-left: 1px solid #aaaaaa">
                             <span style="padding: 0 6px;">
                                 <i style="padding-right: 3px" class="fa fa-circle text-danger"></i>手机
@@ -301,6 +304,17 @@
 
         },
         methods: {
+            // 转为待处理项
+            pendTenant() {
+                this.$http.post('account/pending/tenant/' + this.pitch).then((res) => {
+                    if(res.data.code === '18810'){
+                        this.search(this.params.beforePage);
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
 //            导出
             leading_out (){
                 this.$http.get('/finance/customer/rent/export', {

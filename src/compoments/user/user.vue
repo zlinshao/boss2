@@ -38,11 +38,22 @@
                                 重置
                             </button>
                         </div>
+
                         <div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('User/saveUser')>-1">
                             <button class="btn btn-primary" @click="addUser">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增员工
                             </button>
                         </div>
+                        <!--<div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('User/saveUser')>-1">-->
+                            <!--<button class="btn btn-primary" @click="sendMessage(2)">-->
+                                <!--年后短信-->
+                            <!--</button>-->
+                        <!--</div>-->
+                        <!--<div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('User/saveUser')>-1">-->
+                            <!--<button class="btn btn-primary" @click="sendMessage(1)">-->
+                                <!--年前短信-->
+                            <!--</button>-->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
@@ -226,6 +237,7 @@
                 operateId : '', //操作id
                 userSelectId : [],  //员工选择数组
                 allId : [],
+                messageType:'',
             }
         },
         created(){
@@ -353,6 +365,13 @@
                 $('#confirm').modal('show');
                 this.msgFlag = 'deleteAccount';
             },
+
+            sendMessage(type){
+                this.confirmMsg = {msg: '您确定发送短信吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'sendMessage';
+                this.messageType  = type;
+            },
             getConfirm(){
                 switch (this.msgFlag){
                     case 'startAccount' :
@@ -394,7 +413,29 @@
                             }else{
                                 this.errorMsg(res.data.msg);
                             }
-                        })
+                        });
+                        break;
+                    case 'sendMessage' :
+                        if(this.messageType === 1){
+                            this.$http.get('manager/user/send_sms').then((res) => {
+                                if(res.data.code==='90018'){
+                                    this.successMsg(res.data.msg);
+                                }else{
+                                    this.errorMsg(res.data.msg);
+                                }
+                            });
+                        }else {
+                            this.$http.get('manager/user/send_sms?type=1').then((res) => {
+                                if(res.data.code==='90018'){
+                                    this.successMsg(res.data.msg);
+                                }else{
+                                    this.errorMsg(res.data.msg);
+                                }
+                            });
+                        }
+                        break;
+
+
                 }
             },            //模拟登陆
             simulates (val, address){

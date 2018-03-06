@@ -103,7 +103,7 @@
                             <h5 @click="payables"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
                             </h5>
                         </li>
-                        <li v-show="pitch.length == 1 && rollbacks != null">
+                        <li v-show="pitch.length == 1 && rollbacks.length !== 0">
                             <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
                         <li>
@@ -201,7 +201,7 @@
                             <td v-if="recycle_bin">
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                         'c_off':pitch.indexOf(item.id) == -1}"
-                                       @click.prevent="changeIndex($event,item.id,item.status,item.running_account_record)">
+                                       @click.prevent="changeIndex($event,item.id,item.status,item.running_account_record_v2)">
                                     <input type="checkbox" :checked="pitch.indexOf(item.id) > -1">
                                 </label>
 
@@ -420,11 +420,11 @@
                         <h4 class="modal-title">回滚</h4>
                     </div>
                     <div class="modal-body">
-                        <h5 v-for="(key,index) in rollbacks">
-                            <label :class="{'label_check':true,'c_on':rollback_id.indexOf(index) > -1,
-                                    'c_off':rollback_id.indexOf(index) == -1}"
-                                   @click.prevent="change_index($event,index)">
-                                <input type="checkbox" :checked="rollback_id.indexOf(index) > -1"
+                        <h5 v-for="item in rollbacks">
+                            <label :class="{'label_check':true,'c_on':rollback_id.indexOf(indexs) > -1,
+                                    'c_off':rollback_id.indexOf(indexs) == -1}" v-for="(key,indexs) in item"
+                                   @click.prevent="change_index($event,indexs)">
+                                <input type="checkbox" :checked="rollback_id.indexOf(indexs) > -1"
                                        class="rollbacks">{{key}}
                             </label>
                         </h5>
@@ -469,7 +469,7 @@
     import Page from '../../common/page.vue'
     import Status from '../../common/status.vue';
     import FlexBox from '../../common/flexBox.vue'
-    import STAFF from  '../../common/oraganization.vue'
+    import STAFF from '../../common/oraganization.vue'
     import DatePicker from '../../common/datePicker.vue'
 
     import SelectHouse from '../../common/selectPayHouse.vue'
@@ -481,7 +481,7 @@
     import DetailInfo from './detail_info.vue'
     import AddRemark from '../../common/addRemark.vue'
 
-    export default{
+    export default {
         components: {
             Page,
             Status,
@@ -498,7 +498,7 @@
             AddRemark
         },
 
-        data(){
+        data() {
             return {
                 detail_info: [],                //详情信息
                 detail: '',                //详情信息
@@ -506,13 +506,13 @@
                 sub_isActive: '',
                 leadingOut: '',             //导出
                 rollback_id: [],               //回滚ID
-                rollbacks: {},               //回滚
+                rollbacks: [],               //回滚
                 isActive: '',
                 amount: '',                        //编辑列表金额
                 recycle_bin: true,                 //回收站
                 pitch: [],                         //选中id
                 status: [],                        // 选中状态
-                remark:{
+                remark: {
                     look_remark: [],                    //备注内容
                     addRemark: '',                      //新增备注
                     address_remark: '',                 //头部信息
@@ -607,7 +607,7 @@
             }
         },
 
-        mounted (){
+        mounted() {
             let params = this.$route.query.myParam;
             let page = this.$route.query.page;
             let selected = this.$route.query.selected;
@@ -646,7 +646,7 @@
         },
         methods: {
 //            查看详情
-            look_detail (val, del){
+            look_detail(val, del) {
                 this.detail_info = [];
                 this.$http.get('account/payable/' + val).then((res) => {
                     if (res.data.code === '18400') {
@@ -659,7 +659,7 @@
                 });
             },
 //            导出
-            leading_out (){
+            leading_out() {
                 this.$http.get('account/payable/export', {
                     params: this.params
                 }).then((res) => {
@@ -671,32 +671,32 @@
                     }
                 })
             },
-            close_ (){
+            close_() {
                 $('#leading_out').modal('hide');
             },
 //              选择房屋
-            selectHouse(){
+            selectHouse() {
                 $('.selectHouse:eq(0)').modal('show');
             },
 //              房屋信息
-            getHouse(data){
+            getHouse(data) {
                 this.params.search = data.address;
                 this.search(1);
             },
 //            清空科目
-            search_empty (){
+            search_empty() {
                 if (this.params.subject_id !== -3) {
                     this.params.subject_id = '';
                     this.search(1);
                 }
             },
 //            科目搜索
-            houseSubject(val){
+            houseSubject(val) {
                 this.params.subject_id = val;
                 this.search(1);
             },
 //            编辑列表科目
-            subject_show (val, id){
+            subject_show(val, id) {
                 if (val === 1) {
                     this.sub_isActive = id;
                 } else if (val === 2) {
@@ -704,11 +704,11 @@
                 }
             },
 //            选择科目
-            subject_revise (val){
+            subject_revise(val) {
                 this.rev.subject_id = val;
             },
 //            房屋到期
-            houseIndex(ev){
+            houseIndex(ev) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -720,7 +720,7 @@
                 }
             },
 //            确定修改列表科目
-            subject_hide (id){
+            subject_hide(id) {
                 this.$http.put('account/payable/subject/' + id, {
                     subject_id: this.rev.subject_id,
                 }).then((res) => {
@@ -734,7 +734,7 @@
                 })
             },
 //            编辑金额
-            able_show (val, m, id){
+            able_show(val, m, id) {
                 if (val === 1) {
                     this.amount = m;
                     this.isActive = id;
@@ -744,7 +744,7 @@
                 }
             },
 //            保存金额编辑
-            able_save (id){
+            able_save(id) {
                 if (this.amount !== '') {
                     this.$http.post('account/payable/edit/' + id, {
                         amount: this.amount
@@ -763,7 +763,7 @@
                 }
             },
 //            编辑补齐时间
-            date_show (val, m, id){
+            date_show(val, m, id) {
                 if (val === 1) {
                     this.polishing = m;
                     this.dateStatus = id;
@@ -773,7 +773,7 @@
                 }
             },
 //            编辑补齐时间
-            date_save (id){
+            date_save(id) {
                 if (this.polishing !== '') {
                     this.$http.post('account/payable/scheduler_c/' + id, {
 //                this.$http.post('account/payable/scheduler/' + id, {
@@ -792,11 +792,11 @@
                     this.errorMsg('请选择时间');
                 }
             },
-            pay_date (val){
+            pay_date(val) {
                 this.polishing = val;
             },
 //            清空
-            clear_info (){
+            clear_info() {
                 this.params.department_id = [];
                 this.params.name = [];
                 this.params.staff_id = [];
@@ -806,7 +806,8 @@
                 this.params.search = '';
                 this.selected = [];
             },
-            search(val){
+            search(val) {
+                this.rollbacks = [];
                 if (this.recycle_bin === false) {
                     this.pitch = [];
                     this.status = [];
@@ -819,7 +820,7 @@
             },
 
 //            回收站列表/列表
-            playback (){
+            playback() {
                 this.pitch = [];
                 this.recycle_bin = !this.recycle_bin;
                 if (this.recycle_bin === false) {
@@ -830,7 +831,7 @@
                     this.filter(this.beforePage);
                 }
             },
-            playbacks (val){
+            playbacks(val) {
                 this.paging = '';
                 this.beforePage = val;
                 this.$http.get('account/payable/trashed?page=' + val, {
@@ -847,7 +848,7 @@
                 })
             },
 //            应付列表
-            filter(val){
+            filter(val) {
                 this.paging = '';
                 this.beforePage = val;
                 this.$http.get('account/payable?page=' + val, {
@@ -868,14 +869,14 @@
                 })
             },
 //            回滚
-            Rollback_show(){
+            Rollback_show() {
                 this.rollback_id = [];
                 $('#Rollback').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
 //            回滚选择
-            change_index (ev, val){
+            change_index(ev, val) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -888,12 +889,13 @@
                 }
             },
 //            回滚
-            rollback (){
+            rollback() {
                 this.$http.put('account/payable/revert/' + this.pitch, {
                     ra_id: this.rollback_id
                 }).then((res) => {
                     if (res.data.code === '18410') {
                         this.search(this.beforePage);
+                        this.rollbacks = [];
                         $('#Rollback').modal('hide');
                         this.successMsg(res.data.msg);
                     } else {
@@ -903,25 +905,25 @@
             },
 
 //            查看备注
-            look_tag (val, addr, id){
+            look_tag(val, addr, id) {
                 this.remark.look_remark = val;
                 this.remark.address_remark = addr;
                 this.remark.remark_id = id;
                 $('#addRemarks').modal({backdrop: 'static'});
             },
-            lookRemark (){
+            lookRemark() {
                 this.search(this.beforePage);
             },
 
 
 //            新增入账模态框
-            addPay (){
+            addPay() {
                 $('#addPay').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
 //            确认新增入账
-            new_addPay(){
+            new_addPay() {
                 this.$http.post('account/payable', {
                     customer_id: this.cus_id,                           //客户ID
                     identity: this.identity,                            //客户身份
@@ -943,7 +945,7 @@
                 })
             },
 //            取消
-            clearForm(){
+            clearForm() {
                 $('#addPay').modal('hide');
                 this.accountType = '';                    //账户类型
                 this.accountNumber = '';                  //账户账号
@@ -956,7 +958,7 @@
                 this.remarks = '';                        //备注
             },
 //            房屋到期
-            houseIndex(ev){
+            houseIndex(ev) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -968,7 +970,7 @@
                 }
             },
 //            应付入账
-            payables (){
+            payables() {
                 $('#payFor').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
@@ -978,38 +980,48 @@
                 });
             },
 //             全选
-            chooseAll(ev){
+            chooseAll(ev) {
                 this.pitch = [];
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
                     for (let i = 0; i < this.myData.length; i++) {
                         this.pitch.push(this.myData[i].id);
+                        let data = this.myData[i].running_account_record_v2;
+                        if(data.length !== 0){
+                            this.rollbacks.push(data);
+                        }
                     }
                 }
             },
 //            列表多选框
-            changeIndex(ev, id, status, index){
+            changeIndex(ev, id, status, index) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
-                this.rollbacks = index;
                 this.status = [];
                 if (evInput.checked) {
                     this.pitch.push(id);
                     this.status.push(status);
+                    if (index.length !== 0) {
+                        this.rollbacks.push(index);
+                    }
                 } else {
-                    let index = this.pitch.indexOf(id);
-                    if (index > -1) {
-                        this.pitch.splice(index, 1);
+                    let index0 = this.pitch.indexOf(id);
+                    if (index0 > -1) {
+                        this.pitch.splice(index0, 1);
                     }
                     let index1 = this.status.indexOf(status);
                     if (index1 > -1) {
                         this.status.splice(index1, 1);
                     }
+                    let index2 = this.rollbacks.indexOf(index);
+                    if (index2 > -1) {
+                        this.rollbacks.splice(index2, 1);
+                    }
                 }
             },
 //            列表
-            payFlowList(){
+            payFlowList() {
                 this.$http.get('account/payable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
                     if (res.data.code === '18400') {
@@ -1039,11 +1051,11 @@
 //                }.bind(this));
 //            },
 //            人资
-            select(){
+            select() {
                 $('#selectCustom').modal('show');
             },
 //            人资
-            selectDateSend(val){
+            selectDateSend(val) {
                 for (let i = 0; i < val.department.length; i++) {
                     this.selected.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)
@@ -1055,20 +1067,20 @@
                 this.search(1);
             },
 //            清除搜索
-            clearSelect(){
+            clearSelect() {
                 this.params.department_id = [];
                 this.params.staff_id = [];
                 this.selected = [];
                 this.search(1);
             },
 
-            getDate(data){
+            getDate(data) {
                 // 时间
                 this.params.range = data;
                 this.search(1);
             },
 
-            setTips(val, bool){
+            setTips(val, bool) {
                 if (bool) {
                     this.tips.payable_sum = val.payable_sum;
                     this.tips.paid_sum = val.paid_sum;
@@ -1082,27 +1094,27 @@
             },
 
             // 选择客户
-            selectClient(){
+            selectClient() {
                 $('.selectClient:eq(0)').modal('show');
             },
-            getClient(data){
+            getClient(data) {
                 console.log(data);
                 this.cus_id = data.id;
                 this.identity = data.identity;
                 this.cus_name = data.address
 
             },
-            getSubject(val){
+            getSubject(val) {
                 this.subject = val;
             },
 
             // 删除
-            dele(){
+            dele() {
                 this.confirmMsg.id = this.pitch;
                 this.confirmMsg.msg = '确定删除该条应付款项吗？';
                 $('#confirm').modal('show');
             },
-            getConfirm(){
+            getConfirm() {
                 this.$http.post('account/payable/delete/' + this.pitch).then((res) => {
                     if (res.data.code === '18410') {
                         this.pitch = [];
@@ -1115,7 +1127,7 @@
                 })
             },
 //            编辑付款时间
-            modifyTime(val){
+            modifyTime(val) {
                 this.$http.post('account/payable/batch', {
                     ids: this.pitch,
                     pay_date: val
@@ -1129,15 +1141,15 @@
                     }
                 })
             },
-            getDate1(val){
+            getDate1(val) {
                 this.pay_time = val;
             },
-            successMsg(msg){    //成功提示信息
+            successMsg(msg) {    //成功提示信息
                 this.info.success = msg;
                 //显示成功弹窗 ***
                 this.info.state_success = true;
             },
-            errorMsg(msg){      //失败提示信息
+            errorMsg(msg) {      //失败提示信息
                 this.info.error = msg;
                 //显示成功弹窗 ***
                 this.info.state_error = true;

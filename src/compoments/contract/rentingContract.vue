@@ -94,6 +94,11 @@
                                 导出
                             </button>
                         </div>
+                        <!--<div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('Rent/sendSms_remind')>-1||isSuper">-->
+                            <!--<button class="btn btn-primary" @click="sendMessage">-->
+                                <!--温馨提醒-->
+                            <!--</button>-->
+                        <!--</div>-->
                     </div>
 
                     <div class="pull-right" v-if="!flag && flag1 === false">
@@ -171,10 +176,10 @@
                             发送短信
                         </li>
 
-                        <li class="operate" @click="sendMessage" v-if="simulate.indexOf('Rent/sendSms_remind')>-1||isSuper">
-                            <i class="fa fa-envelope"></i>
-                            温馨提示
-                        </li>
+                        <!--<li class="operate" @click="sendMessage" v-if="simulate.indexOf('Rent/sendSms_remind')>-1||isSuper">-->
+                        <!--<i class="fa fa-envelope"></i>-->
+                        <!--温馨提示-->
+                        <!--</li>-->
                     </ul>
                 </div>
             </div>
@@ -386,6 +391,28 @@
                 </div>
             </div>
         </div>
+
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="prompt">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            确定要发送信息吗？
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <a class="btn btn-default btn-md" data-dismiss="modal">取消</a>
+                        <a class="btn btn-success btn-md" @click="sure">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -487,17 +514,17 @@
         },
         methods: {
             sendMessage() {
-                if(this.pitch.length > 0){
-                    this.$http.get('core/collect/sendSms?type=rent', {
-                        params: {id: this.pitch}
-                    }).then((res) => {
-                        if (res.data.code === '70018') {
-                            this.successMsg(res.data.msg);
-                        } else {
-                            this.errorMsg(res.data.msg);
-                        }
-                    })
-                }
+                $('#prompt').modal({backdrop: 'static'});
+            },
+            sure()  {
+                this.$http.get('core/rent/sendSms?type=rent').then((res) => {
+                    if (res.data.code === '80018') {
+                        this.successMsg(res.data.msg);
+                        $('#prompt').modal('hide');
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
             },
             showFlag() {
                 this.flag = !this.flag;
@@ -662,7 +689,7 @@
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
                     this.contractSeleted.push(item.id);
-                    if(item.contract_status != 1){
+                    if (item.contract_status != 1) {
                         this.pitch.push(item.id);
                     }
                     this.houseId.push(item.house_id);

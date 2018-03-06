@@ -3,9 +3,9 @@
         <ol class="breadcrumb">
             <li>业绩管理</li>
             <li>
-                <router-link :to="{path:'/personal'}">个人业绩</router-link>
+                <router-link :to="{path:'/personal'}">个人工资</router-link>
             </li>
-            <li>个人业绩详情</li>
+            <li>个人工资详情</li>
         </ol>
         <section class="panel">
             <div class="panel-body">
@@ -17,7 +17,7 @@
                         <li v-if="tabs == 1">
                             <h5><a @click="personal_rev">编辑</a></h5>
                         </li>
-                        <li v-if="tabs != 1">
+                        <li v-if="tabs == 3">
                             <h5><a @click="detailRevise">编辑</a></h5>
                         </li>
                         <li v-if="tabs != 1">
@@ -40,11 +40,11 @@
                             <a data-toggle="tab" href="#salary_bill" aria-expanded="true">
                                 <i class="fa fa-pencil-square-o"></i>&nbsp;工资条</a>
                         </li>
-                        <!--<li @click="tab_personal(personal_id, 2)" :class="{'active': tabs == 2}">-->
-                        <!--<a data-toggle="tab" href="#Insightful" aria-expanded="false">-->
-                        <!--过往未发工资明细-->
-                        <!--</a>-->
-                        <!--</li>-->
+                        <li @click="tab_personal(personal_id, 2)" :class="{'active': tabs == 2}">
+                            <a data-toggle="tab" href="#Insightful" aria-expanded="false">
+                                过往未发工资明细
+                            </a>
+                        </li>
                         <li @click="tab_personal(personal_id, 3)" :class="{'active': tabs == 3}">
                             <a data-toggle="tab" href="#sto_sent" aria-expanded="false">
                                 本月工资明细
@@ -54,6 +54,7 @@
                 </header>
                 <div class="panel-body">
                     <div class="tab-content">
+
                         <div id="salary_bill" class="tab-pane table table-responsive roll"
                              :class="{'active': tabs == 1}">
                             <header class="col-xs-12">
@@ -66,7 +67,7 @@
                                 <tr class="text-center">
                                     <td rowspan="2">
                                         <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
-                        'c_off':pitch.indexOf(item.id)==-1}" @click.prevent="pitchId(item.id, $event)">
+                        'c_off':pitch.indexOf(item.id)==-1}" @click.prevent="pitchId(item.id, $event,'', 0)">
                                             <input type="checkbox" class="pull-left"
                                                    :checked="pitch.indexOf(item.id) > -1">
                                         </label>
@@ -85,7 +86,7 @@
                                     <td class="width80">住宿扣款</td>
                                     <td class="width80">购车扣款</td>
                                     <td class="width80">其他扣款</td>
-                                    <!--<td class="width100">过往未发工资</td>-->
+                                    <td class="width100">过往未发工资</td>
                                     <td class="width80">套餐类型</td>
                                     <td class="width80">应发工资</td>
                                     <td class="width80">实发工资</td>
@@ -107,7 +108,7 @@
                                     <td>{{item.amount_accomm_deduction}}</td>
                                     <td>{{item.amount_car_deduction}}</td>
                                     <td>{{item.amount_other_deduction}}</td>
-                                    <!--<td>{{item.history_rc}}</td>-->
+                                    <td>{{item.history_rc}}</td>
                                     <td>{{dict.package[item.package] }}</td>
                                     <td>{{item.amount_due}}</td>
                                     <td>{{item.amount_actual}}</td>
@@ -171,25 +172,29 @@
                                 </div>
                             </div>
                         </div>
+
                         <div id="Insightful" class="tab-pane table has-js table-responsive roll"
-                             :class="{'active': tabs == 2}" v-if="false">
+                             :class="{'active': tabs == 2}">
                             <form class="form-inline clearFix" role="form">
                                 <header class="pull-left">
                                     <h4>过往未发工资明细</h4>
                                 </header>
-                                <!--<div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">-->
-                                <!--<input type="text" class="form-control" placeholder="房屋地址">-->
-                                <!--<span class="input-group-btn">-->
-                                <!--<button class="btn btn-success" type="button">搜索</button>-->
-                                <!--</span>-->
-                                <!--</div>-->
-                                <!--<div class="form-group pull-right">-->
-                                <!--<select class="form-control">-->
-                                <!--<option value="candidate">收租状态</option>-->
-                                <!--<option value="unrelated">收房</option>-->
-                                <!--<option value="unrelated">租房</option>-->
-                                <!--</select>-->
-                                <!--</div>-->
+                                <div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">
+                                    <input type="text" class="form-control" v-model="params.search"
+                                           @keydown.enter.prevent="personal(personal_id, 2)" placeholder="房屋地址">
+                                    <span class="input-group-btn">
+                                <button class="btn btn-success" @click="personal(personal_id, 2)"
+                                        type="button">搜索</button>
+                                </span>
+                                </div>
+                                <div class="form-group pull-right">
+                                    <select class="form-control" v-model="params.cate"
+                                            @change="personal(personal_id, 2)">
+                                        <option value="">收租状态</option>
+                                        <option value="1">收房</option>
+                                        <option value="2">租房</option>
+                                    </select>
+                                </div>
                             </form>
 
                             <!--过往未发工资明细-->
@@ -198,105 +203,123 @@
                                 <tr class="vertical">
                                     <th></th>
                                     <th class="text-center width80">收租状态</th>
-                                    <th class="text-center width50">月份</th>
+                                    <!--<th class="text-center width50">月份</th>-->
+                                    <th class="text-center width100">月份</th>
                                     <th class="text-center width150">房屋地址</th>
-                                    <th class="text-center width80">空置期奖励</th>
-                                    <th class="text-center width80">价格差奖励</th>
-                                    <th class="text-center width80">收房付款方式奖励</th>
-                                    <th class="text-center width80">收房年限奖励</th>
-                                    <th class="text-center width80">业绩提成</th>
+                                    <!--<th class="text-center width80">空置期奖励</th>-->
+                                    <!--<th class="text-center width80">价格差奖励</th>-->
+                                    <!--<th class="text-center width80">收房付款方式奖励</th>-->
+                                    <!--<th class="text-center width80">收房年限奖励</th>-->
+                                    <!--<th class="text-center width80">业绩提成</th>-->
                                     <th class="text-center width50">合同</th>
                                     <th class="text-center width50">资料</th>
                                     <th class="text-center width50">交接</th>
                                     <th class="text-center width50">客诉</th>
                                     <th class="text-center width50">尾款</th>
-                                    <th class="text-center width80">未发比例</th>
-                                    <th class="text-center width80">年限(涨价)扣款</th>
-                                    <th class="text-center width80">空置期扣款</th>
-                                    <th class="text-center width80">中介费</th>
-                                    <th class="text-center width50">共计</th>
-                                    <th class="text-center width50">备注</th>
+                                    <th class="text-center width80">开单人</th>
+                                    <th class="text-center width80">负责人</th>
+                                    <th class="text-center width80">所属部门</th>
+                                    <!--<th class="text-center width80">未发比例</th>-->
+                                    <!--<th class="text-center width80">年限(涨价)扣款</th>-->
+                                    <!--<th class="text-center width80">空置期扣款</th>-->
+                                    <!--<th class="text-center width80">中介费</th>-->
+                                    <!--<th class="text-center width50">共计</th>-->
+                                    <!--<th class="text-center width50">备注</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="text-center" v-for="item in salaryDetail">
+                                <tr class="text-center" v-for="item in historySalary">
                                     <td>
                                         <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                     'c_off':pitch.indexOf(item.id)==-1}"
-                                               @click.prevent="pitchId(item.id, $event, item.simple_cells)">
+                                               @click.prevent="pitchId(item.id, $event, item.cells, 1)">
                                             <input type="checkbox" class="pull-left"
                                                    :checked="pitch.indexOf(item.id) > -1">
                                         </label>
                                     </td>
-                                    <td>{{dict.typical[item.typical]}}</td>
+                                    <td>
+                                        <span v-if="item.proof_category == 1">收</span>
+                                        <span v-if="item.proof_category == 2">租</span>
+                                    </td>
                                     <td>{{item.generate_date}}</td>
                                     <td>{{item.address}}</td>
-                                    <td>{{item.bonus_vacancy}}</td>
-                                    <td>{{item.bonus_price}}</td>
-                                    <td>{{item.bonus_pay_type}}</td>
-                                    <td>{{item.bonus_year}}</td>
-                                    <td>{{item.achv}}</td>
-                                    <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                    <!--<td>{{item.bonus_vacancy}}</td>-->
+                                    <!--<td>{{item.bonus_price}}</td>-->
+                                    <!--<td>{{item.bonus_pay_type}}</td>-->
+                                    <!--<td>{{item.bonus_year}}</td>-->
+                                    <!--<td>{{item.achv}}</td>-->
+                                    <td v-for="key in item.cells"
+                                        :class="{'deduct_marks': key.history_settled == 2}"
                                         v-show="key.category == 1">
-                                        <span>{{key.amount_actual}}</span>
+                                        <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                                        <span v-else>/</span>
                                     </td>
-                                    <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                    <td v-for="key in item.cells"
+                                        :class="{'deduct_marks': key.history_settled == 2}"
                                         v-show="key.category == 2">
-                                        <span>{{key.amount_actual}}</span>
+                                        <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                                        <span v-else>/</span>
                                     </td>
-                                    <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                    <td v-for="key in item.cells"
+                                        :class="{'deduct_marks': key.history_settled == 2}"
                                         v-show="key.category == 3">
-                                        <span>{{key.amount_actual}}</span>
+                                        <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                                        <span v-else>/</span>
                                     </td>
-                                    <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                    <td v-for="key in item.cells"
+                                        :class="{'deduct_marks': key.history_settled == 2}"
                                         v-show="key.category == 4">
-                                        <span>{{key.amount_actual}}</span>
+                                        <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                                        <span v-else>/</span>
                                     </td>
-                                    <td v-if="item.simple_cells.length == 0">
+                                    <td v-if="item.cells.length == 0">
                                         /
                                     </td>
-                                    <td v-if="item.simple_cells.length == 0">
+                                    <td v-if="item.cells.length == 0">
                                         /
                                     </td>
-                                    <td v-if="item.simple_cells.length == 0">
+                                    <td v-if="item.cells.length == 0">
                                         /
                                     </td>
-                                    <td v-if="item.simple_cells.length == 0">
+                                    <td v-if="item.cells.length == 0">
                                         /
                                     </td>
-                                    <td v-if="item.simple_cells.length == 5"
-                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
-                                         <span v-for="key in item.simple_cells"
-                                               v-show="key.category == 5">{{key.amount_actual}}</span>
+                                    <td v-if="item.cells.length == 5"
+                                        :class="{'deduct_marks':item.cells.length == 5 && item.cells[4].history_settled == 2}">
+                                         <span v-for="key in item.cells" v-if="key.category == 5 && item.cells[4].status == 2">
+                                             {{key.amount_actual}}
+                                         </span>
+                                        <span v-for="key in item.cells" v-if="key.category == 5 && item.cells[4].status == 1">
+                                             /
+                                         </span>
                                     </td>
                                     <td v-else>
                                         <span>/</span>
                                     </td>
-                                    <td>{{item.percentage_remain}}</td>
-                                    <td>{{item.punish_year}}</td>
-                                    <td>{{item.punish_vacancy}}</td>
-                                    <td>
-                                        <span @click="cost_show(item.id, item.medi_cost)" v-if="isActive != item.id"
-                                              style="cursor: pointer;">
-                                            {{item.medi_cost}}
-                                        </span>
-                                        <span v-if="isActive == item.id"
-                                              style="display: inline-block;min-width: 100px;">
-                                            <input type="text" class="form-control" v-model="costStatus"
-                                                   style="margin-bottom: 5px;">
-                                            <a class="btn btn-default btn-sm" @click.stop="cost_show('','')">取消</a>
-                                            <a class="btn btn-success btn-sm" @click="cost_save(item.id)">保存</a>
-                                        </span>
-                                    </td>
-                                    <td>{{item.total_price}}</td>
-                                    <td>
-                                        <i class="fa fa-book" @click="lookRemark(item.remark)"
-                                           v-if="item.remark != ''"></i>
-                                    </td>
+                                    <td>{{item.staff_name}}</td>
+                                    <td>{{item.leader_name}}</td>
+                                    <td>{{item.department_name}}</td>
+                                    <!--<td>{{item.percentage_remain}}</td>-->
+                                    <!--<td>{{item.punish_year}}</td>-->
+                                    <!--<td>{{item.punish_vacancy}}</td>-->
+                                    <!--<td>-->
+                                    <!--&lt;!&ndash;<span @click="cost_show(item.id, item.medi_cost)" v-if="isActive != item.id"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;style="cursor: pointer;">&ndash;&gt;-->
+                                    <!--{{item.medi_cost}}-->
+                                    <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span v-if="isActive == item.id"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;style="display: inline-block;min-width: 100px;">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<input type="text" class="form-control" v-model="costStatus"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;style="margin-bottom: 5px;">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<a class="btn btn-default btn-sm" @click.stop="cost_show('','')">取消</a>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<a class="btn btn-success btn-sm" @click="cost_save(item.id)">保存</a>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                                    <!--</td>-->
+                                    <!--<td>{{item.total_price}}</td>-->
+                                    <!--<td>-->
+                                    <!--<i class="fa fa-book" @click="lookRemark(item.remark)"-->
+                                    <!--v-if="item.remark != ''"></i>-->
+                                    <!--</td>-->
                                 </tr>
                                 <tr v-show="isShow2">
                                     <td colspan="21" class="text-center text-muted">
@@ -364,7 +387,7 @@
                                     <td>
                                         <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                     'c_off':pitch.indexOf(item.id)==-1}"
-                                               @click.prevent="pitchId(item.id, $event, item.simple_cells)">
+                                               @click.prevent="pitchId(item.id, $event, item.simple_cells, 2)">
                                             <input type="checkbox" class="pull-left"
                                                    :checked="pitch.indexOf(item.id) > -1">
                                         </label>
@@ -411,17 +434,17 @@
                                     <td>{{item.punish_vacancy}}</td>
                                     <td>
                                         <!--<span @click="cost_show(item.id)" v-if="isActive != item.id"-->
-                                              <!--style="cursor: pointer;">-->
-                                            {{item.medi_cost}}
+                                        <!--style="cursor: pointer;">-->
+                                        {{item.medi_cost}}
                                         <!--</span>-->
                                         <!--<span v-if="isActive == item.id"-->
-                                              <!--style="display: inline-block;min-width: 160px;position: relative;">-->
-                                            <!--<input type="number" class="form-control" v-model="costStatus"-->
-                                                   <!--@keyup="fruit"-->
-                                                   <!--style="margin-bottom: 5px;">&nbsp;<span-->
-                                                <!--style="position: absolute;top: 8px;right: 5px;">×&nbsp;0.7&nbsp;=&nbsp;{{cost_fruit}}</span>-->
-                                            <!--<a class="btn btn-default btn-sm" @click.stop="cost_show('')">取消</a>-->
-                                            <!--<a class="btn btn-success btn-sm" @click="cost_save(item.id)">保存</a>-->
+                                        <!--style="display: inline-block;min-width: 160px;position: relative;">-->
+                                        <!--<input type="number" class="form-control" v-model="costStatus"-->
+                                        <!--@keyup="fruit"-->
+                                        <!--style="margin-bottom: 5px;">&nbsp;<span-->
+                                        <!--style="position: absolute;top: 8px;right: 5px;">×&nbsp;0.7&nbsp;=&nbsp;{{cost_fruit}}</span>-->
+                                        <!--<a class="btn btn-default btn-sm" @click.stop="cost_show('')">取消</a>-->
+                                        <!--<a class="btn btn-success btn-sm" @click="cost_save(item.id)">保存</a>-->
                                         <!--</span>-->
                                     </td>
                                     <td>{{item.total_price}}</td>
@@ -453,14 +476,20 @@
                         <h4 class="modal-title" style="border: 0;">提示信息</h4>
                     </div>
                     <div class="modal-body has-js clearfix">
-                        <div v-for="item in simple_cells" class="pull-left"
-                             style="margin-right: 15px;">
+                        <div v-for="item in simple_cells" class="pull-left" v-if="simple_cells.length != 0"
+                             style="margin-right: 15px;position: relative;padding: 2px 6px;">
+                            <div class="module" v-if="item.writable === 2"></div>
                             <label :class="{'label_check':true,'c_on':cell_pitch.indexOf(item.id) > -1,
-                                    'c_off':cell_pitch.indexOf(item.id)==-1}"
+                                    'c_off':cell_pitch.indexOf(item.id)==-1}" style="margin-top: 0;height: 19px;"
                                    @click.prevent="cell_pitchId(item.id, $event)">
+
                                 <input type="checkbox" class="pull-left"
-                                       :checked="cell_pitch.indexOf(item.id) > -1">{{dict.cell_category[item.category]}}
+                                       :checked="cell_pitch.indexOf(item.id) > -1">
+                                {{dict.cell_category[item.category]}}
                             </label>
+                        </div>
+                        <div v-if="simple_cells.length == 0" style="font-size: 16px;">
+                            无未发详情
                         </div>
                     </div>
                     <div class="modal-footer text-right">
@@ -486,12 +515,12 @@
 
 <script>
     import salaryRemark from './salaryRemark.vue'
-    import personalRevise from  './personalRevise.vue'      //备注编辑
-    import DetailRevise from  './detailRevise.vue'          //合同工资编辑
+    import personalRevise from './personalRevise.vue'      //备注编辑
+    import DetailRevise from './detailRevise.vue'          //合同工资编辑
     import Status from '../common/status.vue';              //提示信息
     export default {
         components: {salaryRemark, personalRevise, DetailRevise, Status},
-        data (){
+        data() {
             return {
                 params: {
                     cate: '',
@@ -508,9 +537,11 @@
                 cell_pitch_off: [],
                 dict: {},
                 simple_cells: [],
+                numbs: '',
                 isShow2: false,
                 isShow3: false,
                 salaryDetail: [],       //工资明细
+                historySalary: [],      //过往工资明细
                 salary_detail: {},      //工资明细详情
                 salaryBar: [],          //工资条
                 salaryBar_object: {},   //工资条
@@ -529,7 +560,7 @@
                 },
             }
         },
-        mounted (){
+        mounted() {
             this.$http.get('salary/Commission/dict').then((res) => {
                 this.typical = [];
                 this.dict = res.data;
@@ -540,7 +571,7 @@
         },
         methods: {
 //            已发未发
-            toggle (val, id){
+            toggle(val, id) {
                 this.$http.post('salary/view/toggle/' + id, {
                     status: 3 - val,
                 }).then((res) => {
@@ -549,16 +580,16 @@
                     }
                 })
             },
-            fruit (){
+            fruit() {
                 this.cost_fruit = Math.floor(this.costStatus * 0.7 * 100) / 100;
             },
 //            中介费修改
-            cost_show (id){
+            cost_show(id) {
                 this.isActive = id;
                 this.costStatus = 0.00;
 
             },
-            cost_save (){
+            cost_save() {
                 this.$http.post('achv/commission/medicost/' + this.isActive, {
                     amount: this.costStatus,
                 }).then((res) => {
@@ -571,18 +602,21 @@
                     }
                 });
             },
-            search (){
+            search() {
                 this.pitch = [];
                 this.personal(this.personal_id, this.tabs);
             },
 //            标签页切换
-            tab_personal (val, tab){
+            tab_personal(val, tab) {
                 this.pitch = [];
+                this.params.cate = '';
+                this.params.search = '';
                 this.personal(val, tab);
             },
 //            详情
-            personal (val, tab){
+            personal(val, tab) {
                 this.salaryBar = [];
+                this.historySalary = [];
                 this.salaryDetail = [];
                 this.tabs = tab;
                 if (tab === 1) {
@@ -593,9 +627,11 @@
                     })
                 }
                 if (tab === 2) {
-                    this.$http.get('salary/view/history/' + val).then((res) => {
-                        if (res.data.code === '70000') {
-                            this.salaryDetail = res.data.data;
+                    this.$http.get('salary/view/history/' + val, {
+                        params: this.params,
+                    }).then((res) => {
+                        if (res.data.code === '70010') {
+                            this.historySalary = res.data.data;
                             this.isShow2 = false;
                         } else {
                             this.isShow2 = true;
@@ -619,33 +655,43 @@
 
             },
 //            已发工资
-            already_salary (){
-                this.cell_pitch = [];
+            already_salary() {
                 this.cell_pitch = [];
                 this.cell_pitch_off = [];
-                for (let i = 0; i < this.simple_cells.length; i++) {
-                    if (this.simple_cells[i].status === 1) {
-                        this.cell_pitch.push(this.simple_cells[i].id);
-                    } else if (this.simple_cells[i].status === 2) {
-                        this.cell_pitch_off.push(this.simple_cells[i].id);
+                if (this.numbs === 1) {
+                    for (let i = 0; i < this.simple_cells.length; i++) {
+                        if (this.simple_cells[i].history_settled === 1) {
+                            this.cell_pitch.push(this.simple_cells[i].id);
+                        } else if (this.simple_cells[i].history_settled === 2) {
+                            this.cell_pitch_off.push(this.simple_cells[i].id);
+                        }
+                    }
+                }
+                if (this.numbs === 2) {
+                    for (let i = 0; i < this.simple_cells.length; i++) {
+                        if (this.simple_cells[i].status === 1) {
+                            this.cell_pitch.push(this.simple_cells[i].id);
+                        } else if (this.simple_cells[i].status === 2) {
+                            this.cell_pitch_off.push(this.simple_cells[i].id);
+                        }
                     }
                 }
                 $('#already_salary').modal({backdrop: 'static',});
             },
 //            编辑工资条
-            personal_rev (){
+            personal_rev() {
                 this.personal(this.personal_id, 1);
                 $('#personalModel').modal({backdrop: 'static',});
             },
 
 //            查看备注
-            lookRemark (val){
+            lookRemark(val) {
                 this.lookRem = val;
                 $('#salaryRemark').modal({backdrop: 'static',});
             },
 
 //            编辑工资明细
-            detailRevise (){
+            detailRevise() {
                 this.$http.get('/achv/commission/salarified/' + this.pitch).then((res) => {
                     if (res.data.code === '70010') {
                         this.salary_detail = res.data.data;
@@ -656,7 +702,7 @@
                 });
             },
 //            选中
-            pitchId (rul, ev, cell){
+            pitchId(rul, ev, cell, num) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.pitch = [];
@@ -668,10 +714,13 @@
                         this.pitch.splice(index, 1);
                     }
                 }
-                this.simple_cells = cell;
+                if (cell !== '') {
+                    this.simple_cells = cell;
+                }
+                this.numbs = num;
             },
 //            已发选中
-            cell_pitchId (rul, ev){
+            cell_pitchId(rul, ev) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -689,8 +738,15 @@
                 }
             },
 //            确定已发
-            cell_ok (){
-                this.$http.post('achv/cell/change/' + this.pitch, {
+            cell_ok() {
+                let urls;
+                if (this.tabs === 2) {
+                    urls = 'achv/cell/history/';
+                }
+                if (this.tabs === 3) {
+                    urls = 'achv/cell/change/';
+                }
+                this.$http.post(urls + this.pitch, {
                     on: this.cell_pitch,
                     off: this.cell_pitch_off,
                 }).then((res) => {
@@ -704,12 +760,12 @@
                     }
                 })
             },
-            successMsg(msg){    //成功提示信息
+            successMsg(msg) {    //成功提示信息
                 this.info.success = msg;
                 //显示成功弹窗 ***
                 this.info.state_success = true;
             },
-            errorMsg(msg){      //失败提示信息
+            errorMsg(msg) {      //失败提示信息
                 this.info.error = msg;
                 //显示成功弹窗 ***
                 this.info.state_error = true;
@@ -772,6 +828,16 @@
 
     input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
         -webkit-appearance: none !important;
+    }
+
+    .module {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #EEEEEE;
+        opacity: .6;
     }
 
 </style>
