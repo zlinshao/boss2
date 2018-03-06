@@ -74,7 +74,7 @@
                             <h5><a @click="cancel_rename">取消重名标记</a></h5>
                         </li>
                         <li>
-                            <h5><a @click="pendTenant">转为待处理项</a></h5>
+                            <h5><a @click="dialogPend">转为待处理项</a></h5>
                         </li>
                         <li><h5 style="border-left: 1px solid #aaaaaa">
                             <span style="padding: 0 6px;">
@@ -204,6 +204,28 @@
                 </tbody>
             </table>
         </section>
+
+        <!--转为待处理项-->
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="dialogPend">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>确定要转为待处理项吗？</h5>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
+                        <a class="btn btn-success btn-md" @click="pendTenant">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!--导出-->
         <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
             <div class="modal-dialog ">
@@ -309,11 +331,17 @@
                 this.$http.post('account/pending/tenant/' + this.pitch).then((res) => {
                     if(res.data.code === '18810'){
                         this.search(this.params.beforePage);
+                        $('#dialogPend').modal('hide');
                         this.successMsg(res.data.msg);
                     } else {
                         this.errorMsg(res.data.msg);
                     }
                 })
+            },
+            dialogPend(){
+                $('#dialogPend').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
             },
 //            导出
             leading_out (){
