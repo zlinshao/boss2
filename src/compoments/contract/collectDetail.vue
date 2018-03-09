@@ -251,6 +251,12 @@
                                                 </span>
                                             </div>
                                             <div class="infoList">
+                                                <span>保修期(月)<sup>*</sup>：</span>
+                                                <span>
+                                                    {{item.warranty_period}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList">
                                                 <span>空置期开始日期：</span>
                                                 <span>{{item.vac_start_date}}</span>
                                             </div>

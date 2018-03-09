@@ -82,9 +82,13 @@
                                                        v-model="contractRenew.contract_num" placeholder="合同编号">
                                             </div>
 
-                                            <label class="label_check col-sm-6" @click.prevent="isChecked($event)"
+                                            <label class="label_check col-sm-3" @click.prevent="isChecked($event)"
                                                    :class="{'c_on':isMedia,'c_off':isMedia}">
-                                                <input type="checkbox" v-model="isMedia">是否中介合同
+                                                <input type="checkbox" v-model="isMedia">中介合同
+                                            </label>
+                                            <label class="label_check col-sm-3" @click.prevent="isPersonal($event)"
+                                                   :class="{'c_on':contractRenew.is_personal==1,'c_off':contractRenew.is_personal==2}">
+                                                <input type="checkbox" v-model="contractRenew.is_personal">个人合同
                                             </label>
                                             <div class="col-xs-12" style="margin-top: -18px;margin-bottom: 18px;padding-left : 0"
                                                  v-if="!contract_num_right">
@@ -129,6 +133,14 @@
                                         <label class="col-sm-2 control-label">空置期<sup>*</sup></label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" disabled v-model="contractRenew.vacancy">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >保修月数<sup>*</sup></label>
+                                        <!--<label class="col-sm-2 control-label">保修月数<sup>*</sup></label>-->
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" v-model="contractRenew.warranty_period">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -471,6 +483,9 @@
                     price : [],
                     cost_deposit : '',
                     vacancy : '',
+
+                    warranty_period : '',
+                    is_personal:2,
 
                     //                    客户
                     customer_id : '',
@@ -933,6 +948,13 @@
                     this.contract_num_right = true;
                 }else if(!this.isMedia){
                     this.test();
+                }
+            },
+            isPersonal(e){
+                if(this.contractRenew.is_personal ===1){
+                    this.contractRenew.is_personal = 2
+                }else {
+                    this.contractRenew.is_personal = 1
                 }
             }
         }

@@ -88,9 +88,13 @@
                                                        v-model="contractRenew.contract_num" placeholder="合同编号">
                                             </div>
 
-                                            <label class="label_check col-sm-6" @click.prevent="isChecked($event)"
+                                            <label class="label_check col-sm-3" @click.prevent="isChecked($event)"
                                                    :class="{'c_on':isMedia,'c_off':isMedia}">
-                                                <input type="checkbox" v-model="isMedia">是否中介合同
+                                                <input type="checkbox" v-model="isMedia">中介合同
+                                            </label>
+                                            <label class="label_check col-sm-3" @click.prevent="isPersonal($event)"
+                                                   :class="{'c_on':contractRenew.is_personal==1,'c_off':contractRenew.is_personal==2}">
+                                                <input type="checkbox" v-model="contractRenew.is_personal">个人合同
                                             </label>
                                             <div class="col-xs-12" style="margin-top: -18px;margin-bottom: 18px;padding-left : 0"
                                                  v-if="!contract_num_right">
@@ -653,7 +657,7 @@
 
                     payment_pic :[],        //转账凭证
 
-
+                    is_personal:'',
 
                     villa_id: '',
                     customer_id: '',
@@ -1194,6 +1198,13 @@
                     this.contract_num_right = true;
                 }else if(!this.isMedia){
                     this.test();
+                }
+            },
+            isPersonal(e){
+                if(this.contractRenew.is_personal ===1){
+                    this.contractRenew.is_personal = 2
+                }else {
+                    this.contractRenew.is_personal = 1
                 }
             }
         }
