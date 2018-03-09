@@ -79,9 +79,13 @@
                                                        v-model="contractAdd.contract_num" placeholder="合同编号">
                                             </div>
 
-                                            <label class="label_check col-sm-6" @click.prevent="isChecked($event)"
+                                            <label class="label_check col-sm-3" @click.prevent="isChecked($event)"
                                                    :class="{'c_on':isMedia,'c_off':isMedia}">
-                                                <input type="checkbox" v-model="isMedia">是否中介合同
+                                                <input type="checkbox" v-model="isMedia">中介合同
+                                            </label>
+                                            <label class="label_check col-sm-3" @click.prevent="isPersonal($event)"
+                                                   :class="{'c_on':contractAdd.is_personal==1,'c_off':contractAdd.is_personal==2}">
+                                                <input type="checkbox" v-model="contractAdd.is_personal">个人合同
                                             </label>
                                             <div class="col-xs-12" style="margin-top: -18px;margin-bottom: 18px;padding-left : 0"
                                                  v-if="!contract_num_right">
@@ -675,6 +679,7 @@
                     payment_pic: [],        //转账凭证
                     receipt_number: '',     // 收据编号
 
+                    is_personal:2,
 
                     villa_id: '',
                     customer_id: '',
@@ -1171,6 +1176,13 @@
                     this.contract_num_right = true;
                 }else if(!this.isMedia){
                     this.test();
+                }
+            },
+            isPersonal(e){
+                if(this.contractAdd.is_personal ===1){
+                    this.contractAdd.is_personal = 2
+                }else {
+                    this.contractAdd.is_personal = 1
                 }
             }
         }

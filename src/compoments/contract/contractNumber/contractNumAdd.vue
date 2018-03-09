@@ -582,6 +582,7 @@
                 this.receiver_name = val.staff[0].name;
                 this.receiver_id = val.staff[0].id;
                 this.$http.get('finance/staff_info/' + val.staff[0].id).then((res) => {
+                    console.log(res)
                     this.department = res.data.data.departmnet_name;
                     this.department_id = res.data.data.department_id;
                 })
