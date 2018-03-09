@@ -764,7 +764,7 @@
                     water_fee: '',     // 水费
                     gas_fee: '',       // 燃气费
 
-                    intermediary  : 1,
+                    intermediar  : 1,
 
                     received_amount: '',
                     cost_deposit: '',
@@ -897,15 +897,15 @@
             },
             isMedia(val){
                 if(val){
-                    this.contractEdit.intermediary = 2
+                    this.contractEdit.intermediar = 2
                 } else {
-                    this.contractEdit.intermediary = 1
+                    this.contractEdit.intermediar = 1
                 }
             }
         },
         methods: {
             test(){
-                if(!this.isMedia){
+                if(!this.isMedia&&this.contractEdit.is_personal !== 1){
                     this.contractEdit.contract_num = this.contractEdit.contract_num.toUpperCase();
                     let reg = /^LJZF0[1-7][0-9]{7}$/i;
                     let reg1 = /^LJS\d{1,7}$/i;
@@ -967,9 +967,9 @@
                         this.contractEdit.end_date = contractList.end_date;         //合同结束时间
                         this.contractEdit.complete_date = contractList.complete_date[0];    //
 
-                        this.contractEdit.intermediary = contractList.intermediary;
-
-                        this.isMedia = this.contractEdit.intermediary == 2? true : false;
+                        this.contractEdit.is_personal = contractList.is_personal;
+                        this.contractEdit.intermediar = contractList.intermediar;
+                        this.isMedia = this.contractEdit.intermediar === 2;
 
                         this.contractEdit.remarks = contractList.remarks;
 
@@ -1359,6 +1359,9 @@
                 this.isMedia = !this.isMedia;
                 if(this.isMedia){
                     this.contract_num_right = true;
+                    if(this.contractEdit.is_personal ===1){
+                        this.contractEdit.is_personal = 2;
+                    }
                 }else if(!this.isMedia){
                     this.test();
                 }
@@ -1369,7 +1372,11 @@
                     this.test();
                 }else {
                     this.contractEdit.is_personal = 1;
+                    if(this.isMedia){
+                        this.isMedia = false;
+                    }
                     this.contract_num_right = true;
+
                 }
             }
         }

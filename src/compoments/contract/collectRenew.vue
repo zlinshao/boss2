@@ -506,7 +506,7 @@
                     medi_alipay_owner : '',      // 支付宝姓名
                     medi_account_num  :'',
                     staff_id : '',
-                    intermediary : 1,
+                    intermediar : 1,
                 },
                 staff_name:'',
                 dateConfigureVac: [{range:false,needHour:false, }],
@@ -601,15 +601,15 @@
             },
             isMedia(val){
                 if(val){
-                    this.contractRenew.intermediary = 2
+                    this.contractRenew.intermediar = 2
                 } else {
-                    this.contractRenew.intermediary = 1
+                    this.contractRenew.intermediar = 1
                 }
             }
         },
         methods : {
             test(){
-                if(!this.isMedia){
+                if(!this.isMedia&&this.contractRenew.is_personal !== 1){
                     this.contractRenew.contract_num = this.contractRenew.contract_num.toUpperCase();
                     let reg = /^LJSF0[1-7][0-9]{7}$/i;
                     if(this.contractRenew.contract_num!==''){
@@ -866,7 +866,8 @@
                 this.contractRenew.medi_account_owner = '';
                 this.contractRenew.medi_account_bank = 1;
                 this.contractRenew.medi_account_subbank = '';
-                this.contractRenew.intermediary = 1;
+                this.contractRenew.intermediar = 1;
+                this.contractRenew.is_personal = 2;
 
                 this.more  = 1;
                 this.relative_customer = [];
@@ -946,6 +947,9 @@
                 this.isMedia = !this.isMedia;
                 if(this.isMedia){
                     this.contract_num_right = true;
+                    if(this.contractRenew.is_personal ===1){
+                        this.contractRenew.is_personal = 2;
+                    }
                 }else if(!this.isMedia){
                     this.test();
                 }
@@ -956,7 +960,11 @@
                     this.test();
                 }else {
                     this.contractRenew.is_personal = 1;
+                    if(this.isMedia){
+                        this.isMedia = false;
+                    }
                     this.contract_num_right = true;
+
                 }
             }
         }

@@ -22,7 +22,7 @@
                                                 <option value="成都市">成都市</option>
                                                 <option value="西安市">西安市</option>
                                                 <option value="合肥市">合肥市</option>
-                                                <option value="昆山市">昆山市</option>
+                                                <option value="苏州市">昆山市</option>
                                             </select>
                                         </div>
                                         <div class="input-group">
