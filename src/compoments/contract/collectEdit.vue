@@ -525,7 +525,7 @@
                     medi_account_subbank : '',   // 支行
                     medi_alipay_owner : '',      // 支付宝姓名
                     medi_account_num  :'',
-                    intermediary : '',
+                    intermediar : '',
                 },
                 staff:'',
                 dateConfigureVac: [{range:false,needHour:false, }],
@@ -619,9 +619,9 @@
             },
             isMedia(val){
                 if(val){
-                    this.contractEdit.intermediary = 2
+                    this.contractEdit.intermediar = 2
                 } else {
-                    this.contractEdit.intermediary = 1
+                    this.contractEdit.intermediar = 1
                 }
             }
         },
@@ -632,7 +632,7 @@
 
 
             test(){
-                if(!this.isMedia){
+                if(!this.isMedia&&this.contractEdit.is_personal !== 1){
                     this.contractEdit.contract_num = this.contractEdit.contract_num.toUpperCase();
                     let reg = /^LJSF0[1-7][0-9]{7}$/i;
                     let reg1 = /^LJS\d{1,7}$/i;
@@ -714,9 +714,10 @@
                         this.contractEdit.pay_date = contractList.pay_date;
                         this.contractEdit.remarks = contractList.remarks;
 
-                        this.contractEdit.intermediary = contractList.intermediary;
+                        this.contractEdit.is_personal = contractList.is_personal;
+                        this.contractEdit.intermediar = contractList.intermediar;
 
-                        this.isMedia = this.contractEdit.intermediary == 2? true : false;
+                        this.isMedia = this.contractEdit.intermediar === 2;
 
                         this.staff = contractList.staff;
 
@@ -1087,6 +1088,9 @@
                 this.isMedia = !this.isMedia;
                 if(this.isMedia){
                     this.contract_num_right = true;
+                    if(this.contractEdit.is_personal ===1){
+                        this.contractEdit.is_personal = 2;
+                    }
                 }else if(!this.isMedia){
                     this.test();
                 }
@@ -1097,7 +1101,11 @@
                     this.test();
                 }else {
                     this.contractEdit.is_personal = 1;
+                    if(this.isMedia){
+                        this.isMedia = false;
+                    }
                     this.contract_num_right = true;
+
                 }
             }
         }

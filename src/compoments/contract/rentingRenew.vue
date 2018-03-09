@@ -693,7 +693,7 @@
                     received_type: 1,
                     received_amount: '',
                     staff_id :'',
-                    intermediary : 1,
+                    intermediar : 1,
                 },
                 dateConfigureVac: [{range:false,needHour:false, }],
                 dateConfigureComplete: [{range:false,needHour:false, }],
@@ -781,15 +781,15 @@
             },
             isMedia(val){
                 if(val){
-                    this.contractRenew.intermediary = 2
+                    this.contractRenew.intermediar = 2
                 } else {
-                    this.contractRenew.intermediary = 1
+                    this.contractRenew.intermediar = 1
                 }
             }
         },
         methods : {
             test(){
-                if(!this.isMedia){
+                if(!this.isMedia && this.contractRenew.is_personal !== 1){
                     this.contractRenew.contract_num = this.contractRenew.contract_num.toUpperCase();
                     let reg = /^LJZF0[1-7][0-9]{7}$/i;
                     let regPer = /^GR[0-9]{6}$/i;
@@ -1096,7 +1096,9 @@
                 this.contractRenew.water_fee = '';
                 this.contractRenew.gas_fee = '';
 
-                this.contractRenew.intermediary = 1
+                this.contractRenew.intermediar = 1;
+                this.contractRenew.is_personal = 2;
+
 
                 this.more  = 1;
                 this.relative_customer = [];
@@ -1193,9 +1195,11 @@
             },
             isChecked(e){
                 this.isMedia = !this.isMedia;
-                console.log(this.isMedia)
                 if(this.isMedia){
                     this.contract_num_right = true;
+                    if(this.contractRenew.is_personal ===1){
+                        this.contractRenew.is_personal = 2;
+                    }
                 }else if(!this.isMedia){
                     this.test();
                 }
@@ -1206,7 +1210,11 @@
                     this.test();
                 }else {
                     this.contractRenew.is_personal = 1;
+                    if(this.isMedia){
+                        this.isMedia = false;
+                    }
                     this.contract_num_right = true;
+
                 }
             }
         }
