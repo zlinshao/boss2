@@ -952,9 +952,11 @@
             },
             isPersonal(e){
                 if(this.contractRenew.is_personal ===1){
-                    this.contractRenew.is_personal = 2
+                    this.contractRenew.is_personal = 2;
+                    this.test();
                 }else {
-                    this.contractRenew.is_personal = 1
+                    this.contractRenew.is_personal = 1;
+                    this.contract_num_right = true;
                 }
             }
         }

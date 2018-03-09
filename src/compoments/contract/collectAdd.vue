@@ -934,9 +934,11 @@
             },
             isPersonal(e){
                 if(this.contractAdd.is_personal ===1){
-                    this.contractAdd.is_personal = 2
+                    this.contractAdd.is_personal = 2;
+                    this.test();
                 }else {
-                    this.contractAdd.is_personal = 1
+                    this.contractAdd.is_personal = 1;
+                    this.contract_num_right = true;
                 }
             }
         }

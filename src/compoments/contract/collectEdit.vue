@@ -1093,9 +1093,11 @@
             },
             isPersonal(e){
                 if(this.contractEdit.is_personal ===1){
-                    this.contractEdit.is_personal = 2
+                    this.contractEdit.is_personal = 2;
+                    this.test();
                 }else {
-                    this.contractEdit.is_personal = 1
+                    this.contractEdit.is_personal = 1;
+                    this.contract_num_right = true;
                 }
             }
         }
