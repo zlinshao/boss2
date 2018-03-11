@@ -121,88 +121,88 @@
 
         <!--增加/查看 备注-->
         <!--<div class="modal fade " id="addRemarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-             <!--aria-hidden="true">-->
-            <!--<div class="modal-dialog">-->
-                <!--<div class="modal-content">-->
+        <!--aria-hidden="true">-->
+        <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
 
-                    <!--<div class="modal-header">-->
-                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-                        <!--<h4 class="modal-title">{{address_remark}}</h4>-->
-                    <!--</div>-->
+        <!--<div class="modal-header">-->
+        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+        <!--<h4 class="modal-title">{{address_remark}}</h4>-->
+        <!--</div>-->
 
-                    <!--<div class="modal-body roll" style="max-height: 500px;overflow: auto;">-->
-                        <!--<div class="row has-js">-->
-                            <!--<div class="col-lg-12">-->
-                                <!--<section class="panel table table-responsive roll" style="margin-bottom: 0;">-->
-                                    <!--<table class="table table-advance table-hover">-->
-                                        <!--<thead>-->
-                                        <!--<tr>-->
-                                            <!--<th class="text-center width100">备注时间</th>-->
-                                            <!--<th class="text-center">备注内容</th>-->
-                                            <!--<th class="text-center width80">备注人</th>-->
-                                        <!--</tr>-->
-                                        <!--</thead>-->
-                                        <!--<tbody>-->
-                                        <!--<tr>-->
-                                            <!--<td colspan="3" v-if="remarks_status == 1">-->
-                                                <!--<div class="form-group">-->
-                                                    <!--<div class="col-lg-12">-->
-                                                        <!--<textarea class="form-control" v-model="addRemark"></textarea>-->
-                                                    <!--</div>-->
-                                                    <!--<div class="col-lg-12" style="margin-top: 10px;">-->
-                                                        <!--<button class="btn btn-primary btn-sm pull-right"-->
-                                                                <!--style="margin-left: 8px;"-->
-                                                                <!--v-if="remarks_status == 1" @click="addRem">确定-->
-                                                        <!--</button>-->
-                                                        <!--<button class="btn btn-default btn-sm pull-right"-->
-                                                                <!--@click="remark_hide"-->
-                                                                <!--v-if="remarks_status == 1">取消-->
-                                                        <!--</button>-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
-                                            <!--</td>-->
-                                        <!--</tr>-->
-                                        <!--<tr class="text-center" v-for="item in look_remark">-->
-                                            <!--&lt;!&ndash;v-show="remark_isActive != item.id" @click="revise_remark(item.id, item.content)"&ndash;&gt;-->
-                                            <!--<td>{{item.create_time}}</td>-->
-                                            <!--<td>{{item.content}}</td>-->
-                                            <!--<td>{{item.name}}</td>-->
-                                            <!--&lt;!&ndash;<td v-show="remark_isActive == item.id">&ndash;&gt;-->
-                                            <!--&lt;!&ndash;<textarea class="form-control" v-model="addRemark"></textarea>&ndash;&gt;-->
-                                            <!--&lt;!&ndash;</td>&ndash;&gt;-->
-                                        <!--</tr>-->
-                                        <!--<tr v-show="look_remark.length == 0" class="text-center">-->
-                                            <!--<td colspan="3" style="font-size: 16px;">暂无备注...</td>-->
-                                        <!--</tr>-->
-                                        <!--</tbody>-->
-                                    <!--</table>-->
-                                <!--</section>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
+        <!--<div class="modal-body roll" style="max-height: 500px;overflow: auto;">-->
+        <!--<div class="row has-js">-->
+        <!--<div class="col-lg-12">-->
+        <!--<section class="panel table table-responsive roll" style="margin-bottom: 0;">-->
+        <!--<table class="table table-advance table-hover">-->
+        <!--<thead>-->
+        <!--<tr>-->
+        <!--<th class="text-center width100">备注时间</th>-->
+        <!--<th class="text-center">备注内容</th>-->
+        <!--<th class="text-center width80">备注人</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr>-->
+        <!--<td colspan="3" v-if="remarks_status == 1">-->
+        <!--<div class="form-group">-->
+        <!--<div class="col-lg-12">-->
+        <!--<textarea class="form-control" v-model="addRemark"></textarea>-->
+        <!--</div>-->
+        <!--<div class="col-lg-12" style="margin-top: 10px;">-->
+        <!--<button class="btn btn-primary btn-sm pull-right"-->
+        <!--style="margin-left: 8px;"-->
+        <!--v-if="remarks_status == 1" @click="addRem">确定-->
+        <!--</button>-->
+        <!--<button class="btn btn-default btn-sm pull-right"-->
+        <!--@click="remark_hide"-->
+        <!--v-if="remarks_status == 1">取消-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--</tr>-->
+        <!--<tr class="text-center" v-for="item in look_remark">-->
+        <!--&lt;!&ndash;v-show="remark_isActive != item.id" @click="revise_remark(item.id, item.content)"&ndash;&gt;-->
+        <!--<td>{{item.create_time}}</td>-->
+        <!--<td>{{item.content}}</td>-->
+        <!--<td>{{item.name}}</td>-->
+        <!--&lt;!&ndash;<td v-show="remark_isActive == item.id">&ndash;&gt;-->
+        <!--&lt;!&ndash;<textarea class="form-control" v-model="addRemark"></textarea>&ndash;&gt;-->
+        <!--&lt;!&ndash;</td>&ndash;&gt;-->
+        <!--</tr>-->
+        <!--<tr v-show="look_remark.length == 0" class="text-center">-->
+        <!--<td colspan="3" style="font-size: 16px;">暂无备注...</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+        <!--</table>-->
+        <!--</section>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
 
-                    <!--&lt;!&ndash;<div class="modal-body" v-if="remarks_status == 1">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<form class="form-horizontal" role="form">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="col-lg-12">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<textarea class="form-control" v-model="addRemark"></textarea>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</form>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="modal-body" v-if="remarks_status == 1">&ndash;&gt;-->
+        <!--&lt;!&ndash;<form class="form-horizontal" role="form">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="col-lg-12">&ndash;&gt;-->
+        <!--&lt;!&ndash;<textarea class="form-control" v-model="addRemark"></textarea>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</form>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-                    <!--&lt;!&ndash;<div class="modal-footer" v-if="remarks_status == 1">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button class="btn btn-primary" type="button" @click="addRem">确定</button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--<div class="modal-footer">-->
-                        <!--<button class="btn btn-primary btn-sm pull-left" @click="remark_show"-->
-                                <!--v-if="remarks_status == 2">新增备注-->
-                        <!--</button>-->
-                        <!--<button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
+        <!--&lt;!&ndash;<div class="modal-footer" v-if="remarks_status == 1">&ndash;&gt;-->
+        <!--&lt;!&ndash;<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button class="btn btn-primary" type="button" @click="addRem">确定</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<div class="modal-footer">-->
+        <!--<button class="btn btn-primary btn-sm pull-left" @click="remark_show"-->
+        <!--v-if="remarks_status == 2">新增备注-->
+        <!--</button>-->
+        <!--<button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
         <!--</div>-->
 
         <div class="panel tips">
@@ -544,6 +544,27 @@
             </div>
         </div>
 
+        <!--生成滞纳金-->
+        <div role="dialog" class="modal fade bs-example-modal-sm has-js" id="Lates">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        是否生成滞纳金？
+                    </div>
+                    <div class="modal-footer text-right">
+                        <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
+                        <button class="btn btn-primary btn-md" @click="Lates">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
         <!--提示信息-->
@@ -578,7 +599,7 @@
     import Page from '../../common/page.vue'
     import Status from '../../common/status.vue';
     import FlexBox from '../../common/flexBox.vue'
-    import STAFF from  '../../common/oraganization.vue'
+    import STAFF from '../../common/oraganization.vue'
     import DatePicker from '../../common/datePicker.vue'
     import upLoad from '../../common/upload.vue'
     import SelectClient from '../../common/selectPayClient.vue'
@@ -591,7 +612,7 @@
     import SendMessage from './sendMessage.vue'
     import AddRemark from '../../common/addRemark.vue'
 
-    export default{
+    export default {
         components: {
             Page,
             Status,
@@ -610,7 +631,7 @@
             AddRemark
         },
 
-        data(){
+        data() {
             return {
                 starPrice: '',
                 endPrice: '',
@@ -625,7 +646,7 @@
                 isActive: '',
                 amount: '',                     //编辑列表金额
                 recycle_bin: true,            //回收站
-                remarks:{
+                remarks: {
                     look_remark: [],                        //备注内容
                     addRemark: '',                          //新增备注
                     address_remark: '',                     //头部信息
@@ -633,6 +654,7 @@
                     urls: 'account/receivable/tag_v2/'      //新增接口
                 },
                 pitch: [],                  //选中id
+                lateId: [],                  //滞纳金ID
                 status: [],                // 选中状态
                 beforePage: 1,
                 certificatePic: {
@@ -728,11 +750,11 @@
                 dateStatus: '',             //修改日期状态
             }
         },
-        updated (){
+        updated() {
 //            时间选择
             this.remindData();
         },
-        mounted (){
+        mounted() {
             let params = this.$route.query.myParam;
             let page = this.$route.query.page;
             let selected = this.$route.query.selected;
@@ -770,13 +792,29 @@
         },
 
         methods: {
+            // 滞纳金
+            Lates() {
+                this.$http.get('account/receivable/penalty/' + this.lateId).then((res) => {
+                    if (res.data.code === '18510') {
+                        this.chooseResult.customer_name = res.data.data.customer_name;
+                        this.formData.customer_id = res.data.data.customer_id;
+                        this.formData = res.data.data;
+                        $('#addCollect').modal({
+                            backdrop: 'static',         //空白处模态框不消失
+                        });
+                        $('#Lates').modal('hide');
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
 //            剩余款项
-            surplus (){
+            surplus() {
                 $('#surplus').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
-            surplusVal (val){
+            surplusVal(val) {
                 if (val === 1) {
                     this.params.price = ['', 100];
                 }
@@ -794,13 +832,13 @@
             },
 
 //            发送短信
-            sendMessage (){
+            sendMessage() {
                 $('#sendMessage').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
 //            查看详情
-            look_detail (val, del){
+            look_detail(val, del) {
                 this.detail_info = [];
                 this.$http.get('account/receivable/' + val).then((res) => {
                     if (res.data.code === '18500') {
@@ -813,7 +851,7 @@
                 });
             },
 //            导出
-            leading_out (){
+            leading_out() {
                 this.$http.get('account/receivable/export', {
                     params: this.params
                 }).then((res) => {
@@ -825,32 +863,32 @@
                     }
                 })
             },
-            close_ (){
+            close_() {
                 $('#leading_out').modal('hide');
             },
 //              选择房屋
-            selectHouse(){
+            selectHouse() {
                 $('.selectHouse:eq(0)').modal('show');
             },
 //              房屋信息
-            getHouse(data){
+            getHouse(data) {
                 this.params.search = data.address;
                 this.search(1);
             },
 //            清空科目
-            search_empty (){
+            search_empty() {
                 if (this.params.subject_id !== -3) {
                     this.params.subject_id = '';
                     this.search(1);
                 }
             },
 //            科目搜索
-            houseSubject(val){
+            houseSubject(val) {
                 this.params.subject_id = val;
                 this.search(1);
             },
 //            编辑列表科目
-            subject_show (val, id){
+            subject_show(val, id) {
                 if (val === 1) {
                     this.sub_isActive = id;
                 } else if (val === 2) {
@@ -858,11 +896,11 @@
                 }
             },
 //            选择科目
-            subject_revise (val){
+            subject_revise(val) {
                 this.rev.subject_id = val;
             },
 //            确定修改列表科目
-            subject_hide (id){
+            subject_hide(id) {
                 this.$http.put('account/receivable/subject/' + id, {
                     subject_id: this.rev.subject_id,
                 }).then((res) => {
@@ -876,7 +914,7 @@
                 })
             },
 //            编辑金额
-            able_show (val, m, id){
+            able_show(val, m, id) {
                 if (val === 1) {
                     this.amount = m;
                     this.isActive = id;
@@ -886,7 +924,7 @@
                 }
             },
 //            保存金额编辑
-            able_save (id){
+            able_save(id) {
                 if (this.amount !== '') {
                     this.$http.post('account/receivable/edit/' + id, {
                         amount: this.amount
@@ -905,7 +943,7 @@
                 }
             },
 //            编辑补齐时间
-            date_show (val, m, id){
+            date_show(val, m, id) {
                 if (val === 1) {
                     this.polishing = m;
                     this.dateStatus = id;
@@ -915,16 +953,19 @@
                 }
             },
 //            编辑补齐时间
-            date_save (id){
+            date_save(id) {
                 if (this.polishing !== '') {
+                    this.lateId = id;
                     this.$http.post('account/receivable/scheduler_c/' + id, {
-//                this.$http.post('account/receivable/scheduler/' + id, {
                         pay_date: this.polishing
                     }).then((res) => {
                         if (res.data.code === '18510') {
                             this.search(this.beforePage);
                             this.polishing = '';
                             this.dateStatus = '';
+                            $('#Lates').modal({
+                                backdrop: 'static',         //空白处模态框不消失
+                            });
                             this.successMsg(res.data.msg);
                         } else {
                             this.errorMsg(res.data.msg);
@@ -935,11 +976,11 @@
                 }
             },
 //            补齐时间
-            pay_date (val){
+            pay_date(val) {
                 this.polishing = val;
             },
 //            清空
-            clear_info (){
+            clear_info() {
                 this.params.department_id = [];
                 this.params.name = [];
                 this.params.staff_id = [];
@@ -950,7 +991,7 @@
                 this.selected = [];
             },
 //            切换
-            playback (){
+            playback() {
                 this.pitch = [];
                 this.recycle_bin = !this.recycle_bin;
                 if (this.recycle_bin === false) {
@@ -961,7 +1002,7 @@
                     this.filter(this.beforePage);
                 }
             },
-            search(val){
+            search(val) {
                 this.rollbacks = [];
                 if (this.recycle_bin === false) {
                     this.pitch = [];
@@ -974,7 +1015,7 @@
                 }
 
             },
-            playbacks(val){
+            playbacks(val) {
                 this.beforePage = val;
                 this.paging = '';
                 this.$http.get('account/receivable/trashed?page=' + val, {
@@ -991,7 +1032,7 @@
                 })
             },
 
-            filter(val){
+            filter(val) {
                 this.beforePage = val;
                 this.paging = '';
                 this.$http.get('account/receivable?page=' + val, {
@@ -1014,14 +1055,14 @@
             },
 
 //            回滚
-            Rollback_show(){
+            Rollback_show() {
                 this.rollback_id = [];
                 $('#Rollback').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
 //            回滚选择
-            change_index (ev, val){
+            change_index(ev, val) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -1034,7 +1075,7 @@
                 }
             },
 //            回滚
-            rollback (){
+            rollback() {
                 this.$http.put('account/receivable/revert/' + this.pitch, {
                     ra_id: this.rollback_id
                 }).then((res) => {
@@ -1049,18 +1090,18 @@
             },
 
 //            查看备注
-            look_tag (val, addr, id){
+            look_tag(val, addr, id) {
                 this.remarks.look_remark = val;
                 this.remarks.address_remark = addr;
                 this.remarks.remark_id = id;
                 $('#addRemarks').modal({backdrop: 'static'});    //空白处模态框不消失
 
             },
-            lookRemark (){
+            lookRemark() {
                 this.search(this.beforePage);
             },
 
-            clearForm(){
+            clearForm() {
                 this.chooseResult.customer_name = '';
                 this.formData.description = '';
                 this.formData.customer_id = '';
@@ -1072,7 +1113,7 @@
                 $('#addCollect').modal('hide');
             },
 //             全选
-            chooseAll(ev){
+            chooseAll(ev) {
                 this.pitch = [];
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
@@ -1080,13 +1121,13 @@
                     for (let i = 0; i < this.myData.length; i++) {
                         this.pitch.push(this.myData[i].id);
                         let data = this.myData[i].running_account_record_v2;
-                        if(data.length !== 0){
+                        if (data.length !== 0) {
                             this.rollbacks.push(data);
                         }
                     }
                 }
             },
-            changeIndex(ev, id, status, index){
+            changeIndex(ev, id, status, index) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.status = [];
@@ -1112,7 +1153,7 @@
                 }
             },
 //            房屋到期
-            houseIndex(ev){
+            houseIndex(ev) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -1123,12 +1164,12 @@
                     this.search(1);
                 }
             },
-            operation(id, index){
+            operation(id, index) {
                 this.title = '修改应付';
                 this.isAdd = false;
             },
 
-            payFlowList(){
+            payFlowList() {
                 this.$http.get('account/receivable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
                     if (res.data.code === '18500') {
@@ -1142,7 +1183,7 @@
                     }
                 })
             },
-            remindData (){
+            remindData() {
                 $('.form_datetime').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
@@ -1158,10 +1199,10 @@
 
             },
 
-            select(){
+            select() {
                 $('#selectCustom').modal('show');
             },
-            selectDateSend(val){
+            selectDateSend(val) {
                 for (let i = 0; i < val.department.length; i++) {
                     this.selected.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)
@@ -1172,7 +1213,7 @@
                 }
                 this.search(1);
             },
-            clearSelect(){
+            clearSelect() {
                 if (this.selected.length === 0) {
                     return;
                 }
@@ -1181,14 +1222,14 @@
                 this.selected = [];
                 this.search(1);
             },
-            getDate(data){
+            getDate(data) {
                 // 时间
                 this.params.range = data;
                 this.search(1);
 
             },
 
-            setTips(val, bool){
+            setTips(val, bool) {
                 if (bool) {
                     this.tips.receivable_sum = val.receivable_sum;
                     this.tips.received_sum = val.received_sum;
@@ -1202,16 +1243,16 @@
             },
 
             // 选择客户
-            selectClient(){
+            selectClient() {
                 $('.selectClient:eq(0)').modal('show');
             },
-            getClient(data){
+            getClient(data) {
                 this.formData.customer_id = data.id;
                 this.formData.identity = data.identity;
                 this.chooseResult.customer_name = data.address;
             },
 
-            save(){
+            save() {
                 this.$http.post('account/receivable', this.formData).then((res) => {
                     if (res.data.code === '18510') {
                         this.successMsg(res.data.msg);
@@ -1224,22 +1265,22 @@
             },
 
             // 图片上传
-            certificatePicId(data){
+            certificatePicId(data) {
                 // 获取图片
                 this.certificatePic.cus_idPhoto = data;
             },
 
-            picDelete(data){
+            picDelete(data) {
                 // 删除图片
                 let index = this.certificatePic.cus_idPhoto.indexOf(data);
                 if (index > -1) {
                     this.certificatePic.cus_idPhoto.splice(index, 1);
                 }
             },
-            complete(data){
+            complete(data) {
                 this.complete_ok = data;
             },
-            cus_confirm(num){
+            cus_confirm(num) {
                 // 提交时调用
                 this.$http.defaults.withCredentials = true;
                 if (this.complete_ok === 'ok') {
@@ -1257,22 +1298,22 @@
             },
 
 //            应收入账
-            addCollect(){
+            addCollect() {
                 this.shouldCollectId = this.pitch;
                 $('#collectFor').modal('show');
             },
 
-            getSubject(val){
+            getSubject(val) {
                 this.formData.subject_id = val;
             },
 
 //           删除
-            dele(){
+            dele() {
                 this.confirmMsg.id = this.pitch;
                 this.confirmMsg.msg = '确定删除该条应收款项吗？';
                 $('#confirm').modal('show');
             },
-            getConfirm(){
+            getConfirm() {
                 this.$http.post('account/receivable/delete/' + this.pitch).then((res) => {
                     if (res.data.code === '18510') {
                         this.pitch = [];
@@ -1285,7 +1326,7 @@
             },
 
 //            编辑付款时间
-            modifyTime(val){
+            modifyTime(val) {
                 this.$http.post('account/receivable/batch', {
                     ids: this.pitch,
                     pay_date: val
@@ -1299,15 +1340,15 @@
                     }
                 })
             },
-            getDate1(val){
+            getDate1(val) {
                 this.formData.pay_date = val;
             },
-            successMsg(msg){    //成功提示信息
+            successMsg(msg) {    //成功提示信息
                 this.info.success = msg;
                 //显示成功弹窗 ***
                 this.info.state_success = true;
             },
-            errorMsg(msg){      //失败提示信息
+            errorMsg(msg) {      //失败提示信息
                 this.info.error = msg;
                 //显示成功弹窗 ***
                 this.info.state_error = true;
