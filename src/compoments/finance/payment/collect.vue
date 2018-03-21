@@ -56,11 +56,42 @@
                             <a class="btn btn-success" type="button" @click="selectHouse">选择地址搜索</a>
                         </div>
                         <div class="form-group" style="height: 39px;">
-                            <a class="btn btn-success" type="button" @click="leading_out">导出</a>
+                            <a class="btn btn-success" type="button" @click="leading_out(1)">导出</a>
+                        </div>
+                        <div class="form-group" style="height: 39px;" v-if="simulate.indexOf('AccountReceivable/note') > -1||isSuper">
+                            <a class="btn btn-success" type="button" @click="leading_out(2)">催缴导出</a>
                         </div>
                         <div class="form-group" style="height: 39px;">
                             <a class="btn btn-success" type="button" @click="search(beforePage)">刷新</a>
                         </div>
+
+                        <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_remark">
+                            <div class="modal-dialog ">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>&times;</span>
+                                        </button>
+                                        <h4 class="modal-title">提示信息</h4>
+                                    </div>
+                                    <div class="modal-body" style="height: 70px;">
+                                        <div class="form-group col-sm-8">
+                                            <label class="col-sm-3 control-label" style="padding-top: 8px">催缴日期<sup
+                                                    class="required">*</sup></label>
+                                            <div class="col-sm-9">
+                                                <DatePicker :dateConfigure="dateConfigure6" :currentDate="[remarkDate]"
+                                                            :placeholder="'催缴日期'" @sendDate="getDate6"></DatePicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer text-right">
+                                        <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
+                                        <a class="btn btn-success btn-md" @click="close_remark">下载</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
                             <div class="modal-dialog ">
                                 <div class="modal-content">
@@ -75,7 +106,8 @@
                                     </div>
                                     <div class="modal-footer text-right">
                                         <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
-                                        <a :href="leadingOut" class="btn btn-success btn-md" @click="close_">下载</a>
+                                        <a :href="leadingOut" class="btn btn-success btn-md"
+                                           @click="close_">下载</a>
                                     </div>
                                 </div>
                             </div>
@@ -108,102 +140,11 @@
                         <li>
                             <h5 @click="sendMessage"><a><i class="fa fa-envelope-o"></i>&nbsp;发送短信</a></h5>
                         </li>
-
-                        <!--<li v-show="pitch.length == 1">-->
-                        <!--<h5 @click="remark_show">-->
-                        <!--<a><i class="fa fa-book"></i>&nbsp;新增备注</a>-->
-                        <!--</h5>-->
-                        <!--</li>-->
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!--增加/查看 备注-->
-        <!--<div class="modal fade " id="addRemarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-        <!--aria-hidden="true">-->
-        <!--<div class="modal-dialog">-->
-        <!--<div class="modal-content">-->
-
-        <!--<div class="modal-header">-->
-        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-        <!--<h4 class="modal-title">{{address_remark}}</h4>-->
-        <!--</div>-->
-
-        <!--<div class="modal-body roll" style="max-height: 500px;overflow: auto;">-->
-        <!--<div class="row has-js">-->
-        <!--<div class="col-lg-12">-->
-        <!--<section class="panel table table-responsive roll" style="margin-bottom: 0;">-->
-        <!--<table class="table table-advance table-hover">-->
-        <!--<thead>-->
-        <!--<tr>-->
-        <!--<th class="text-center width100">备注时间</th>-->
-        <!--<th class="text-center">备注内容</th>-->
-        <!--<th class="text-center width80">备注人</th>-->
-        <!--</tr>-->
-        <!--</thead>-->
-        <!--<tbody>-->
-        <!--<tr>-->
-        <!--<td colspan="3" v-if="remarks_status == 1">-->
-        <!--<div class="form-group">-->
-        <!--<div class="col-lg-12">-->
-        <!--<textarea class="form-control" v-model="addRemark"></textarea>-->
-        <!--</div>-->
-        <!--<div class="col-lg-12" style="margin-top: 10px;">-->
-        <!--<button class="btn btn-primary btn-sm pull-right"-->
-        <!--style="margin-left: 8px;"-->
-        <!--v-if="remarks_status == 1" @click="addRem">确定-->
-        <!--</button>-->
-        <!--<button class="btn btn-default btn-sm pull-right"-->
-        <!--@click="remark_hide"-->
-        <!--v-if="remarks_status == 1">取消-->
-        <!--</button>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--<tr class="text-center" v-for="item in look_remark">-->
-        <!--&lt;!&ndash;v-show="remark_isActive != item.id" @click="revise_remark(item.id, item.content)"&ndash;&gt;-->
-        <!--<td>{{item.create_time}}</td>-->
-        <!--<td>{{item.content}}</td>-->
-        <!--<td>{{item.name}}</td>-->
-        <!--&lt;!&ndash;<td v-show="remark_isActive == item.id">&ndash;&gt;-->
-        <!--&lt;!&ndash;<textarea class="form-control" v-model="addRemark"></textarea>&ndash;&gt;-->
-        <!--&lt;!&ndash;</td>&ndash;&gt;-->
-        <!--</tr>-->
-        <!--<tr v-show="look_remark.length == 0" class="text-center">-->
-        <!--<td colspan="3" style="font-size: 16px;">暂无备注...</td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-        <!--</table>-->
-        <!--</section>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <!--&lt;!&ndash;<div class="modal-body" v-if="remarks_status == 1">&ndash;&gt;-->
-        <!--&lt;!&ndash;<form class="form-horizontal" role="form">&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="col-lg-12">&ndash;&gt;-->
-        <!--&lt;!&ndash;<textarea class="form-control" v-model="addRemark"></textarea>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</form>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-        <!--&lt;!&ndash;<div class="modal-footer" v-if="remarks_status == 1">&ndash;&gt;-->
-        <!--&lt;!&ndash;<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>&ndash;&gt;-->
-        <!--&lt;!&ndash;<button class="btn btn-primary" type="button" @click="addRem">确定</button>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--<div class="modal-footer">-->
-        <!--<button class="btn btn-primary btn-sm pull-left" @click="remark_show"-->
-        <!--v-if="remarks_status == 2">新增备注-->
-        <!--</button>-->
-        <!--<button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
 
         <div class="panel tips">
             <ul class="clearFix">
@@ -273,6 +214,7 @@
                             </th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">补齐时间</th>
                             <th class="text-center width50" :class="{red: !recycle_bin}">状态</th>
+                            <th class="text-center width50" v-if="simulate.indexOf('AccountReceivable/note') > -1||isSuper" :class="{red: !recycle_bin}">催缴备注</th>
                             <th class="text-center width150" :class="{red: !recycle_bin}">明细详情</th>
                             <th class="text-center width150" :class="{red: !recycle_bin}">备注</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">手机号</th>
@@ -356,10 +298,17 @@
                                     {{dict.account_should_status[item.status]}}
                                 </label>
                             </td>
+                            <td v-if="simulate.indexOf('AccountReceivable/note') > -1||isSuper" class="callRemark" @click="callRemark(item.notice, item.customer.address,item.id)">
+                                <span v-for="(key, index) in item.notice"
+                                      v-show="index === 0 && item.notice.length !== 0">
+                                    <span style="color: #aaaaaa;font-size: 10px;">{{key.create_time}}</span><br>
+                                    {{key.content}}
+                                </span>
+                            </td>
                             <td>{{item.description}}</td>
                             <td @click="look_tag(item.tags, item.customer.address,item.id)"
                                 style="cursor: pointer;">
-                                <span v-for="(key, index) in item.tags" v-show="index < 1 && item.tags.length > 0">
+                                <span v-for="(key, index) in item.tags" v-show="index === 0 && item.tags.length !== 0">
                                     <span style="color: #aaaaaa;font-size: 10px;">{{key.create_time}}</span><br>
                                     {{key.content}}
                                 </span>
@@ -592,6 +541,8 @@
 
         <!--新增备注-->
         <AddRemark @add="lookRemark" :remark="remarks"></AddRemark>
+
+        <CallRemark @add="lookRemark" :remark="callRemarks" :dict="dict"></CallRemark>
     </div>
 </template>
 
@@ -611,6 +562,7 @@
     import DetailInfo from './detail_info.vue'
     import SendMessage from './sendMessage.vue'
     import AddRemark from '../../common/addRemark.vue'
+    import CallRemark from './callRemark.vue'
 
     export default {
         components: {
@@ -628,9 +580,10 @@
             ModifyTime,
             DetailInfo,
             SendMessage,
-            AddRemark
+            AddRemark,
+            CallRemark
         },
-
+        props: ['simulate','isSuper'],
         data() {
             return {
                 starPrice: '',
@@ -652,6 +605,13 @@
                     address_remark: '',                     //头部信息
                     remark_id: '',                          //备注id
                     urls: 'account/receivable/tag_v2/'      //新增接口
+                },
+                callRemarks: {
+                    look_remark: [],                        //备注内容
+                    addRemark: '',                          //新增备注
+                    address_remark: '',                     //头部信息
+                    remark_id: '',                          //备注id
+                    urls: 'account/receivable/tag_v3/'      //新增接口
                 },
                 pitch: [],                  //选中id
                 lateId: [],                  //滞纳金ID
@@ -738,6 +698,12 @@
                         needHour: false,
                     }
                 ],
+                dateConfigure6: [
+                    {
+                        range: true,
+                        needHour: false
+                    }
+                ],
                 todayMature: [],
                 todayMatureCount: '',
                 polishingDate: [
@@ -748,6 +714,8 @@
                 ],
                 polishing: '',              //修改日期
                 dateStatus: '',             //修改日期状态
+
+                remarkDate: '',             //催缴日期导出
             }
         },
         updated() {
@@ -792,6 +760,13 @@
         },
 
         methods: {
+            // 催缴备注
+            callRemark(val, addr, id) {
+                this.callRemarks.look_remark = val;
+                this.callRemarks.address_remark = addr;
+                this.callRemarks.remark_id = id;
+                $('#callRemark').modal({backdrop: 'static'});
+            },
             // 滞纳金
             Lates() {
                 this.$http.get('account/receivable/penalty/' + this.lateId).then((res) => {
@@ -851,20 +826,30 @@
                 });
             },
 //            导出
-            leading_out() {
-                this.$http.get('account/receivable/export', {
-                    params: this.params
-                }).then((res) => {
-                    if (res.data.code === '18510') {
-                        this.leadingOut = res.data.data;
-                        $('#leading_out').modal({
-                            backdrop: 'static',         //空白处模态框不消失
-                        });
-                    }
-                })
+            leading_out(val) {
+                if (val === 1) {
+                    this.$http.get('account/receivable/export', {
+                        params: this.params
+                    }).then((res) => {
+                        if (res.data.code === '18510') {
+                            this.leadingOut = res.data.data;
+                            $('#leading_out').modal({
+                                backdrop: 'static',         //空白处模态框不消失
+                            });
+                        }
+                    })
+                } else {
+                    $('#leading_remark').modal({
+                        backdrop: 'static',         //空白处模态框不消失
+                    });
+                }
             },
             close_() {
                 $('#leading_out').modal('hide');
+            },
+            close_remark() {
+                window.location.href = globalConfig.server + 'account/receivable/tag_v3?range=' + this.remarkDate;
+                $('#leading_remark').modal('hide');
             },
 //              选择房屋
             selectHouse() {
@@ -1095,7 +1080,6 @@
                 this.remarks.address_remark = addr;
                 this.remarks.remark_id = id;
                 $('#addRemarks').modal({backdrop: 'static'});    //空白处模态框不消失
-
             },
             lookRemark() {
                 this.search(this.beforePage);
@@ -1343,6 +1327,9 @@
             getDate1(val) {
                 this.formData.pay_date = val;
             },
+            getDate6(val) {
+                this.remarkDate = val;
+            },
             successMsg(msg) {    //成功提示信息
                 this.info.success = msg;
                 //显示成功弹窗 ***
@@ -1358,6 +1345,14 @@
 </script>
 
 <style scoped>
+    .callRemark {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 100px;
+        cursor: pointer
+    }
+
     .tips {
         line-height: 30px;
         /*padding-left: 12px;*/
