@@ -19,14 +19,27 @@
 
                         <div class="input-group">
                             <select class="form-control" v-model="params.status" @change="search(1)">
-                                <option value="">全部</option>
+                                <option value="">入账状态</option>
                                 <option :value="value" v-for="(key,value) in dict.account_should_status">{{key}}
                                 </option>
                             </select>
                         </div>
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                            <DatePicker :dateConfigure="dateConfigure" :rangeId="'first'"
+                                        :currentDate="[currentDate]" :placeholder="'应收日期'"
                                         @sendDate="getDate"></DatePicker>
+                        </div>
+                        <div class="input-group">
+                            <select class="form-control" v-model="params.tag_category" @change="search(1)">
+                                <option value="">催缴状态</option>
+                                <option :value="value" v-for="(key,value) in dict.tag_category">{{key}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="padd">
+                            <DatePicker :dateConfigure="dateConfigure3" :rangeId="'second'"
+                                        :currentDate="[currentDate3]" :placeholder="'催缴日期'"
+                                        @sendDate="getDate3"></DatePicker>
                         </div>
                         <div class="input-group">
                             <SelectSubject @choose="houseSubject" v-show="params.subject_id != -3"
@@ -58,7 +71,8 @@
                         <div class="form-group" style="height: 39px;">
                             <a class="btn btn-success" type="button" @click="leading_out(1)">导出</a>
                         </div>
-                        <div class="form-group" style="height: 39px;" v-if="simulate.indexOf('AccountReceivable/note') > -1||isSuper">
+                        <div class="form-group" style="height: 39px;"
+                             v-if="simulate.indexOf('AccountReceivable/note') > -1||isSuper">
                             <a class="btn btn-success" type="button" @click="leading_out(2)">催缴导出</a>
                         </div>
                         <div class="form-group" style="height: 39px;">
@@ -80,7 +94,7 @@
                                                     class="required">*</sup></label>
                                             <div class="col-sm-9">
                                                 <DatePicker :dateConfigure="dateConfigure6" :currentDate="[remarkDate]"
-                                                            :placeholder="'催缴日期'" @sendDate="getDate6"></DatePicker>
+                                                            :rangeId="'third'" :placeholder="'催缴日期'" @sendDate="getDate6"></DatePicker>
                                             </div>
                                         </div>
                                     </div>
@@ -214,7 +228,10 @@
                             </th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">补齐时间</th>
                             <th class="text-center width50" :class="{red: !recycle_bin}">状态</th>
-                            <th class="text-center width50" v-if="simulate.indexOf('AccountReceivable/note') > -1||isSuper" :class="{red: !recycle_bin}">催缴备注</th>
+                            <th class="text-center width50"
+                                v-if="simulate.indexOf('AccountReceivable/note') > -1||isSuper"
+                                :class="{red: !recycle_bin}">催缴备注
+                            </th>
                             <th class="text-center width150" :class="{red: !recycle_bin}">明细详情</th>
                             <th class="text-center width150" :class="{red: !recycle_bin}">备注</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">手机号</th>
@@ -298,7 +315,8 @@
                                     {{dict.account_should_status[item.status]}}
                                 </label>
                             </td>
-                            <td v-if="simulate.indexOf('AccountReceivable/note') > -1||isSuper" class="callRemark" @click="callRemark(item.notice, item.customer.address,item.id)">
+                            <td v-if="simulate.indexOf('AccountReceivable/note') > -1||isSuper" class="callRemark"
+                                @click="callRemark(item.notice, item.customer.address,item.id)">
                                 <span v-for="(key, index) in item.notice"
                                       v-show="index === 0 && item.notice.length !== 0">
                                     <span style="color: #aaaaaa;font-size: 10px;">{{key.create_time}}</span><br>
@@ -583,7 +601,7 @@
             AddRemark,
             CallRemark
         },
-        props: ['simulate','isSuper'],
+        props: ['simulate', 'isSuper'],
         data() {
             return {
                 starPrice: '',
@@ -640,6 +658,14 @@
                 ],
                 currentDate: [],
 
+                dateConfigure3: [
+                    {
+                        range: true,
+                        needHour: false
+                    }
+                ],
+                currentDate3: [],
+
                 configure: {},
                 filtrate: {
                     departmentList: [],
@@ -655,6 +681,8 @@
                     range: '',
                     search: '',
                     subject_id: '',                 //科目款项
+                    tag_category: '',
+                    tag_range: '',
                 },
                 tips: {
                     receivable_sum: 0,  // 应收金额
@@ -1206,13 +1234,6 @@
                 this.selected = [];
                 this.search(1);
             },
-            getDate(data) {
-                // 时间
-                this.params.range = data;
-                this.search(1);
-
-            },
-
             setTips(val, bool) {
                 if (bool) {
                     this.tips.receivable_sum = val.receivable_sum;
@@ -1324,11 +1345,19 @@
                     }
                 })
             },
+            getDate(val) {
+                this.params.range = val;
+                this.search(1);
+            },
             getDate1(val) {
                 this.formData.pay_date = val;
             },
             getDate6(val) {
                 this.remarkDate = val;
+            },
+            getDate3(val) {
+                this.params.tag_range = val;
+                this.search(1)
             },
             successMsg(msg) {    //成功提示信息
                 this.info.success = msg;
