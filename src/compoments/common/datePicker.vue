@@ -2,12 +2,13 @@
     <div class="datePickerContainer input-group">
         <div v-if="range">
             <div v-show="isPC">
-                <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期"
-                       v-model="dateRange" class="reservation form-control" readonly>
+                <input @focus="datePicker" type="text" name="reservation" id="reservation" :placeholder="placeholder == undefined?'选择日期':placeholder"
+                       v-model="dateRange" :class="rangeId" class="reservation form-control" readonly>
             </div>
 
             <div class="input-group mobileTimePicker" v-show="!isPC">
-                <input type="text" class="form-control" placeholder="选择日期" v-model="mobilePickerDate"
+
+                <input type="text" class="form-control" :placeholder="placeholder == undefined?'选择日期':placeholder" v-model="mobilePickerDate"
                        @click="showPicker = !showPicker" readonly>
                 <div class="mobileTime" v-show="showPicker">
                     <ul>
@@ -175,7 +176,7 @@
                 let _this = this;
                 this.getDates();
                 //时间插件
-                $('.reservation').daterangepicker({
+                $('.' + this.rangeId).daterangepicker({
                     format: 'YYYY-MM-DD',
                     showDropdowns: true,
                     autoApply: true,
@@ -221,7 +222,7 @@
 //                    console.log('end-------'+end);
                     if (start.format('YYYY-MM-DD') === 'Invalid date') {
                         _this.dateRange = '';
-                        $('.reservation').val('');
+                        $('.' + this.rangeId).val('');
                         _this.$emit('sendDate', '');
                     } else {
                         _this.dateRange = start.format('YYYY-MM-DD') + "至" + end.format('YYYY-MM-DD');
