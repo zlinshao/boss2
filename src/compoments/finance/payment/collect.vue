@@ -569,7 +569,7 @@
     import Status from '../../common/status.vue';
     import FlexBox from '../../common/flexBox.vue'
     import STAFF from '../../common/oraganization.vue'
-    import DatePicker from '../../common/datePicker.vue'
+    import DatePicker from '../../common/datePicker1.vue'
     import upLoad from '../../common/upload.vue'
     import SelectClient from '../../common/selectPayClient.vue'
     import ShouldCollect from './paymentShouldCollect.vue'
