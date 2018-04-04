@@ -391,7 +391,7 @@
             },
             // 手机正则
             reg_phone (val,index){
-                let reg = /^1[3|4|5|7|8|9][0-9]{9}$/;
+                let reg = /^1[0-9][0-9]{9}$/;
                 let isCorrect = reg.test(val);
                 if (val !== undefined && val !== '') {
                     isCorrect ? this.phone_status[index]=true : this.phone_status[index]=false;

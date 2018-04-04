@@ -721,7 +721,7 @@
         methods: {
 //            手机正则
             reg_phone (){
-                let reg = /^1[3|4|5|7|8|9][0-9]{9}$/;
+                let reg = /^1[0-9][0-9]{9}$/;
                 let flag = reg.test(this.cus_phone);
                 if (flag === false) {
                     this.phone_status = !flag;
@@ -959,7 +959,7 @@
                 if (this.phone_status === false) {
 //                保存为草稿
                     this.$http.post(address, {
-                        id: this.renter_id,
+                        id: this.cus_id,
                         staff_id: this.staffId,                     //签约人
                         contact: this.cus_phone,                    //客户联系方式
                         department_id: this.branch_id,              //所属部门
