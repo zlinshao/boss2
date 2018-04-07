@@ -94,7 +94,8 @@
                                                     class="required">*</sup></label>
                                             <div class="col-sm-9">
                                                 <DatePicker :dateConfigure="dateConfigure6" :currentDate="[remarkDate]"
-                                                            :rangeId="'third'" :placeholder="'催缴日期'" @sendDate="getDate6"></DatePicker>
+                                                            :rangeId="'third'" :placeholder="'催缴日期'"
+                                                            @sendDate="getDate6"></DatePicker>
                                             </div>
                                         </div>
                                     </div>
@@ -145,6 +146,9 @@
                         <li v-show="pitch.length == 1">
                             <h5 @click="addCollect"><a><i class="fa fa-pencil"></i>&nbsp;应收入账</a></h5>
                         </li>
+                        <li v-show="pitch.length == 1">
+                            <h5 @click="sendMessage(2)"><a>生成违约金</a></h5>
+                        </li>
                         <li v-show="pitch.length == 1 && rollbacks.length !== 0">
                             <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
@@ -152,13 +156,40 @@
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
                         </li>
                         <li>
-                            <h5 @click="sendMessage"><a><i class="fa fa-envelope-o"></i>&nbsp;发送短信</a></h5>
+                            <h5 @click="sendMessage(1)"><a><i class="fa fa-envelope-o"></i>&nbsp;发送短信</a></h5>
                         </li>
                     </ul>
                 </div>
             </div>
         </section>
-
+        <!--生成违约金-->
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="exit_date">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body" style="height: 70px;">
+                        <div class="form-group col-sm-8">
+                            <label class="col-sm-4 control-label" style="padding-top: 8px">违约金日期<sup
+                                    class="required">*</sup></label>
+                            <div class="col-sm-8">
+                                <DatePicker :dateConfigure="dateConfigure7" :idName="'exitTime'"
+                                            :currentDate="[exitDate]" :placeholder="'违约金日期'"
+                                            @sendDate="getDate7"></DatePicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
+                        <a class="btn btn-success btn-md" @click="breakMoney">生成</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="panel tips">
             <ul class="clearFix">
@@ -732,6 +763,12 @@
                         needHour: false
                     }
                 ],
+                dateConfigure7: [
+                    {
+                        range: false,
+                        needHour: false,
+                    }
+                ],
                 todayMature: [],
                 todayMatureCount: '',
                 polishingDate: [
@@ -744,6 +781,7 @@
                 dateStatus: '',             //修改日期状态
 
                 remarkDate: '',             //催缴日期导出
+                exitDate: '',               //违约金
             }
         },
         updated() {
@@ -835,10 +873,30 @@
             },
 
 //            发送短信
-            sendMessage() {
-                $('#sendMessage').modal({
-                    backdrop: 'static',         //空白处模态框不消失
-                });
+            sendMessage(val) {
+                if (val === 1) {
+                    $('#sendMessage').modal({
+                        backdrop: 'static',         //空白处模态框不消失
+                    });
+                } else {
+                    $('#exit_date').modal({
+                        backdrop: 'static',         //空白处模态框不消失
+                    });
+                }
+            },
+            // 生成违约金
+            breakMoney() {
+                this.$http.post('account/receivable/break/' + this.pitch, {
+                    exit_date: this.exitDate,
+                }).then((res) => {
+                    if(res.data.code === '18810'){
+                        $('#exit_date').modal('hide');
+                        this.search(this.beforePage);
+                        this.successMsg(res.data.msg);
+                    }else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
             },
 //            查看详情
             look_detail(val, del) {
@@ -1307,7 +1365,6 @@
                 this.shouldCollectId = this.pitch;
                 $('#collectFor').modal('show');
             },
-
             getSubject(val) {
                 this.formData.subject_id = val;
             },
@@ -1354,6 +1411,9 @@
             },
             getDate6(val) {
                 this.remarkDate = val;
+            },
+            getDate7(val) {
+                this.exitDate = val;
             },
             getDate3(val) {
                 this.params.tag_range = val;
