@@ -399,6 +399,7 @@
                     this.subject_id.deposit = 2;
                 } else {
                     this.cus_id = val.id;
+                    this.renter_id = val.id;
                     this.reviseStatus = val.status;
                     if (val.staff !== null && val.staff !== undefined) {
                         this.staff = val.staff.real_name;                               //签约人
