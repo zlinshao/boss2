@@ -50,8 +50,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">客户手机号</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="cus_phone"
-                                                   @blur="reg_phone(cus_phone)" maxlength="11"
+                                            <input type="text" class="form-control" v-model="cus_phone" maxlength="11"
                                                    :class="{'error': phone_status}"
                                                    placeholder="请输入手机号" style="margin-bottom: 0;">
                                             <span v-show="phone_status" style="color: #E4393C">手机格号式不正确</span>
