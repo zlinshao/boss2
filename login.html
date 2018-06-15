@@ -21,14 +21,21 @@
 
             body #QRCode, body .QR_Code {
                 display: block;
+                cursor: pointer;
             }
 
             body #computer_PC, body .computer {
                 display: none;
+                cursor: pointer;
             }
         }
+
         .none_ {
             display: none;
+        }
+
+        #changeSwitch {
+
         }
     </style>
     <script src="src/assets/js/jquery-3.2.0.js"></script>
@@ -38,7 +45,7 @@
     <script src="src/assets/gritter/js/jquery.gritter.js"></script>
     <script>
         window.onload = function () {
-            if (navigator.userAgent.indexOf('Edge') != -1 || ( navigator.userAgent.indexOf('Chrome') === -1 && navigator.userAgent.indexOf('CriOS') === -1 )) {
+            if (navigator.userAgent.indexOf('Edge') != -1 || (navigator.userAgent.indexOf('Chrome') === -1 && navigator.userAgent.indexOf('CriOS') === -1)) {
                 document.write('<h4 style="text-align: center; line-height: 30px;">本系统只能试用谷歌浏览器打开，请前去<a href="https://chrome.en.softonic.com/download">下载</a></h4>');
             }
         }
@@ -49,8 +56,11 @@
 <div class="container">
     <form class="form-signin" action="index.html">
         <h2 class="form-signin-heading"
-            style="background-color: #ffffff;text-align: right;border-bottom: 1px solid #cccccc;padding-bottom: 14px;">
-            <div>
+            style="background-color: #ffffff;text-align: right;border-bottom: 1px solid #cccccc;padding-bottom: 14px;display: flex;display: -webkit-flex;align-items: center;justify-content: space-between;">
+            <span id="changeSwitchShow" style="color: #409EFF;min-width: 100px;cursor: pointer;">账号登陆</span>
+            <span id="changeSwitchHide" class="none_"
+                  style="color: #409EFF;min-width: 80px;height: 50px;line-height:50px;cursor: pointer;">&lt;&lt;返回</span>
+            <div style="width: 100%;" id="loginTop">
                 <div class="none_" id="QRCode">
                     <span style=" float: left;margin-top: 16px;margin-left: 24px;color: #000;">手机登录</span>
                     <img src="erweima.png">
@@ -79,10 +89,27 @@
                         <button id="landing" class="btn btn-lg btn-login btn-block" type="button">登陆</button>
                     </div>
                 </div>
-
                 <!--扫码登陆-->
                 <div class="login-wrap col-xs-12 computer">
                     <div id="login_container"></div>
+                </div>
+            </div>
+            <div id="login1" class="none_">
+                <!--账号登陆-->
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="col-sm-2" style="margin: 10px 0;">账号</div>
+                        <div class="col-sm-10">
+                            <input id="names" type="text" class="form-control" placeholder="请输入用户名" autofocus>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-2" style="margin: 10px 0;">密码</div>
+                        <div class="col-sm-10">
+                            <input id="password" type="text" class="form-control" placeholder="请输入密码" autofocus>
+                        </div>
+                    </div>
+                    <button id="landings" class="btn btn-lg btn-login btn-block" type="button">登陆</button>
                 </div>
             </div>
         </div>
@@ -108,6 +135,7 @@
             class_name: 'gritter-success'
         });
     }
+
     //    登陆
     $('#computer_PC').click(function () {
         $(this).css('display', 'none');
@@ -183,6 +211,42 @@
                 window.location.href = url_index;
             }
         })
+    });
+
+    $('#landings').click(function () {
+        let account = {};
+        account.name = $('#names').val();
+        account.password = $('#password').val();
+        $.ajax({
+            type: 'POST',
+            xhrFields: {
+                withCredentials: true
+            },
+            data: account,
+            url: globalConfig.server + 'staff/login',
+            success: function (data) {
+                if (data.code === '80000') {
+                    window.location.href = url_index;
+                } else {
+                    remind(data.msg, 1000);
+                }
+            }
+        })
+    });
+    $('#changeSwitchShow').click(function () {
+        $(this).css('display', 'none');
+        $('#login').css('display', 'none');
+        $('#login1').css('display', 'block');
+        $('#changeSwitchHide').css('display', 'block');
+        $('#loginTop').css('display', 'none');
+    });
+
+    $('#changeSwitchHide').click(function () {
+        $(this).css('display', 'none');
+        $('#login').css('display', 'block');
+        $('#login1').css('display', 'none');
+        $('#changeSwitchShow').css('display', 'block');
+        $('#loginTop').css('display', 'block');
     });
 
     //    二维码
