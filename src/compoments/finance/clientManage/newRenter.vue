@@ -265,14 +265,15 @@
 <script>
     import Status from '../../common/status.vue'
     import Department from '../../common/oraganization.vue'
-    import NewRenterAdd from  './newRenterAdd.vue'
-    import Page from  '../../common/page.vue'
+    import NewRenterAdd from './newRenterAdd.vue'
+    import Page from '../../common/page.vue'
     import Confirm from '../../common/confirm.vue'
     import DatePicker from '../../common/datePicker.vue'
-    export default{
-        props: ['simulate','isSuper'],
+
+    export default {
+        props: ['simulate', 'isSuper', 'urlId'],
         components: {Department, Page, Status, NewRenterAdd, Confirm, DatePicker},
-        data(){
+        data() {
             return {
                 leadingOut: '',
                 rent_address: [],                   //标记地址
@@ -316,7 +317,7 @@
                 },
             }
         },
-        mounted(){
+        mounted() {
             if (this.$route.query.land === 1) {
                 this.params = this.$route.query.sea;
                 this.getLandlordList(1);
@@ -328,8 +329,11 @@
         methods: {
             // 转为待处理项
             pendTenant() {
-                this.$http.post('account/pending/tenant/' + this.pitch).then((res) => {
-                    if(res.data.code === '18810'){
+                this.$http.defaults.baseURL = globalConfig.server_v3;
+                    this.$http.post('financial/pending/renter/' + this.pitch, {
+                    uid: this.urlId,
+                }).then((res) => {
+                    if (res.data.code === '18810') {
                         this.search(this.params.beforePage);
                         $('#dialogPend').modal('hide');
                         this.successMsg(res.data.msg);
@@ -338,13 +342,13 @@
                     }
                 })
             },
-            dialogPend(){
+            dialogPend() {
                 $('#dialogPend').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
 //            导出
-            leading_out (){
+            leading_out() {
                 this.$http.get('/finance/customer/rent/export', {
                     params: this.params
                 }).then((res) => {
@@ -356,11 +360,11 @@
                     }
                 })
             },
-            close_ (){
+            close_() {
                 $('#leading_out').modal('hide');
             },
 //            取消重名标记
-            cancel_rename (){
+            cancel_rename() {
                 this.$http.post('finance/customer/rent/duplication/suppress', {
                     ids: this.pitch,
                 }).then((res) => {
@@ -374,7 +378,7 @@
                 })
             },
 //            恢复重名标记
-            reply_rename (val){
+            reply_rename(val) {
                 this.$http.put('finance/customer/rent/duplication/' + val).then((res) => {
                     if (res.data.code === '90000') {
                         this.search(this.params.beforePage);
@@ -385,7 +389,7 @@
                 });
             },
 //            恢复
-            recover (val){
+            recover(val) {
                 this.$http.post('account/pending/recover', {
                     customer_id: val,
                     identity: 2,
@@ -400,7 +404,7 @@
                 })
             },
 //            选中
-            pitchId (rul, ev){
+            pitchId(rul, ev) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -413,7 +417,7 @@
                 }
             },
 //            编辑
-            reviseLand (){
+            reviseLand() {
                 this.$http.get('finance/customer/rent/' + this.pitch).then((res) => {
                     if (res.data.code === '90010') {
                         this.myLandlordList = res.data.data;
@@ -423,16 +427,16 @@
                 })
             },
 //            搜索
-            search(val){
+            search(val) {
                 this.pitch = [];
                 this.getLandlordList(val);
             },
 //              时间搜索
-            getDate(data){
+            getDate(data) {
                 this.params.range = data;
                 this.search(1);
             },
-            getLandlordList(val){
+            getLandlordList(val) {
                 this.params.beforePage = val;
                 this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.LandlordDict = res.data;
@@ -469,19 +473,19 @@
                 })
             },
 //            人资管理
-            select(){
+            select() {
                 $('.selectCustom:eq(1)').modal({backdrop: 'static',});
                 this.configure = {type: 'department'};
             },
 //            人资管理
-            selectDateSend(val){
+            selectDateSend(val) {
                 for (let i = 0; i < val.department.length; i++) {
                     this.params.selecteds.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)
                 }
                 this.search(1);
             },
-            clearSelect(){
+            clearSelect() {
                 if (this.params.selecteds.length === 0) {
                     return;
                 }
@@ -491,7 +495,7 @@
             },
 
 //            new新增客户
-            newAddRenter (){
+            newAddRenter() {
                 this.house_status = 1;
                 this.myLandlordList = {};
                 $('#newRenterAdd').modal({
@@ -500,14 +504,14 @@
             },
 
 //            删除模态框
-            deleteClient(){
+            deleteClient() {
                 this.confirmMsg = {msg: '您确定删除吗'};
                 $('#confirm').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
 //            删除回调
-            getConfirm(){
+            getConfirm() {
                 this.$http.post('finance/customer/rent/delete', {
                     ids: this.pitch
                 }).then((res) => {
@@ -520,12 +524,12 @@
                     }
                 })
             },
-            successMsg(msg){    //成功提示信息
+            successMsg(msg) {    //成功提示信息
                 this.info.success = msg;
                 //显示成功弹窗 ***
                 this.info.state_success = true;
             },
-            errorMsg(msg){      //失败提示信息
+            errorMsg(msg) {      //失败提示信息
                 this.info.error = msg;
                 //显示成功弹窗 ***
                 this.info.state_error = true;

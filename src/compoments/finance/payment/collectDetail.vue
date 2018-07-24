@@ -323,6 +323,7 @@
 
     export default{
         components: {Status, ShouldCollect, SelectHouse, SelectClient, PicModal, Confirm},
+        props: ['urlId'],
         data(){
             return {
                 cus: '',
@@ -557,8 +558,10 @@
 
             // 转为待处理项
             pendingItem(){
-                this.$http.post('account/pending/receivable/' + this.id).then((res) => {
-                    console.log(res);
+                this.$http.defaults.baseURL = globalConfig.server_v3;
+                this.$http.post('financial/pending/receivable/' + this.id, {
+                    uid: this.urlId,
+                }).then((res) => {
                     if (res.data.code === '18810') {
                         // 成功
                         this.info.success = res.data.msg;
