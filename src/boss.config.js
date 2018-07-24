@@ -4,6 +4,7 @@
 
 globalConfig = {
     server: 'http://test.v2.api.boss.lejias.cn/',                       //接口地址
+    server_v3: 'http://test.v3.api.boss.lejias.cn/',                    //接口地址
     host: 'http//test.v2.boss.lejias.cn/',
     pic_address: 'http://test.v2.api.boss.lejias.cn/picture/upload',    //图片地址
     appId:'dingoaop2sz9fntxxgaytz',

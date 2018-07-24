@@ -272,7 +272,7 @@
     import DatePicker from '../../common/datePicker.vue'
 
     export default {
-        props: ['simulate', 'isSuper'],
+        props: ['simulate', 'isSuper', 'urlId'],
         components: {Department, Page, Status, NewClientAdd, Confirm, DatePicker},
         data() {
             return {
@@ -328,8 +328,11 @@
         methods: {
             // 转为待处理项
             pendOwner() {
-                this.$http.post('account/pending/owner/' + this.pitch).then((res) => {
-                    if(res.data.code === '18810'){
+                this.$http.defaults.baseURL = globalConfig.server_v3;
+                this.$http.post('financial/pending/lord/' + this.pitch, {
+                    uid: this.urlId,
+                }).then((res) => {
+                    if (res.data.code === '18810') {
                         this.search(this.params.beforePage);
                         this.successMsg(res.data.msg);
                         $('#dialogPend').modal('hide');
@@ -338,7 +341,7 @@
                     }
                 })
             },
-            dialogPend(){
+            dialogPend() {
                 $('#dialogPend').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });

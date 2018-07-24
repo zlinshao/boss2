@@ -251,9 +251,10 @@
     import SelectHouse from '../../common/selectHouse.vue'
     import SelectClient from '../../common/selectClient.vue'
 
-    export default{
+    export default {
         components: {Status, ShouldPay, SelectHouse, SelectClient, Confirm},
-        data(){
+        props: ['urlId'],
+        data() {
             return {
                 cus: '',
                 changeCompleteDate: true,       //修改补齐时间
@@ -292,11 +293,11 @@
                 selected: [],
             }
         },
-        updated (){
+        updated() {
             this.remindData();
             this.remindData1();
         },
-        mounted (){
+        mounted() {
             this.should_id = this.$route.query.payId;
             this.params = this.$route.query.myParams;
             this.page = this.$route.query.page;
@@ -309,7 +310,7 @@
         },
         methods: {
 //            资料补齐时间
-            remindData1 (){
+            remindData1() {
                 $('.form_datetime1').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
@@ -323,11 +324,11 @@
                 }.bind(this));
             },
 //            编辑资料补齐时间
-            changeComplete (){
+            changeComplete() {
                 this.changeCompleteDate = !this.changeCompleteDate;
             },
 //            修改资料补齐时间
-            change_com (){
+            change_com() {
                 this.$http.put('account/payable/' + this.should_id, {
                     complete_date: this.complete_date
                 }).then((res) => {
@@ -347,11 +348,11 @@
                     }
                 });
             },
-            pay_success (){
+            pay_success() {
                 this.details(this.should_id);
             },
 //            详情
-            details (val){
+            details(val) {
                 this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.select_info = res.data;
 
@@ -385,10 +386,10 @@
                     });
                 });
             },
-            oper(){
+            oper() {
                 $('#edit').modal('show');
             },
-            remindData (){
+            remindData() {
                 $('.form_datetime').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
@@ -425,14 +426,14 @@
                 }.bind(this));
             },
 
-            changeShow(index){
+            changeShow(index) {
                 if (this.currentIndex === -1) {
                     this.currentIndex = index;
 //                this.showOper[index] = true;
                     this.showOper.splice(index, 1, true);
                 }
             },
-            operTime(index, id){
+            operTime(index, id) {
                 this.$http.post('account/payable/scheduler/' + this.moreTime[index].id, {pay_date: this.moreTime[index].pay_date}).then((res) => {
                     if (res.data.code === '18410') {
                         // 成功
@@ -454,14 +455,17 @@
                     }
                 })
             },
-            cancel(index){
+            cancel(index) {
                 this.currentIndex = -1;
                 this.showOper.splice(index, 1, false);
                 this.moreTime.splice(index, 1, this.times[index]);
             },
 
-            pendingItem(){
-                this.$http.post('account/pending/payable/' + this.should_id).then((res) => {
+            pendingItem() {
+                this.$http.defaults.baseURL = globalConfig.server_v3;
+                this.$http.post('financial/pending/payable/' + this.should_id, {
+                    uid: this.urlId,
+                }).then((res) => {
                     if (res.data.code === '18810') {
                         // 成功
                         this.info.success = res.data.msg;
@@ -472,23 +476,23 @@
 //                        this.details(this.should_id);
                         this.$router.replace({path: '/payPayment'});
                     } else {
+                        // 失败
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        this.info.state_error = false;
                     }
-                    // 失败
-                    this.info.error = res.data.msg;
-                    //显示失败弹窗 ***
-                    this.info.state_error = true;
-                    //一秒自动关闭失败信息弹窗 ***
-                    this.info.state_error = false;
                 })
             },
 
             // 删除
-            dele(){
+            dele() {
                 this.confirmMsg.id = this.operId;
                 this.confirmMsg.msg = '确定删除该条应付款项吗？';
                 $('#confirm').modal('show');
             },
-            getConfirm(){
+            getConfirm() {
                 this.$http.post('account/payable/delete/' + this.should_id).then((res) => {
                     if (res.data.code === '18410') {
                         // 成功
