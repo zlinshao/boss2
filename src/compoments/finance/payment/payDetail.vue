@@ -463,9 +463,8 @@
 
             pendingItem() {
                 this.$http.defaults.baseURL = globalConfig.server_v3;
-                this.$http.post('financial/pending/payable/' + this.should_id, {
-                    uid: this.urlId,
-                }).then((res) => {
+                this.$http.post('financial/pending/payable/' + this.should_id + '?uid=' + this.urlId).then((res) => {
+                    this.$http.defaults.baseURL = globalConfig.server;
                     if (res.data.code === '18810') {
                         // 成功
                         this.info.success = res.data.msg;
@@ -483,6 +482,8 @@
                         //一秒自动关闭失败信息弹窗 ***
                         this.info.state_error = false;
                     }
+                }).catch((error) => {
+                    this.$http.defaults.baseURL = globalConfig.server;
                 })
             },
 
