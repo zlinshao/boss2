@@ -330,9 +330,8 @@
             // 转为待处理项
             pendTenant() {
                 this.$http.defaults.baseURL = globalConfig.server_v3;
-                    this.$http.post('financial/pending/renter/' + this.pitch, {
-                    uid: this.urlId,
-                }).then((res) => {
+                this.$http.post('financial/pending/renter/' + this.pitch + '?uid=' + this.urlId).then((res) => {
+                    this.$http.defaults.baseURL = globalConfig.server;
                     if (res.data.code === '18810') {
                         this.search(this.params.beforePage);
                         $('#dialogPend').modal('hide');
@@ -340,6 +339,8 @@
                     } else {
                         this.errorMsg(res.data.msg);
                     }
+                }).catch((error) => {
+                    this.$http.defaults.baseURL = globalConfig.server;
                 })
             },
             dialogPend() {
@@ -512,9 +513,11 @@
             },
 //            删除回调
             getConfirm() {
+                this.$http.defaults.baseURL = globalConfig.server_v3;
                 this.$http.post('finance/customer/rent/delete', {
                     ids: this.pitch
                 }).then((res) => {
+                    this.$http.defaults.baseURL = globalConfig.server;
                     if (res.data.code === '90010') {
                         this.pitch = [];
                         this.search(this.params.beforePage);
@@ -522,6 +525,8 @@
                     } else {
                         this.errorMsg(res.data.msg);
                     }
+                }).catch((error) => {
+                    this.$http.defaults.baseURL = globalConfig.server;
                 })
             },
             successMsg(msg) {    //成功提示信息

@@ -6,7 +6,7 @@
             <!--router-->
             <section id="main-content">
                 <section class="wrapper">
-                    <router-view :simulate="simulates" :isSuper="superManager"></router-view>
+                    <router-view :urlId="urlId" :simulate="simulates" :isSuper="superManager"></router-view>
                 </section>
             </section>
             <!--loading-->
