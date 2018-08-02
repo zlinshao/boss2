@@ -390,16 +390,20 @@
             },
 //            恢复
             recover(val) {
-                this.$http.post('account/pending/recover', {
+                this.$http.defaults.baseURL = globalConfig.server_v3;
+                this.$http.post('financial/pending/recover' + '?uid=' + this.urlId, {
                     customer_id: val,
                     identity: 1,
                 }).then((res) => {
+                    this.$http.defaults.baseURL = globalConfig.server;
                     if (res.data.code === '18810') {
                         this.search(this.params.beforePage);
                         this.successMsg(res.data.msg);
                     } else {
                         this.errorMsg(res.data.msg);
                     }
+                }).catch((error) => {
+                    this.$http.defaults.baseURL = globalConfig.server;
                 })
             },
 //            选中
